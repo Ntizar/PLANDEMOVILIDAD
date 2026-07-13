@@ -897,4 +897,26 @@ body {
 .status-error {
     background: #fee2e2;
     color: var(--color-danger);
+}\
+
+/* ═══════════════════════════════════════════ */
+/* RESPONSIVE — Móvil y tablet                   */
+/* ═══════════════════════════════════════════ */
+
+/* Tablet */
+
+/* Móvil */
+
+/* Móvil muy pequeño */
+@media (max-width: 380px) {
+    #app-header h1 {
+        font-size: 0.85rem;
+    }
+    #sidebar .nav-item {
+        min-width: 48px;
+        font-size: 0.55rem;
+    }
+    #sidebar .nav-item span:first-child {
+        font-size: 1rem;
+    }
 }
