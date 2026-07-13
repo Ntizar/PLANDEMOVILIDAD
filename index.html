@@ -244,6 +244,9 @@
                 <div class="qr-placeholder">
                     <p>[Código QR se generará aquí]</p>
                 </div>
+                <div id="survey-form-container" class="survey-form-container">
+                    <!-- La encuesta se genera dinámicamente aquí -->
+                </div>
             </div>
 
             <div id="encuesta-respuestas" class="survey-results" style="display:none;">
@@ -259,18 +262,23 @@
                 <p>Cálculo automático: reparto modal, huella CO2e, ocupación y KPIs.</p>
             </div>
 
-            <button id="btn-calcul-diagnostico" class="btn btn-primary">&#9654; Calcular diagnóstico</button>
+            <button id="btn-calcular-diagnostico" class="btn btn-primary">&#9654; Calcular diagnóstico</button>
 
             <div id="diagnostico-panel" class="diagnostico-panel" style="display:none;">
-                <div class="kpi-grid" id="kpi-grid"></div>
+                <p id="diagnostico-mensaje" class="diagnostico-mensaje"></p>
+                <div class="kpi-grid" id="diagnostico-kpis"></div>
                 <div class="charts-grid">
                     <div class="chart-container">
                         <h4>Reparto modal</h4>
-                        <canvas id="chart-modal-split"></canvas>
+                        <canvas id="chart-modal"></canvas>
                     </div>
                     <div class="chart-container">
                         <h4>Huella CO2e por modo</h4>
                         <canvas id="chart-co2e"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h4>Densidad de viajes por hora</h4>
+                        <canvas id="chart-densidad"></canvas>
                     </div>
                 </div>
             </div>
@@ -285,7 +293,7 @@
 
             <button id="btn-calcular-dafo" class="btn btn-primary">&#9654; Calcular DAFO</button>
 
-            <div id="dafo-panel" class="dafo-panel" style="display:none;">
+            <div id="dafo-matriz" class="dafo-panel" style="display:none;">
                 <div class="dafo-grid">
                     <div class="dafo-matrix fortalezas">
                         <h3>&#128994; Fortalezas</h3>
@@ -314,10 +322,10 @@
                 <p>Catálogo de medidas por jerarquía de impacto.</p>
             </div>
 
-            <button id="btn-priorizar-medidas" class="btn btn-primary">&#9654; Priorizar medidas</button>
+            <button id="btn-generar-medidas" class="btn btn-primary">&#9654; Generar medidas</button>
 
             <div id="medidas-panel" class="medidas-panel" style="display:none;">
-                <table id="medidas-table" class="data-table">
+                <table id="medidas-tabla" class="data-table">
                     <thead>
                         <tr>
                             <th>Prioridad</th>
@@ -342,9 +350,7 @@
 
             <button id="btn-generar-objetivos" class="btn btn-primary">&#9654; Generar objetivos</button>
 
-            <div id="objetivos-panel" class="objetivos-panel" style="display:none;">
-                <div id="objetivos-list"></div>
-            </div>
+            <div id="objetivos-container" class="objetivos-panel" style="display:none;"></div>
         </section>
 
         <!-- ─── Sección 8: Informe ─── -->

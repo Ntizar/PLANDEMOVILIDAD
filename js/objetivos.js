@@ -185,6 +185,10 @@ export function initObjetivos() {
         
         renderObjetivos(objetivos);
         
+        // Mostrar container
+        const container = document.getElementById('objetivos-container');
+        if (container) container.style.display = 'block';
+        
         btnGenerar.textContent = '✅ Objetivos generados';
         btnGenerar.disabled = true;
     });

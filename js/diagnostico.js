@@ -590,6 +590,10 @@ export function initDiagnostico() {
         // Guardar en localStorage
         localStorage.setItem('pmst_diagnostico', JSON.stringify(diagnostico));
         
+        // Mostrar panel
+        const panel = document.getElementById('diagnostico-panel');
+        if (panel) panel.style.display = 'block';
+        
         // Renderizar
         renderDiagnosticoCards(diagnostico);
         renderDiagnosticoCharts(diagnostico);
@@ -629,6 +633,10 @@ export function loadSavedDiagnostico() {
         
         renderDiagnosticoCards(diagnostico);
         renderDiagnosticoCharts(diagnostico);
+        
+        // Mostrar panel
+        const panel = document.getElementById('diagnostico-panel');
+        if (panel) panel.style.display = 'block';
         
         const btn = document.getElementById('btn-calcular-diagnostico');
         if (btn) {
