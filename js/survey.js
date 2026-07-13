@@ -533,15 +533,15 @@ export function initSurvey() {
     
     if (btnCargar) {
         btnCargar.addEventListener('click', async () => {
-            btnCargar.textContent = '⏳ Cargando datos demo...';
-            btnCargar.disabled = true;
-            
-            const count = await loadDemoData();
-            
-            btnCargar.textContent = `✅ ${count} respuestas demo cargadas`;
-            btnCargar.disabled = true;
-            
-            updateSurveyResults();
+        btnCargar.textContent = '⏳ Cargando datos demo...';
+        btnCargar.disabled = true;
+        
+        const count = await loadDemoData();
+        
+        btnCargar.textContent = `✅ ${count} respuestas demo cargadas`;
+        btnCargar.disabled = true;
+        
+        await updateSurveyResults();
         });
     }
 }
