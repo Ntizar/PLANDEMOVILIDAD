@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLANDEMOVILIDAD — Generador de Planes de Movilidad Sostenible</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@2.0.0/dist/leaflet.css" />
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- HEADER                                        -->
+    <!-- ═══════════════════════════════════════════ -->
+    <header id="app-header">
+        <div class="header-left">
+            <h1>PLANDEMOVILIDAD</h1>
+            <span class="header-subtitle">Generador de Planes de Movilidad Sostenible al Trabajo</span>
+        </div>
+        <div class="header-right">
+            <button id="btn-nueva-empresa" class="btn btn-secondary" title="Empezar un nuevo plan">
+                &#10685; Nueva empresa
+            </button>
+            <div class="dropdown">
+                <button id="btn-exportar" class="btn btn-primary" title="Exportar informe">
+                    &#10514; Exportar &#9662;
+                </button>
+                <div class="dropdown-menu" id="export-menu">
+                    <button data-format="markdown" class="dropdown-item">&#128196; Markdown (.md)</button>
+                    <button data-format="pdf" class="dropdown-item">&#128196; PDF (.pdf)</button>
+                    <button data-format="docx" class="dropdown-item">&#128196; DOCX (.docx)</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SIDEBAR NAVIGATION                            -->
+    <!-- ═══════════════════════════════════════════ -->
+    <aside id="sidebar">
+        <nav class="sidebar-nav">
+            <button class="nav-item active" data-section="centro" title="Datos del centro">
+                <span class="nav-icon">&#127960;</span>
+                <span class="nav-label">Centro</span>
+            </button>
+            <button class="nav-item" data-section="empresa" title="Datos de la empresa">
+                <span class="nav-icon">&#127970;</span>
+                <span class="nav-label">Empresa</span>
+            </button>
+            <button class="nav-item" data-section="encuesta" title="Encuesta de movilidad">
+                <span class="nav-icon">&#128203;</span>
+                <span class="nav-label">Encuesta</span>
+            </button>
+            <button class="nav-item" data-section="diagnostico" title="Diagnóstico">
+                <span class="nav-icon">&#128202;</span>
+                <span class="nav-label">Diagnóstico</span>
+            </button>
+            <button class="nav-item" data-section="dafo" title="Análisis DAFO">
+                <span class="nav-icon">&#128200;</span>
+                <span class="nav-label">DAFO</span>
+            </button>
+            <button class="nav-item" data-section="medidas" title="Medidas priorizadas">
+                <span class="nav-icon">&#9881;</span>
+                <span class="nav-label">Medidas</span>
+            </button>
+            <button class="nav-item" data-section="objetivos" title="Objetivos SMART">
+                <span class="nav-icon">&#127942;</span>
+                <span class="nav-label">Objetivos</span>
+            </button>
+            <button class="nav-item" data-section="informe" title="Informe con IA">
+                <span class="nav-icon">&#128221;</span>
+                <span class="nav-label">Informe</span>
+            </button>
+            <button class="nav-item" data-section="export" title="Exportar">
+                <span class="nav-icon">&#128229;</span>
+                <span class="nav-label">Export</span>
+            </button>
+        </nav>
+    </aside>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- MAIN CONTENT AREA                             -->
+    <!-- ═══════════════════════════════════════════ -->
+    <main id="main-content">
+
+        <!-- ─── Sección 1: Centro ─── -->
+        <section id="section-centro" class="section active">
+            <div class="section-header">
+                <h2>&#127960; Datos del Centro</h2>
+                <p>Ubicación, actividad, plantilla y turnos del centro de trabajo.</p>
+            </div>
+
+            <div class="split-layout">
+                <!-- Formulario -->
+                <div class="form-panel">
+                    <form id="form-centro" class="data-form">
+                        <div class="form-group">
+                            <label for="centro-nombre">Nombre del centro *</label>
+                            <input type="text" id="centro-nombre" required placeholder="Ej: Sede Central Ineco Madrid">
+                        </div>
+                        <div class="form-group">
+                            <label for="centro-direccion">Dirección *</label>
+                            <input type="text" id="centro-direccion" required placeholder="C/ Ejemplo, 1, Madrid">
+                            <div class="geo-actions">
+                                <button type="button" id="btn-geocode" class="btn btn-small btn-secondary">&#128270; Geolocalizar</button>
+                                <button type="button" id="btn-ubicacion-actual" class="btn btn-small btn-tertiary">&#128205; Mi ubicación</button>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="centro-lat">Latitud</label>
+                                <input type="text" id="centro-lat" readonly placeholder="Auto o manual">
+                            </div>
+                            <div class="form-group">
+                                <label for="centro-lon">Longitud</label>
+                                <input type="text" id="centro-lon" readonly placeholder="Auto o manual">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="centro-actividad">Actividad económica (CNAE)</label>
+                            <input type="text" id="centro-actividad" placeholder="Ej: 62.01 - Actividades de programación informática">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="centro-plantilla">Plantilla total *</label>
+                                <input type="number" id="centro-plantilla" required min="1" placeholder="Nº trabajadores">
+                            </div>
+                            <div class="form-group">
+                                <label for="centro-superficie">Superficie (m²)</label>
+                                <input type="number" id="centro-superficie" min="1" placeholder="Total m²">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="centro-turnos">Turnos</label>
+                            <div class="toggle-group" id="turnos-group">
+                                <label class="toggle-label"><input type="checkbox" name="turno" value="morning"> Mañana (7:00-15:00)</label>
+                                <label class="toggle-label"><input type="checkbox" name="turno" value="afternoon"> Tarde (15:00-23:00)</label>
+                                <label class="toggle-label"><input type="checkbox" name="turno" value="split"> Partido (mañana y tarde)</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">&#128230; Guardar centro</button>
+                    </form>
+                </div>
+
+                <!-- Mapa -->
+                <div class="map-panel">
+                    <div id="centro-map" class="map-container"></div>
+                    <p class="map-hint">Haz clic en el mapa para fijar la ubicación del centro</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── Sección 2: Empresa ─── -->
+        <section id="section-empresa" class="section">
+            <div class="section-header">
+                <h2>&#127970; Datos de la Empresa</h2>
+                <p>Política de movilidad, flota, aparcamiento y servicios.</p>
+            </div>
+
+            <form id="form-empresa" class="data-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="emp-teletrabajo">% teletrabajo actual</label>
+                        <input type="number" id="emp-teletrabajo" min="0" max="100" placeholder="0-100%">
+                    </div>
+                    <div class="form-group">
+                        <label for="emp-dias-presencial">Días presencial semanales</label>
+                        <input type="number" id="emp-dias-presencial" min="1" max="5" placeholder="1-5">
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">&#128663; Aparcamiento</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="emp-pk-coche">Plazas aparcamiento coche</label>
+                        <input type="number" id="emp-pk-coche" min="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="emp-pk-bici">Plazas aparcamiento bicicleta</label>
+                        <input type="number" id="emp-pk-bici" min="0" placeholder="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="toggle-group">
+                        <label class="toggle-label"><input type="checkbox" id="emp-duchas"> Duchas / vestuarios disponibles</label>
+                        <label class="toggle-label"><input type="checkbox" id="emp-recarga"> Punto recarga eléctrica</label>
+                        <label class="toggle-label"><input type="checkbox" id="emp-ayuda-transporte"> Ayuda al transporte público</label>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">&#128663; Flota corporativa</h3>
+                <div id="flota-container">
+                    <div class="flota-item" data-index="0">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" placeholder="Tipo (Ej: furgoneta)" class="flota-tipo">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Combustible (gasolina/diésel/eléctrico)" class="flota-combustible">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" placeholder="Nº unidades" min="1" class="flota-unidades">
+                            </div>
+                            <button type="button" class="btn btn-small btn-danger flota-remove" title="Eliminar">&times;</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="btn-add-flota" class="btn btn-small btn-secondary">&#43; Añadir vehículo</button>
+
+                <h3 class="subsection-title">&#128196; Política de viajes</h3>
+                <div class="form-group">
+                    <label for="emp-politica-viajes">Política de viajes de trabajo</label>
+                    <textarea id="emp-politica-viajes" rows="3" placeholder="Describe la política actual de viajes en misión..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">&#128230; Guardar empresa</button>
+            </form>
+        </section>
+
+        <!-- ─── Sección 3: Encuesta ─── -->
+        <section id="section-encuesta" class="section">
+            <div class="section-header">
+                <h2>&#128203; Encuesta de Movilidad</h2>
+                <p>Encuesta anonimizada de hábitos de desplazamiento. Umbral mínimo: 10 respuestas.</p>
+            </div>
+
+            <div class="survey-controls">
+                <button id="btn-generar-encuesta" class="btn btn-primary">&#128190; Generar encuesta</button>
+                <button id="btn-cargar-respuestas" class="btn btn-secondary">&#128200; Cargar respuestas (demo)</button>
+                <span id="encuesta-stats" class="encuesta-stats"></span>
+            </div>
+
+            <div id="encuesta-preview" class="encuesta-preview" style="display:none;">
+                <p class="encuesta-info">Comparte este enlace o muestra el código QR a la plantilla:</p>
+                <div class="survey-link-box">
+                    <input type="text" id="survey-url" readonly>
+                    <button id="btn-copy-url" class="btn btn-small btn-secondary">&#128203; Copiar</button>
+                </div>
+                <div class="qr-placeholder">
+                    <p>[Código QR se generará aquí]</p>
+                </div>
+            </div>
+
+            <div id="encuesta-respuestas" class="survey-results" style="display:none;">
+                <h3>Resultados agregados</h3>
+                <div id="survey-aggregates"></div>
+            </div>
+        </section>
+
+        <!-- ─── Sección 4: Diagnóstico ─── -->
+        <section id="section-diagnostico" class="section">
+            <div class="section-header">
+                <h2>&#128202; Diagnóstico</h2>
+                <p>Cálculo automático: reparto modal, huella CO2e, ocupación y KPIs.</p>
+            </div>
+
+            <button id="btn-calcul-diagnostico" class="btn btn-primary">&#9654; Calcular diagnóstico</button>
+
+            <div id="diagnostico-panel" class="diagnostico-panel" style="display:none;">
+                <div class="kpi-grid" id="kpi-grid"></div>
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h4>Reparto modal</h4>
+                        <canvas id="chart-modal-split"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h4>Huella CO2e por modo</h4>
+                        <canvas id="chart-co2e"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── Sección 5: DAFO ─── -->
+        <section id="section-dafo" class="section">
+            <div class="section-header">
+                <h2>&#128200; Análisis DAFO</h2>
+                <p>Fortalezas, Debilidades, Oportunidades y Amenazas generadas automáticamente.</p>
+            </div>
+
+            <button id="btn-calcular-dafo" class="btn btn-primary">&#9654; Calcular DAFO</button>
+
+            <div id="dafo-panel" class="dafo-panel" style="display:none;">
+                <div class="dafo-grid">
+                    <div class="dafo-matrix fortalezas">
+                        <h3>&#128994; Fortalezas</h3>
+                        <ul id="dafo-fortalezas"></ul>
+                    </div>
+                    <div class="dafo-matrix debilidades">
+                        <h3>&#128163; Debilidades</h3>
+                        <ul id="dafo-debilidades"></ul>
+                    </div>
+                    <div class="dafo-matrix oportunidades">
+                        <h3>&#128640; Oportunidades</h3>
+                        <ul id="dafo-oportunidades"></ul>
+                    </div>
+                    <div class="dafo-matrix amenazas">
+                        <h3>&#9888; Amenazas</h3>
+                        <ul id="dafo-amenazas"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── Sección 6: Medidas ─── -->
+        <section id="section-medidas" class="section">
+            <div class="section-header">
+                <h2>&#9881; Medidas Priorizadas</h2>
+                <p>Catálogo de medidas por jerarquía de impacto.</p>
+            </div>
+
+            <button id="btn-priorizar-medidas" class="btn btn-primary">&#9654; Priorizar medidas</button>
+
+            <div id="medidas-panel" class="medidas-panel" style="display:none;">
+                <table id="medidas-table" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Prioridad</th>
+                            <th>Medida</th>
+                            <th>Categoría</th>
+                            <th>Responsable</th>
+                            <th>Coste</th>
+                            <th>Plazo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="medidas-tbody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ─── Sección 7: Objetivos ─── -->
+        <section id="section-objetivos" class="section">
+            <div class="section-header">
+                <h2>&#127942; Objetivos SMART</h2>
+                <p>Objetivos específicos, medibles, alcanzables, relevantes y temporales.</p>
+            </div>
+
+            <button id="btn-generar-objetivos" class="btn btn-primary">&#9654; Generar objetivos</button>
+
+            <div id="objetivos-panel" class="objetivos-panel" style="display:none;">
+                <div id="objetivos-list"></div>
+            </div>
+        </section>
+
+        <!-- ─── Sección 8: Informe ─── -->
+        <section id="section-informe" class="section">
+            <div class="section-header">
+                <h2>&#128221; Informe con IA</h2>
+                <p>Generación del informe profesional con análisis inteligente y recomendaciones.</p>
+            </div>
+
+            <div class="informe-toolbar">
+                <button id="btn-generar-informe" class="btn btn-primary">&#129302; Generar informe con IA</button>
+                <span id="informe-progress"></span>
+            </div>
+
+            <div class="split-layout informe-split">
+                <div class="editor-panel">
+                    <h3>Editor Markdown</h3>
+                    <textarea id="informe-editor" class="informe-editor" placeholder="El informe se generará aquí..."></textarea>
+                </div>
+                <div class="preview-panel">
+                    <h3>Vista previa</h3>
+                    <div id="informe-preview" class="informe-preview"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── Sección 9: Export ─── -->
+        <section id="section-export" class="section">
+            <div class="section-header">
+                <h2>&#128229; Exportar</h2>
+                <p>Descarga el informe en el formato que necesites.</p>
+            </div>
+
+            <div class="export-options">
+                <div class="export-card">
+                    <h3>&#128196; Markdown</h3>
+                    <p>Archivo .md editable</p>
+                    <button id="btn-export-md" class="btn btn-primary">Descargar .md</button>
+                </div>
+                <div class="export-card">
+                    <h3>&#128196; PDF</h3>
+                    <p>Documento PDF profesional</p>
+                    <button id="btn-export-pdf" class="btn btn-primary">Descargar .pdf</button>
+                </div>
+                <div class="export-card">
+                    <h3>&#128196; DOCX</h3>
+                    <p>Documento Word editable</p>
+                    <button id="btn-export-docx" class="btn btn-primary">Descargar .docx</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- FOOTER                                        -->
+    <!-- ═══════════════════════════════════════════ -->
+    <footer id="app-footer">
+        <p>Hecho con &#10084;&#65039; por David Antizar</p>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SCRIPTS                                       -->
+    <!-- ═══════════════════════════════════════════ -->
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@2.0.0/dist/leaflet.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- jsPDF AutoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- HTML2Canvas (para captura de mapa en PDF) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- DOCX library (UMD) -->
+    <script src="https://unpkg.com/docx@8.2.3/build/index.umd.js"></script>
+    <script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+    <!-- App modules — init principal -->
+    <script type="module">
+        import { initApp } from './js/main.js';
+        import { initSurvey, updateSurveyResults } from './js/survey.js';
+        import { initDiagnostico, loadSavedDiagnostico } from './js/diagnostico.js';
+        import { initDAFO, loadSavedDAFO } from './js/dafo.js';
+        import { initObjetivos, loadSavedObjetivos } from './js/objetivos.js';
+        import { initInforme, loadSavedInforme } from './js/informe.js';
+        
+        // Inicializar todo
+        initApp();
+        
+        // Inicializar módulos después de initApp
+        setTimeout(() => {
+            initSurvey();
+            initDiagnostico();
+            initDAFO();
+            initObjetivos();
+            initInforme();
+            
+            // Cargar datos guardados
+            loadSavedDiagnostico();
+            loadSavedDAFO();
+            loadSavedObjetivos();
+            loadSavedInforme();
+        }, 100);
+    </script>
+
+</body>
+</html>
