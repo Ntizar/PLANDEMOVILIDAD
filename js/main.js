@@ -228,70 +228,129 @@ async function exportPDF(content) {
     const margin = 20;
     const maxWidth = 170;
     
+    let tableBuffer = [];
+    
+    function flushTable() {
+        if (tableBuffer.length > 1) {
+            const headers = tableBuffer[0].map(c => c);
+            const data = tableBuffer.slice(1).map(r => r.map(c => c));
+            doc.autoTable({
+                head: [headers],
+                body: data,
+                startY: y,
+                theme: 'grid',
+                headStyles: {
+                    fillColor: [37, 99, 235],
+                    textColor: 255,
+                    fontStyle: 'bold',
+                    fontSize: 8,
+                    halign: 'center',
+                },
+                bodyStyles: { fontSize: 8 },
+                alternateRowStyles: { fillColor: [240, 244, 255] },
+                margin: { left: margin, right: margin },
+            });
+            y = doc.lastAutoTable.finalY + 6;
+            tableBuffer = [];
+        }
+    }
+    
     for (const line of lines) {
+        // Acumular filas de tabla
+        if (line.startsWith('|') && line.endsWith('|')) {
+            const cells = line.split('|').slice(1, -1).map(c => c.trim());
+            // Saltar separadores
+            if (cells.every(c => c.replace('-', '').replace(' ', '') === '')) {
+                continue;
+            }
+            tableBuffer.push(cells);
+            continue;
+        }
+        
+        // Si encontramos una línea no-tabla, volcar la tabla acumulada
+        flushTable();
+        
+        // Saltar líneas vacías y separadores
+        if (line.startsWith('---') || line.trim() === '') {
+            y += line.trim() === '' ? 4 : 2;
+            continue;
+        }
+        
         // Headers
         if (line.startsWith('# ')) {
             doc.setFontSize(18);
             doc.setFont(undefined, 'bold');
             y += 8;
+            if (y > pageHeight - 30) { doc.addPage(); y = 20; }
+            doc.text(line.replace('# ', ''), margin, y);
+            y += 4;
+            // Línea decorativa
+            doc.setDrawColor(249, 115, 22);
+            doc.setLineWidth(1);
+            doc.line(margin, y, margin + 80, y);
+            y += 6;
         } else if (line.startsWith('## ')) {
             doc.setFontSize(14);
             doc.setFont(undefined, 'bold');
             y += 6;
+            if (y > pageHeight - 20) { doc.addPage(); y = 20; }
+            doc.text(line.replace('## ', ''), margin, y);
+            y += 4;
         } else if (line.startsWith('### ')) {
             doc.setFontSize(12);
             doc.setFont(undefined, 'bold');
             y += 4;
+            if (y > pageHeight - 20) { doc.addPage(); y = 20; }
+            doc.text(line.replace('### ', ''), margin, y);
+            y += 4;
         } else if (line.startsWith('**') && line.includes('**')) {
             doc.setFont(undefined, 'bold');
+            if (y > pageHeight - 20) { doc.addPage(); y = 20; }
+            doc.text(line.replace(/\*\*/g, ''), margin, y);
+            y += 4;
+        } else if (line.startsWith('- ')) {
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            if (y > pageHeight - 20) { doc.addPage(); y = 20; }
+            doc.text('• ' + line.slice(2), margin, y);
+            y += 4;
         } else {
             doc.setFontSize(10);
             doc.setFont(undefined, 'normal');
-        }
-        
-        // Saltar líneas de separación y listas
-        if (line.startsWith('---') || line.startsWith('|') || line.startsWith('>') || line.trim() === '') {
-            if (line.trim() === '') y += 2;
-            continue;
-        }
-        
-        // Verificar si necesitamos nueva página
-        if (y > pageHeight - 20) {
-            doc.addPage();
-            y = 20;
-        }
-        
-        // Dividir línea larga
-        const words = line.replace(/\*\*/g, '').split(' ');
-        let currentLine = '';
-        for (const word of words) {
-            const testLine = currentLine + (currentLine ? ' ' : '') + word;
-            if (doc.getTextWidth(testLine) > maxWidth) {
+            if (y > pageHeight - 20) { doc.addPage(); y = 20; }
+            // Word wrap
+            const words = line.split(' ');
+            let currentLine = '';
+            for (const word of words) {
+                const testLine = currentLine + (currentLine ? ' ' : '') + word;
+                if (doc.getTextWidth(testLine) > maxWidth) {
+                    doc.text(currentLine, margin, y);
+                    y += 5;
+                    currentLine = word;
+                    if (y > pageHeight - 20) { doc.addPage(); y = 20; }
+                } else {
+                    currentLine = testLine;
+                }
+            }
+            if (currentLine) {
                 doc.text(currentLine, margin, y);
                 y += 5;
-                currentLine = word;
-                if (y > pageHeight - 20) {
-                    doc.addPage();
-                    y = 20;
-                }
-            } else {
-                currentLine = testLine;
             }
-        }
-        if (currentLine) {
-            doc.text(currentLine, margin, y);
-            y += 5;
         }
     }
     
-    // Footer
+    // Flush final table
+    flushTable();
+    
+    // Footer en todas las páginas
     const pageCount = doc.internal.pageSize.getPageCount();
     for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i);
         doc.setFontSize(8);
         doc.setFont(undefined, 'normal');
+        doc.setTextColor(136, 136, 136);
         doc.text(`PLANDEMOVILIDAD — ${centro?.nombre || 'Plan de Movilidad'} — Página ${i} de ${pageCount}`, margin, pageHeight - 10);
-        doc.text(`Hecho con ❤️ por David Antizar`, 190 - margin, pageHeight - 10, { align: 'right' });
+        doc.text('Hecho con ❤️ por David Antizar', 190 - margin, pageHeight - 10, { align: 'right' });
     }
     
     const filename = centro ? `PMST_${slugify(centro.nombre)}.pdf` : 'PMST.pdf';
@@ -300,47 +359,92 @@ async function exportPDF(content) {
 
 /**
  * Exportar como DOCX usando docx library
+ * Genera DOCX real con tablas, encabezados y formato profesional
  */
 async function exportDOCX(content) {
-    const { Document, Packer, Paragraph, TextRun, HeadingLevel } = window.docx;
+    const { Document, Packer, Paragraph, TextRun, HeadingLevel, Table, TableRow, TableCell, WidthType, AlignmentType, BorderStyle, ShadingType } = window.docx;
     
     const centro = window.appState.centro;
     const lines = content.split('\n');
     const children = [];
+    let tableRows = [];
+    
+    function flushTable() {
+        if (tableRows.length > 1) {
+            const headerRow = new TableRow({
+                children: tableRows[0].map(cell => new TableCell({
+                    children: [new Paragraph({ children: [new TextRun({ text: cell, bold: true, size: 20 })] }), { spacing: { after: 40 } }],
+                    shading: { type: ShadingType.CLEAR, fill: '2563EB', color: 'FFFFFF' },
+                    width: { size: 100 / tableRows[0].length, type: WidthType.PERCENTAGE },
+                })),
+            });
+            
+            const bodyRows = tableRows.slice(1).map(row => new TableRow({
+                children: row.map(cell => new TableCell({
+                    children: [new Paragraph({ children: [new TextRun({ text: cell, size: 20 })] }), { spacing: { after: 40 } }],
+                    shading: { type: ShadingType.CLEAR, fill: (tableRows.indexOf(row) % 2 === 0) ? 'F0F4FF' : 'FFFFFF' },
+                    width: { size: 100 / row.length, type: WidthType.PERCENTAGE },
+                })),
+            }));
+            
+            children.push(new Table({
+                rows: [headerRow, ...bodyRows],
+                width: { size: 100, type: WidthType.PERCENTAGE },
+            }));
+        }
+        tableRows = [];
+    }
     
     for (const line of lines) {
+        if (line.startsWith('|') && line.endsWith('|')) {
+            const cells = line.split('|').slice(1, -1).map(c => c.trim());
+            if (cells.every(c => c.replace('-', '').replace(' ', '') === '')) continue;
+            tableRows.push(cells);
+            continue;
+        }
+        
+        flushTable();
+        
         if (line.startsWith('# ')) {
             children.push(new Paragraph({
                 heading: HeadingLevel.HEADING_1,
-                children: [new TextRun({ text: line.replace('# ', ''), bold: true })],
+                children: [new TextRun({ text: line.replace('# ', ''), bold: true, size: 44 })],
                 spacing: { after: 200 },
             }));
         } else if (line.startsWith('## ')) {
             children.push(new Paragraph({
                 heading: HeadingLevel.HEADING_2,
-                children: [new TextRun({ text: line.replace('## ', ''), bold: true })],
+                children: [new TextRun({ text: line.replace('## ', ''), bold: true, size: 32 })],
                 spacing: { after: 160 },
             }));
         } else if (line.startsWith('### ')) {
             children.push(new Paragraph({
                 heading: HeadingLevel.HEADING_3,
-                children: [new TextRun({ text: line.replace('### ', ''), bold: true })],
+                children: [new TextRun({ text: line.replace('### ', ''), bold: true, size: 26 })],
                 spacing: { after: 120 },
             }));
         } else if (line.startsWith('**') && line.includes('**')) {
             children.push(new Paragraph({
-                children: [new TextRun({ text: line.replace(/\*\*/g, ''), bold: true })],
+                children: [new TextRun({ text: line.replace(/\*\*/g, ''), bold: true, size: 22 })],
+                spacing: { after: 80 },
             }));
-        } else if (line.startsWith('---') || line.startsWith('|') || line.startsWith('>') || line.trim() === '') {
-            if (line.trim() !== '') {
-                children.push(new Paragraph({ children: [] })); // Empty line
-            }
-        } else {
+        } else if (line.startsWith('- ')) {
             children.push(new Paragraph({
-                children: [new TextRun(line)],
+                children: [new TextRun({ text: '• ' + line.slice(2), size: 22 })],
+                spacing: { after: 60, before: 40 },
+                indent: { left: 360 },
+            }));
+        } else if (line.startsWith('---') || line.trim() === '') {
+            children.push(new Paragraph({ children: [], spacing: { after: 100 } }));
+        } else if (line) {
+            children.push(new Paragraph({
+                children: [new TextRun({ text: line, size: 22 })],
+                spacing: { after: 80 },
             }));
         }
     }
+    
+    flushTable();
     
     const doc = new Document({
         sections: [{
