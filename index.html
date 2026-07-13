@@ -3,465 +3,1060 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PLANDEMOVILIDAD — Generador de Planes de Movilidad Sostenible</title>
-
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@2.0.0/dist/leaflet.css" />
-
-    <!-- App CSS -->
+    <title>PLANDEMOVILIDAD v2.0 — Generador de Planes de Movilidad Sostenible</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- HEADER                                        -->
-    <!-- ═══════════════════════════════════════════ -->
-    <header id="app-header">
-        <div class="header-left">
-            <h1>PLANDEMOVILIDAD</h1>
-            <span class="header-subtitle">Generador de Planes de Movilidad Sostenible al Trabajo</span>
-        </div>
-        <div class="header-right">
-            <button id="btn-nueva-empresa" class="btn btn-secondary" title="Empezar un nuevo plan">
-                &#10685; Nueva empresa
-            </button>
-            <div class="dropdown">
-                <button id="btn-exportar" class="btn btn-primary" title="Exportar informe">
-                    &#10514; Exportar &#9662;
-                </button>
-                <div class="dropdown-menu" id="export-menu">
-                    <button data-format="markdown" class="dropdown-item">&#128196; Markdown (.md)</button>
-                    <button data-format="pdf" class="dropdown-item">&#128196; PDF (.pdf)</button>
-                    <button data-format="docx" class="dropdown-item">&#128196; DOCX (.docx)</button>
+    <!-- ═══════════════════════════════════════════
+         HEADER
+         ═══════════════════════════════════════════ -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo-area">
+                <h1>🚇 PLANDEMOVILIDAD <span class="version-badge">v2.0</span></h1>
+                <p class="subtitle">Generador Profesional de Planes de Movilidad Sostenible al Trabajo</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-outline" onclick="window.pmstApp.nuevaEmpresa()">🏢 Nueva empresa</button>
+                <div class="dropdown">
+                    <button class="btn btn-primary">📥 Export ▾</button>
+                    <div class="dropdown-menu">
+                        <a href="#" onclick="window.pmstApp.exportPDF(); return false;">📄 Informe HTML</a>
+                        <a href="#" onclick="window.pmstApp.exportDOCX(); return false;">📝 Markdown</a>
+                        <a href="#" onclick="window.pmstApp.exportZIP(); return false;">📦 ZIP completo</a>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SIDEBAR NAVIGATION                            -->
-    <!-- ═══════════════════════════════════════════ -->
-    <aside id="sidebar">
-        <nav class="sidebar-nav">
-            <button class="nav-item active" data-section="centro" title="Datos del centro">
-                <span class="nav-icon">&#127960;</span>
-                <span class="nav-label">Centro</span>
-            </button>
-            <button class="nav-item" data-section="empresa" title="Datos de la empresa">
-                <span class="nav-icon">&#127970;</span>
-                <span class="nav-label">Empresa</span>
-            </button>
-            <button class="nav-item" data-section="encuesta" title="Encuesta de movilidad">
-                <span class="nav-icon">&#128203;</span>
-                <span class="nav-label">Encuesta</span>
-            </button>
-            <button class="nav-item" data-section="diagnostico" title="Diagnóstico">
-                <span class="nav-icon">&#128202;</span>
-                <span class="nav-label">Diagnóstico</span>
-            </button>
-            <button class="nav-item" data-section="dafo" title="Análisis DAFO">
-                <span class="nav-icon">&#128200;</span>
-                <span class="nav-label">DAFO</span>
-            </button>
-            <button class="nav-item" data-section="medidas" title="Medidas priorizadas">
-                <span class="nav-icon">&#9881;</span>
-                <span class="nav-label">Medidas</span>
-            </button>
-            <button class="nav-item" data-section="objetivos" title="Objetivos SMART">
-                <span class="nav-icon">&#127942;</span>
-                <span class="nav-label">Objetivos</span>
-            </button>
-            <button class="nav-item" data-section="informe" title="Informe con IA">
-                <span class="nav-icon">&#128221;</span>
-                <span class="nav-label">Informe</span>
-            </button>
-            <button class="nav-item" data-section="export" title="Exportar">
-                <span class="nav-icon">&#128229;</span>
-                <span class="nav-label">Export</span>
-            </button>
-        </nav>
-    </aside>
+    <div class="app-layout">
+        <!-- ═══════════════════════════════════════════
+             SIDEBAR
+             ═══════════════════════════════════════════ -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-label">📊 Dashboard</span>
+                    <button class="nav-btn active" data-tab="dashboard" onclick="showTab('dashboard')">📊 Resumen</button>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-label">📋 Datos</span>
+                    <button class="nav-btn" data-tab="centro" onclick="showTab('centro')">🏘 Centro</button>
+                    <button class="nav-btn" data-tab="empresa" onclick="showTab('empresa')">🏢 Empresa</button>
+                    <button class="nav-btn" data-tab="empleados" onclick="showTab('empleados')">👥 Empleados</button>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-label">📈 Análisis</span>
+                    <button class="nav-btn" data-tab="diagnostico" onclick="showTab('diagnostico')">📊 Diagnóstico</button>
+                    <button class="nav-btn" data-tab="dafo" onclick="showTab('dafo')">📈 DAFO</button>
+                    <button class="nav-btn" data-tab="mapa" onclick="showTab('mapa')">🗺️ Mapa</button>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-label">🚌 Transporte</span>
+                    <button class="nav-btn" data-tab="transporte" onclick="showTab('transporte')">🚌 Oferta TP</button>
+                    <button class="nav-btn" data-tab="flota" onclick="showTab('flota')">🚗 Flota</button>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-label">📉 Seguimiento</span>
+                    <button class="nav-btn" data-tab="seguimiento" onclick="showTab('seguimiento')">📉 KPIs</button>
+                    <button class="nav-btn" data-tab="comparativas" onclick="showTab('comparativas')">📊 Comparativas</button>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-label">🎯 Planificación</span>
+                    <button class="nav-btn" data-tab="medidas" onclick="showTab('medidas')">⚙️ Medidas</button>
+                    <button class="nav-btn" data-tab="objetivos" onclick="showTab('objetivos')">🏆 Objetivos</button>
+                </div>
+            </nav>
+        </aside>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- MAIN CONTENT AREA                             -->
-    <!-- ═══════════════════════════════════════════ -->
-    <main id="main-content">
+        <!-- ═══════════════════════════════════════════
+             MAIN CONTENT
+             ═══════════════════════════════════════════ -->
+        <main class="main-content">
+            
+            <!-- ═══════════════════════════════════════════
+                 DASHBOARD — RESUMEN EJECUTIVO
+                 ═══════════════════════════════════════════ -->
+            <section id="tab-dashboard" class="tab-content active">
+                <h2>📊 Resumen Ejecutivo</h2>
+                
+                <!-- KPIs principales -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon">👥</div>
+                        <div class="kpi-value" id="kpi-plantilla">0</div>
+                        <div class="kpi-label">Plantilla total</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">🚌</div>
+                        <div class="kpi-value" id="kpi-sostenible">0%</div>
+                        <div class="kpi-label">Modos sostenibles</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">🚗</div>
+                        <div class="kpi-value" id="kpi-motorizado">0%</div>
+                        <div class="kpi-label">Modos motorizados</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">🏠</div>
+                        <div class="kpi-value" id="kpi-teletrabajo">0%</div>
+                        <div class="kpi-label">Teletrabajo</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">🌱</div>
+                        <div class="kpi-value" id="kpi-co2e">0T</div>
+                        <div class="kpi-label">CO2e anual</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">🚌</div>
+                        <div class="kpi-value" id="kpi-paradas">0</div>
+                        <div class="kpi-label">Paradas cercanas</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">🚗</div>
+                        <div class="kpi-value" id="kpi-flota">0</div>
+                        <div class="kpi-label">Vehículos flota</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">📝</div>
+                        <div class="kpi-value" id="kpi-medidas">0</div>
+                        <div class="kpi-label">Medidas planificadas</div>
+                    </div>
+                </div>
 
-        <!-- ─── Sección 1: Centro ─── -->
-        <section id="section-centro" class="section active">
-            <div class="section-header">
-                <h2>&#127960; Datos del Centro</h2>
+                <!-- Gráficas del dashboard -->
+                <div class="dashboard-grid">
+                    <div class="chart-card">
+                        <h3>🍩 Reparto Modal</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-modal"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>📊 Comparativas con Media Nacional</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-comparativas"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>🌱 Huella CO2e por Modo</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-co2e"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>🚌 Oferta de Transporte Público</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-transporte"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mapa mini en dashboard -->
+                <div class="map-card">
+                    <h3>🗺️ Mapa de Accesibilidad</h3>
+                    <div id="dashboard-map" style="height: 400px; border-radius: 12px; border: 2px solid #e5e7eb;"></div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════
+                 CENTRO
+                 ═══════════════════════════════════════════ -->
+            <section id="tab-centro" class="tab-content">
+                <h2>🏘 Datos del Centro de Trabajo</h2>
                 <p>Ubicación, actividad, plantilla y turnos del centro de trabajo.</p>
-            </div>
-
-            <div class="split-layout">
-                <!-- Formulario -->
-                <div class="form-panel">
-                    <form id="form-centro" class="data-form">
+                
+                <form id="centro-form" class="form-card">
+                    <div class="form-grid">
                         <div class="form-group">
                             <label for="centro-nombre">Nombre del centro *</label>
-                            <input type="text" id="centro-nombre" required placeholder="Ej: Sede Central Ineco Madrid">
+                            <input type="text" id="centro-nombre" placeholder="Ej: Nuevos Ministerios" required>
                         </div>
                         <div class="form-group">
                             <label for="centro-direccion">Dirección *</label>
-                            <input type="text" id="centro-direccion" required placeholder="C/ Ejemplo, 1, Madrid">
-                            <div class="geo-actions">
-                                <button type="button" id="btn-geocode" class="btn btn-small btn-secondary">&#128270; Geolocalizar</button>
-                                <button type="button" id="btn-ubicacion-actual" class="btn btn-small btn-tertiary">&#128205; Mi ubicación</button>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="centro-lat">Latitud</label>
-                                <input type="text" id="centro-lat" readonly placeholder="Auto o manual">
-                            </div>
-                            <div class="form-group">
-                                <label for="centro-lon">Longitud</label>
-                                <input type="text" id="centro-lon" readonly placeholder="Auto o manual">
-                            </div>
+                            <input type="text" id="centro-direccion" placeholder="Calle, número, código postal" required>
                         </div>
                         <div class="form-group">
                             <label for="centro-actividad">Actividad económica (CNAE)</label>
-                            <input type="text" id="centro-actividad" placeholder="Ej: 62.01 - Actividades de programación informática">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="centro-plantilla">Plantilla total *</label>
-                                <input type="number" id="centro-plantilla" required min="1" placeholder="Nº trabajadores">
-                            </div>
-                            <div class="form-group">
-                                <label for="centro-superficie">Superficie (m²)</label>
-                                <input type="number" id="centro-superficie" min="1" placeholder="Total m²">
-                            </div>
+                            <input type="text" id="centro-actividad" placeholder="Ej: 84.11 - Administración pública general">
                         </div>
                         <div class="form-group">
-                            <label for="centro-turnos">Turnos</label>
-                            <div class="toggle-group" id="turnos-group">
-                                <label class="toggle-label"><input type="checkbox" name="turno" value="morning"> Mañana (7:00-15:00)</label>
-                                <label class="toggle-label"><input type="checkbox" name="turno" value="afternoon"> Tarde (15:00-23:00)</label>
-                                <label class="toggle-label"><input type="checkbox" name="turno" value="split"> Partido (mañana y tarde)</label>
-                            </div>
+                            <label for="centro-plantilla">Plantilla total *</label>
+                            <input type="number" id="centro-plantilla" placeholder="Número de trabajadores" min="1" required>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">&#128230; Guardar centro</button>
+                        <div class="form-group">
+                            <label for="centro-superficie">Superficie (m²)</label>
+                            <input type="number" id="centro-superficie" placeholder="Superficie total del edificio">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="centro-lat">Latitud</label>
+                            <input type="text" id="centro-lat" placeholder="40.4168">
+                        </div>
+                        <div class="form-group">
+                            <label for="centro-lon">Longitud</label>
+                            <input type="text" id="centro-lon" placeholder="-3.7038">
+                        </div>
+                        <div class="form-group form-actions">
+                            <button type="button" class="btn btn-outline" onclick="window.pmstApp.geolocalizarCentro()">🔎 Geolocalizar</button>
+                            <button type="button" class="btn btn-outline" onclick="window.pmstApp.miUbicacion()">📍 Mi ubicación</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Turnos de trabajo</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" id="centro-turno-manana"> Mañana (7:00-15:00)</label>
+                            <label><input type="checkbox" id="centro-turno-tarde"> Tarde (15:00-23:00)</label>
+                            <label><input type="checkbox" id="centro-turno-partido"> Partido (mañana y tarde)</label>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary" onclick="window.pmstApp.guardarCentro()">📦 Guardar centro</button>
+                </form>
+            </section>
+
+            <!-- ═══════════════════════════════════════════
+                 EMPRESA
+                 ═══════════════════════════════════════════ -->
+            <section id="tab-empresa" class="tab-content">
+                <h2>🏢 Datos de la Empresa</h2>
+                <p>Políticas de teletrabajo, infraestructuras y beneficios de movilidad.</p>
+                
+                <form id="empresa-form" class="form-card">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="emp-teletrabajo">Teletrabajo actual (%)</label>
+                            <input type="number" id="emp-teletrabajo" placeholder="35" min="0" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="emp-presencial">Días presencial/semana</label>
+                            <input type="number" id="emp-presencial" placeholder="3" min="1" max="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="emp-plazas-coche">Plazas aparcamiento coche</label>
+                            <input type="number" id="emp-plazas-coche" placeholder="120" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="emp-plazas-bici">Plazas aparcamiento bicicleta</label>
+                            <input type="number" id="emp-plazas-bici" placeholder="150" min="0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Infraestructuras disponibles</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" id="emp-duchas"> Duchas / vestuarios</label>
+                            <label><input type="checkbox" id="emp-recarga"> Recarga vehículos eléctricos</label>
+                            <label><input type="checkbox" id="emp-ayuda-transporte"> Ayuda al transporte público</label>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary" onclick="window.pmstApp.guardarEmpresa()">📦 Guardar empresa</button>
+                </form>
+            </section>
+
+            <!-- ═══════════════════════════════════════════
+                 EMPLEADOS
+                 ═══════════════════════════════════════════ -->
+            <section id="tab-empleados" class="tab-content">
+                <h2>👥 Gestión de Empleados</h2>
+                <p>Lista de empleados, departamentos, modos de transporte y respuestas de encuesta.</p>
+                
+                <!-- Formulario añadir empleado -->
+                <div class="form-card">
+                    <h3>Añadir empleado</h3>
+                    <form id="empleado-form" class="form-grid">
+                        <div class="form-group">
+                            <label for="emp-nombre">Nombre *</label>
+                            <input type="text" id="emp-nombre" placeholder="Nombre completo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="emp-depto">Departamento *</label>
+                            <select id="emp-depto" required>
+                                <option value="">Seleccionar...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="emp-puesto">Puesto</label>
+                            <input type="text" id="emp-puesto" placeholder="Cargo o función">
+                        </div>
+                        <div class="form-group">
+                            <label for="emp-email">Email</label>
+                            <input type="email" id="emp-email" placeholder="correo@ejemplo.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="emp-modo">Modo principal</label>
+                            <select id="emp-modo">
+                                <option value="">No especificado</option>
+                                <option value="🚗 Coche particular (conductor)">🚗 Coche particular (conductor)</option>
+                                <option value="🚘 Coche particular (pasajero)">🚘 Coche particular (pasajero)</option>
+                                <option value="🚌 Autobús">🚌 Autobús</option>
+                                <option value="🚇 Metro / Tren">🚇 Metro / Tren</option>
+                                <option value="🚲 Bicicleta (estándar)">🚲 Bicicleta (estándar)</option>
+                                <option value="🚶 Caminando">🚶 Caminando</option>
+                                <option value="🏍️ Motocicleta">🏍️ Motocicleta</option>
+                                <option value="🏠 Teletrabajo (no me desplazo)">🏠 Teletrabajo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="emp-distancia">Distancia (km)</label>
+                            <input type="number" id="emp-distancia" placeholder="7" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="emp-tiempo">Tiempo viaje (min)</label>
+                            <input type="number" id="emp-tiempo" placeholder="25" min="0">
+                        </div>
+                        <div class="form-group form-actions">
+                            <button type="button" class="btn btn-primary" onclick="window.pmstApp.addEmpleado()">➕ Añadir</button>
+                        </div>
                     </form>
                 </div>
-
-                <!-- Mapa -->
-                <div class="map-panel">
-                    <div id="centro-map" class="map-container"></div>
-                    <p class="map-hint">Haz clic en el mapa para fijar la ubicación del centro</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ─── Sección 2: Empresa ─── -->
-        <section id="section-empresa" class="section">
-            <div class="section-header">
-                <h2>&#127970; Datos de la Empresa</h2>
-                <p>Política de movilidad, flota, aparcamiento y servicios.</p>
-            </div>
-
-            <form id="form-empresa" class="data-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="emp-teletrabajo">% teletrabajo actual</label>
-                        <input type="number" id="emp-teletrabajo" min="0" max="100" placeholder="0-100%">
+                
+                <!-- Tabla de empleados -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Lista de empleados (<span id="empleados-count">0</span>)</h3>
+                        <div class="table-actions">
+                            <input type="text" id="empleados-search" placeholder="🔍 Buscar..." oninput="window.pmstApp.filtrarEmpleados()">
+                            <button class="btn btn-outline" onclick="window.pmstApp.importarEmpleadosCSV()">📥 Importar CSV</button>
+                            <button class="btn btn-outline" onclick="window.pmstApp.exportarEmpleadosCSV()">📤 Exportar CSV</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="emp-dias-presencial">Días presencial semanales</label>
-                        <input type="number" id="emp-dias-presencial" min="1" max="5" placeholder="1-5">
-                    </div>
-                </div>
-
-                <h3 class="subsection-title">&#128663; Aparcamiento</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="emp-pk-coche">Plazas aparcamiento coche</label>
-                        <input type="number" id="emp-pk-coche" min="0" placeholder="0">
-                    </div>
-                    <div class="form-group">
-                        <label for="emp-pk-bici">Plazas aparcamiento bicicleta</label>
-                        <input type="number" id="emp-pk-bici" min="0" placeholder="0">
+                    <div class="table-responsive">
+                        <table id="empleados-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Departamento</th>
+                                    <th>Puesto</th>
+                                    <th>Modo</th>
+                                    <th>Dist.</th>
+                                    <th>Tiempo</th>
+                                    <th>Encuesta</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="empleados-tbody">
+                                <tr><td colspan="9" class="empty-state">No hay empleados. Añade el primero.</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="toggle-group">
-                        <label class="toggle-label"><input type="checkbox" id="emp-duchas"> Duchas / vestuarios disponibles</label>
-                        <label class="toggle-label"><input type="checkbox" id="emp-recarga"> Punto recarga eléctrica</label>
-                        <label class="toggle-label"><input type="checkbox" id="emp-ayuda-transporte"> Ayuda al transporte público</label>
+                
+                <!-- Gráficas de empleados -->
+                <div class="dashboard-grid">
+                    <div class="chart-card">
+                        <h3>📊 Por Departamento</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-departamentos"></canvas>
+                        </div>
                     </div>
-                </div>
-
-                <h3 class="subsection-title">&#128663; Flota corporativa</h3>
-                <div id="flota-container">
-                    <div class="flota-item" data-index="0">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <input type="text" placeholder="Tipo (Ej: furgoneta)" class="flota-tipo">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" placeholder="Combustible (gasolina/diésel/eléctrico)" class="flota-combustible">
-                            </div>
-                            <div class="form-group">
-                                <input type="number" placeholder="Nº unidades" min="1" class="flota-unidades">
-                            </div>
-                            <button type="button" class="btn btn-small btn-danger flota-remove" title="Eliminar">&times;</button>
+                    <div class="chart-card">
+                        <h3>🗺️ Mapa de Empleados</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-distancias"></canvas>
                         </div>
                     </div>
                 </div>
-                <button type="button" id="btn-add-flota" class="btn btn-small btn-secondary">&#43; Añadir vehículo</button>
+            </section>
 
-                <h3 class="subsection-title">&#128196; Política de viajes</h3>
-                <div class="form-group">
-                    <label for="emp-politica-viajes">Política de viajes de trabajo</label>
-                    <textarea id="emp-politica-viajes" rows="3" placeholder="Describe la política actual de viajes en misión..."></textarea>
+            <!-- ═══════════════════════════════════════════
+                 DIAGNÓSTICO
+                 ═══════════════════════════════════════════ -->
+            <section id="tab-diagnostico" class="tab-content">
+                <h2>📊 Diagnóstico de Movilidad</h2>
+                <p>Análisis del reparto modal, huella de CO2e e indicadores KPI.</p>
+                
+                <button class="btn btn-primary" onclick="window.pmstApp.calcularDiagnostico()">📊 Calcular diagnóstico</button>
+                
+                <div id="diagnostico-panel" class="dashboard-grid" style="display: none;">
+                    <div class="chart-card">
+                        <h3>🍩 Reparto Modal</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-modal-diagnostico"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>🌱 Huella CO2e</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-co2e-diagnostico"></canvas>
+                        </div>
+                    </div>
                 </div>
+            </section>
 
-                <button type="submit" class="btn btn-primary btn-block">&#128230; Guardar empresa</button>
-            </form>
-        </section>
-
-        <!-- ─── Sección 3: Encuesta ─── -->
-        <section id="section-encuesta" class="section">
-            <div class="section-header">
-                <h2>&#128203; Encuesta de Movilidad</h2>
-                <p>Encuesta anonimizada de hábitos de desplazamiento. Umbral mínimo: 10 respuestas.</p>
-            </div>
-
-            <div class="survey-controls">
-                <button id="btn-generar-encuesta" class="btn btn-primary">&#128190; Generar encuesta</button>
-                <button id="btn-cargar-respuestas" class="btn btn-secondary">&#128200; Cargar respuestas (demo)</button>
-                <span id="encuesta-stats" class="encuesta-stats"></span>
-            </div>
-
-            <div id="encuesta-preview" class="encuesta-preview" style="display:none;">
-                <p class="encuesta-info">Comparte este enlace o muestra el código QR a la plantilla:</p>
-                <div class="survey-link-box">
-                    <input type="text" id="survey-url" readonly>
-                    <button id="btn-copy-url" class="btn btn-small btn-secondary">&#128203; Copiar</button>
+            <!-- ═══════════════════════════════════════════
+                 DAFO
+                 ═══════════════════════════════════════════ -->
+            <section id="tab-dafo" class="tab-content">
+                <h2>📈 Análisis DAFO</h2>
+                <p>Análisis de Fortalezas, Debilidades, Oportunidades y Amenazas.</p>
+                
+                <button class="btn btn-primary" onclick="window.pmstApp.calcularDAFO()">📈 Calcular DAFO</button>
+                
+                <div id="dafo-panel" class="dashboard-grid" style="display: none;">
+                    <div class="chart-card">
+                        <h3>💪 Fortalezas</h3>
+                        <ul id="dafo-fortalezas" class="dafo-list"></ul>
+                    </div>
+                    <div class="chart-card">
+                        <h3>⚠️ Debilidades</h3>
+                        <ul id="dafo-debilidades" class="dafo-list"></ul>
+                    </div>
+                    <div class="chart-card">
+                        <h3>🚀 Oportunidades</h3>
+                        <ul id="dafo-oportunidades" class="dafo-list"></ul>
+                    </div>
+                    <div class="chart-card">
+                        <h3>🔴 Amenazas</h3>
+                        <ul id="dafo-amenazas" class="dafo-list"></ul>
+                    </div>
                 </div>
-                <div class="qr-placeholder">
-                    <p>[Código QR se generará aquí]</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════
+                 MAPA
+                 ═══════════════════════════════════════════ -->
+            <section id="tab-mapa" class="tab-content">
+                <h2>🗺️ Mapa Interactivo</h2>
+                <p>Isocronas, paradas de transporte público, puntos de interés y ubicación de empleados.</p>
+                
+                <div class="map-container">
+                    <div id="mapa-principal" style="height: 600px; border-radius: 12px; border: 2px solid #e5e7eb;"></div>
                 </div>
-                <div id="survey-form-container" class="survey-form-container">
-                    <!-- La encuesta se genera dinámicamente aquí -->
+            </section>
+
+            <!-- ═══════════════════════════════════════════
+                 TRANSPORTE PÚBLICO
+                 ═══════════════════════════════════════════ -->
+            <section id="tab-transporte" class="tab-content">
+                <h2>🚌 Oferta de Transporte Público</h2>
+                <p>Paradas cercanas, frecuencias y cobertura de transporte público.</p>
+                
+                <button class="btn btn-primary" onclick="window.pmstApp.cargarTransportePublico()">🚌 Cargar oferta de TP</button>
+                
+                <div id="transporte-panel" class="dashboard-grid" style="display: none;">
+                    <div class="chart-card">
+                        <h3>🚌 Paradas por tipo</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-transporte-tipos"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>📊 Cobertura</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-transporte-cobertura"></canvas>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                
+                <div class="table-card">
+                    <h3>Paradas encontradas (<span id="paradas-count">0</span>)</h3>
+                    <div class="table-responsive">
+                        <table id="paradas-table">
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Nombre</th>
+                                    <th>Distancia</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paradas-tbody">
+                                <tr><td colspan="3" class="empty-state">Carga la oferta de transporte público</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
-            <div id="encuesta-respuestas" class="survey-results" style="display:none;">
-                <h3>Resultados agregados</h3>
-                <div id="survey-aggregates"></div>
-            </div>
-        </section>
+            <!-- ═══════════════════════════════════════════
+                 FLOTA
+                 ═══════════════════════════════════════════ -->
+            <section id="tab-flota" class="tab-content">
+                <h2>🚗 Flota Corporativa</h2>
+                <p>Listado de vehículos de empresa, combustible y kilómetros anuales.</p>
+                
+                <!-- Formulario añadir vehículo -->
+                <div class="form-card">
+                    <h3>Añadir vehículo</h3>
+                    <form id="vehiculo-form" class="form-grid">
+                        <div class="form-group">
+                            <label for="veh-tipo">Tipo</label>
+                            <select id="veh-tipo">
+                                <option value="Coche">Coche</option>
+                                <option value="Furgoneta">Furgoneta</option>
+                                <option value="Camión">Camión</option>
+                                <option value="Moto">Moto</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="veh-combustible">Combustible</label>
+                            <select id="veh-combustible">
+                                <option value="Gasolina">Gasolina</option>
+                                <option value="Diésel">Diésel</option>
+                                <option value="Eléctrico">Eléctrico</option>
+                                <option value="Híbrido">Híbrido</option>
+                                <option value="GLP">GLP</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="veh-matricula">Matrícula</label>
+                            <input type="text" id="veh-matricula" placeholder="1234 ABC">
+                        </div>
+                        <div class="form-group">
+                            <label for="veh-modelo">Modelo</label>
+                            <input type="text" id="veh-modelo" placeholder="Toyota Corolla">
+                        </div>
+                        <div class="form-group">
+                            <label for="veh-km">Km anuales</label>
+                            <input type="number" id="veh-km" placeholder="15000" min="0">
+                        </div>
+                        <div class="form-group form-actions">
+                            <button type="button" class="btn btn-primary" onclick="window.pmstApp.addVehiculo()">➕ Añadir</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Tabla de vehículos -->
+                <div class="table-card">
+                    <h3>Vehículos (<span id="vehiculos-count">0</span>)</h3>
+                    <div class="table-responsive">
+                        <table id="vehiculos-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tipo</th>
+                                    <th>Combustible</th>
+                                    <th>Matrícula</th>
+                                    <th>Modelo</th>
+                                    <th>Km/año</th>
+                                    <th>CO2e</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vehiculos-tbody">
+                                <tr><td colspan="8" class="empty-state">No hay vehículos en la flota</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Gráficas de flota -->
+                <div class="dashboard-grid">
+                    <div class="chart-card">
+                        <h3>⛽ Combustibles</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-flota"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>📊 KPIs de Flota</h3>
+                        <div class="kpi-grid">
+                            <div class="kpi-card">
+                                <div class="kpi-icon">🚗</div>
+                                <div class="kpi-value" id="kpi-flota-total">0</div>
+                                <div class="kpi-label">Vehículos</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-icon">🛣️</div>
+                                <div class="kpi-value" id="kpi-flota-km">0</div>
+                                <div class="kpi-label">Km/año</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-icon">🌱</div>
+                                <div class="kpi-value" id="kpi-flota-co2e">0T</div>
+                                <div class="kpi-label">CO2e/año</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <!-- ─── Sección 4: Diagnóstico ─── -->
-        <section id="section-diagnostico" class="section">
-            <div class="section-header">
-                <h2>&#128202; Diagnóstico</h2>
-                <p>Cálculo automático: reparto modal, huella CO2e, ocupación y KPIs.</p>
-            </div>
-
-            <button id="btn-calcular-diagnostico" class="btn btn-primary">&#9654; Calcular diagnóstico</button>
-
-            <div id="diagnostico-panel" class="diagnostico-panel" style="display:none;">
-                <p id="diagnostico-mensaje" class="diagnostico-mensaje"></p>
-                <div class="kpi-grid" id="diagnostico-kpis"></div>
-                <div class="charts-grid">
+            <!-- ═══════════════════════════════════════════
+                 SEGUIMIENTO
+                 ═══════════════════════════════════════════ -->
+            <section id="tab-seguimiento" class="tab-content">
+                <h2>📉 Seguimiento y Evaluación</h2>
+                <p>Registro de KPIs a lo largo del tiempo y evolución de indicadores.</p>
+                
+                <!-- Formulario registrar KPI -->
+                <div class="form-card">
+                    <h3>Registrar nuevo KPI</h3>
+                    <form id="kpi-form" class="form-grid">
+                        <div class="form-group">
+                            <label for="kpi-tipo">Indicador</label>
+                            <select id="kpi-tipo">
+                                <option value="porcentaje_sostenible">% modos sostenibles</option>
+                                <option value="porcentaje_motorizado">% modos motorizados</option>
+                                <option value="porcentaje_teletrabajo">% teletrabajo</option>
+                                <option value="co2e_total">CO2e total (kg)</option>
+                                <option value="distancia_media">Distancia media (km)</option>
+                                <option value="empleados_encuestados">Empleados encuestados</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="kpi-valor">Valor</label>
+                            <input type="number" id="kpi-valor" placeholder="55" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="kpi-nota">Nota</label>
+                            <input type="text" id="kpi-nota" placeholder="Observaciones...">
+                        </div>
+                        <div class="form-group form-actions">
+                            <button type="button" class="btn btn-primary" onclick="window.pmstApp.registrarKPI()">📝 Registrar</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Gráfica de evolución -->
+                <div class="chart-card">
+                    <h3>📈 Evolución de KPIs</h3>
                     <div class="chart-container">
-                        <h4>Reparto modal</h4>
-                        <canvas id="chart-modal"></canvas>
-                    </div>
-                    <div class="chart-container">
-                        <h4>Huella CO2e por modo</h4>
-                        <canvas id="chart-co2e"></canvas>
-                    </div>
-                    <div class="chart-container">
-                        <h4>Densidad de viajes por hora</h4>
-                        <canvas id="chart-densidad"></canvas>
+                        <canvas id="chart-seguimiento"></canvas>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- ─── Sección 5: DAFO ─── -->
-        <section id="section-dafo" class="section">
-            <div class="section-header">
-                <h2>&#128200; Análisis DAFO</h2>
-                <p>Fortalezas, Debilidades, Oportunidades y Amenazas generadas automáticamente.</p>
-            </div>
-
-            <button id="btn-calcular-dafo" class="btn btn-primary">&#9654; Calcular DAFO</button>
-
-            <div id="dafo-matriz" class="dafo-panel" style="display:none;">
-                <div class="dafo-grid">
-                    <div class="dafo-matrix fortalezas">
-                        <h3>&#128994; Fortalezas</h3>
-                        <ul id="dafo-fortalezas"></ul>
-                    </div>
-                    <div class="dafo-matrix debilidades">
-                        <h3>&#128163; Debilidades</h3>
-                        <ul id="dafo-debilidades"></ul>
-                    </div>
-                    <div class="dafo-matrix oportunidades">
-                        <h3>&#128640; Oportunidades</h3>
-                        <ul id="dafo-oportunidades"></ul>
-                    </div>
-                    <div class="dafo-matrix amenazas">
-                        <h3>&#9888; Amenazas</h3>
-                        <ul id="dafo-amenazas"></ul>
+                
+                <!-- Tabla de registros -->
+                <div class="table-card">
+                    <h3>Historial de KPIs</h3>
+                    <div class="table-responsive">
+                        <table id="seguimiento-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>KPI</th>
+                                    <th>Valor</th>
+                                    <th>Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody id="seguimiento-tbody">
+                                <tr><td colspan="4" class="empty-state">No hay registros de KPIs</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- ─── Sección 6: Medidas ─── -->
-        <section id="section-medidas" class="section">
-            <div class="section-header">
-                <h2>&#9881; Medidas Priorizadas</h2>
-                <p>Catálogo de medidas por jerarquía de impacto.</p>
-            </div>
+            <!-- ═══════════════════════════════════════════
+                 COMPARATIVAS
+                 ═══════════════════════════════════════════ -->
+            <section id="tab-comparativas" class="tab-content">
+                <h2>📊 Comparativas</h2>
+                <p>Comparación con media nacional, sector y objetivos del plan.</p>
+                
+                <button class="btn btn-primary" onclick="window.pmstApp.calcularComparativas()">📊 Calcular comparativas</button>
+                
+                <div id="comparativas-panel" class="dashboard-grid" style="display: none;">
+                    <div class="chart-card">
+                        <h3>📊 Reparto Modal vs Nacional</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-comparativas-modal"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>🌱 CO2e vs Nacional</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-comparativas-co2e"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tabla de comparativas -->
+                <div class="table-card">
+                    <h3>Comparativas detalladas</h3>
+                    <div class="table-responsive">
+                        <table id="comparativas-table">
+                            <thead>
+                                <tr>
+                                    <th>Indicador</th>
+                                    <th>Tu centro</th>
+                                    <th>Media nacional</th>
+                                    <th>Diferencia</th>
+                                    <th>Evaluación</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparativas-tbody">
+                                <tr><td colspan="5" class="empty-state">Calcula las comparativas</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
-            <button id="btn-generar-medidas" class="btn btn-primary">&#9654; Generar medidas</button>
+            <!-- ═══════════════════════════════════════════
+                 MEDIDAS
+                 ═══════════════════════════════════════════ -->
+            <section id="tab-medidas" class="tab-content">
+                <h2>⚙️ Medidas Priorizadas</h2>
+                <p>Medidas para mejorar la movilidad sostenible, priorizadas por impacto y coste.</p>
+                
+                <button class="btn btn-primary" onclick="window.pmstApp.generarMedidas()">⚙️ Generar medidas automáticas</button>
+                
+                <div class="table-card">
+                    <h3>Medidas (<span id="medidas-count">0</span>)</h3>
+                    <div class="table-responsive">
+                        <table id="medidas-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Medida</th>
+                                    <th>Categoría</th>
+                                    <th>Impacto</th>
+                                    <th>Coste</th>
+                                    <th>Plazo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="medidas-tbody">
+                                <tr><td colspan="6" class="empty-state">Genera las medidas automáticas</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
-            <div id="medidas-panel" class="medidas-panel" style="display:none;">
-                <table id="medidas-tabla" class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Prioridad</th>
-                            <th>Medida</th>
-                            <th>Categoría</th>
-                            <th>Responsable</th>
-                            <th>Coste</th>
-                            <th>Plazo</th>
-                        </tr>
-                    </thead>
-                    <tbody id="medidas-tbody"></tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- ─── Sección 7: Objetivos ─── -->
-        <section id="section-objetivos" class="section">
-            <div class="section-header">
-                <h2>&#127942; Objetivos SMART</h2>
+            <!-- ═══════════════════════════════════════════
+                 OBJETIVOS
+                 ═══════════════════════════════════════════ -->
+            <section id="tab-objetivos" class="tab-content">
+                <h2>🏆 Objetivos SMART</h2>
                 <p>Objetivos específicos, medibles, alcanzables, relevantes y temporales.</p>
-            </div>
-
-            <button id="btn-generar-objetivos" class="btn btn-primary">&#9654; Generar objetivos</button>
-
-            <div id="objetivos-container" class="objetivos-panel" style="display:none;"></div>
-        </section>
-
-        <!-- ─── Sección 8: Informe ─── -->
-        <section id="section-informe" class="section">
-            <div class="section-header">
-                <h2>&#128221; Informe con IA</h2>
-                <p>Generación del informe profesional con análisis inteligente y recomendaciones.</p>
-            </div>
-
-            <div class="informe-toolbar">
-                <button id="btn-generar-informe" class="btn btn-primary">&#129302; Generar informe con IA</button>
-                <span id="informe-progress"></span>
-            </div>
-
-            <div class="split-layout informe-split">
-                <div class="editor-panel">
-                    <h3>Editor Markdown</h3>
-                    <textarea id="informe-editor" class="informe-editor" placeholder="El informe se generará aquí..."></textarea>
+                
+                <button class="btn btn-primary" onclick="window.pmstApp.generarObjetivos()">🏆 Generar objetivos automáticos</button>
+                
+                <div id="objetivos-container" class="dashboard-grid" style="display: none;">
+                    <div class="chart-card">
+                        <h3>🏆 Objetivos</h3>
+                        <div id="objetivos-list"></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>📊 Progreso</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-objetivos"></canvas>
+                        </div>
+                    </div>
                 </div>
-                <div class="preview-panel">
-                    <h3>Vista previa</h3>
-                    <div id="informe-preview" class="informe-preview"></div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- ─── Sección 9: Export ─── -->
-        <section id="section-export" class="section">
-            <div class="section-header">
-                <h2>&#128229; Exportar</h2>
-                <p>Descarga el informe en el formato que necesites.</p>
-            </div>
+        </main>
+    </div>
 
-            <div class="export-options">
-                <div class="export-card">
-                    <h3>&#128196; Markdown</h3>
-                    <p>Archivo .md editable</p>
-                    <button id="btn-export-md" class="btn btn-primary">Descargar .md</button>
-                </div>
-                <div class="export-card">
-                    <h3>&#128196; PDF</h3>
-                    <p>Documento PDF profesional</p>
-                    <button id="btn-export-pdf" class="btn btn-primary">Descargar .pdf</button>
-                </div>
-                <div class="export-card">
-                    <h3>&#128196; DOCX</h3>
-                    <p>Documento Word editable</p>
-                    <button id="btn-export-docx" class="btn btn-primary">Descargar .docx</button>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- FOOTER                                        -->
-    <!-- ═══════════════════════════════════════════ -->
-    <footer id="app-footer">
-        <p>Hecho con &#10084;&#65039; por David Antizar</p>
-    </footer>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SCRIPTS                                       -->
-    <!-- ═══════════════════════════════════════════ -->
-
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@2.0.0/dist/leaflet.js"></script>
-
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
-    <!-- jsPDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-    <!-- jsPDF AutoTable -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-
-    <!-- HTML2Canvas (para captura de mapa en PDF) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-    <!-- DOCX library (UMD) -->
-    <script src="https://unpkg.com/docx@8.2.3/build/index.umd.js"></script>
-    <script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-
-    <!-- App modules — init principal -->
+    <!-- ═══════════════════════════════════════════
+         SCRIPTS
+         ═══════════════════════════════════════════ -->
     <script type="module">
-        import { initApp } from './js/main.js';
-        import { initSurvey, updateSurveyResults } from './js/survey.js';
-        import { initDiagnostico, loadSavedDiagnostico } from './js/diagnostico.js';
-        import { initDAFO, loadSavedDAFO } from './js/dafo.js';
-        import { initObjetivos, loadSavedObjetivos } from './js/objetivos.js';
-        import { initInforme, loadSavedInforme } from './js/informe.js';
+        import { initApp, addEmpleado, getEmpleados, getDepartamentos, getEstadisticasEmpleados, addVehiculo, getFlota, getEstadisticasFlota, cargarTransportePublico, getEstadisticasTransporte, registrarSeguimiento, getSeguimiento, getEstadisticasSeguimiento, getComparativas, DATOS_NACIONALES } from './js/app.js';
+        import { initMap, loadIsocrones, loadParadas, loadPOI, loadEmpleadosMarkers } from './js/mapa.js';
+        import { createModalSplitChart, createEvolucionChart, createComparativasChart, createCO2eChart, createObjetivosChart, createDepartamentosChart, createDistanciasChart, createFlotaChart, createCoberturaChart, exportChartAsPNG } from './js/graficas.js';
+        import { exportPDF, exportDOCX, exportZIP } from './js/export.js';
+        import { CONFIG } from './js/config.js';
+        import { calcularDiagnostico, calcularDAFO, generarMedidas, generarObjetivos } from './js/main.js';
         
-        // Inicializar todo
-        initApp();
+        // ═══════════════════════════════════════════
+        // INICIALIZACIÓN
+        // ═══════════════════════════════════════════
         
-        // Inicializar módulos después de initApp
-        setTimeout(() => {
-            initSurvey();
-            initDiagnostico();
-            initDAFO();
-            initObjetivos();
-            initInforme();
+        window.pmstApp = {
+            appState: {
+                centro: {},
+                empresa: {},
+                empleados: [],
+                diagnostico: {},
+                dafo: {},
+                medidas: [],
+                objetivos: [],
+                seguimiento: [],
+                flota: [],
+                transportePublico: [],
+                comparativas: {},
+            },
+            charts: {},
+        };
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            initApp();
+            initDashboard();
+            initDepartamentosSelect();
+            console.log('✅ PLANDEMOVILIDAD v2.0 inicializado');
+        });
+        
+        // ═══════════════════════════════════════════
+        // DASHBOARD
+        // ═══════════════════════════════════════════
+        
+        function initDashboard() {
+            // Cargar datos de ejemplo si no hay nada
+            loadDemoData();
+            updateDashboard();
+        }
+        
+        function loadDemoData() {
+            // Cargar datos demo para Nuevos Ministerios
+            const demoEmpleados = [
+                { id: 'EMP-001', nombre: 'Ana García', departamento: 'Subdirección General de Movilidad', puesto: 'Técnico', modo_principal: '🚌 Autobús', distancia_km: 7, tiempo_viaje_min: 25, encuesta_completada: true },
+                { id: 'EMP-002', nombre: 'Carlos López', departamento: 'Subdirección General de Transportes', puesto: 'Jefe de servicio', modo_principal: '🚇 Metro / Tren', distancia_km: 5, tiempo_viaje_min: 15, encuesta_completada: true },
+                { id: 'EMP-003', nombre: 'María Martín', departamento: 'Subdirección General de Infraestructuras', puesto: 'Ingeniera', modo_principal: '🚗 Coche particular (conductor)', distancia_km: 12, tiempo_viaje_min: 30, encuesta_completada: true },
+                { id: 'EMP-004', nombre: 'Pedro Sánchez', departamento: 'Servicio de Planificación', puesto: 'Analista', modo_principal: '🚲 Bicicleta (estándar)', distancia_km: 3, tiempo_viaje_min: 12, encuesta_completada: true },
+                { id: 'EMP-005', nombre: 'Laura Fernández', departamento: 'Dirección General', puesto: 'Directora', modo_principal: '🚇 Metro / Tren', distancia_km: 8, tiempo_viaje_min: 20, encuesta_completada: true },
+            ];
             
-            // Cargar datos guardados
-            loadSavedDiagnostico();
-            loadSavedDAFO();
-            loadSavedObjetivos();
-            loadSavedInforme();
-        }, 100);
+            demoEmpleados.forEach(emp => {
+                window.pmstApp.appState.empleados.push(emp);
+            });
+            
+            // Guardar en tabla
+            renderEmpleadosTable();
+            updateDashboard();
+        }
+        
+        function updateDashboard() {
+            const state = window.pmstApp.appState;
+            
+            // KPIs
+            document.getElementById('kpi-plantilla').textContent = state.centro.plantilla || state.empleados.length;
+            document.getElementById('kpi-sostenible').textContent = state.diagnostico?.resumen?.porcentajeSostenible ? `${state.diagnostico.resumen.porcentajeSostenible}%` : '0%';
+            document.getElementById('kpi-motorizado').textContent = state.diagnostico?.resumen?.porcentajeMotorizado ? `${state.diagnostico.resumen.porcentajeMotorizado}%` : '0%';
+            document.getElementById('kpi-teletrabajo').textContent = state.diagnostico?.resumen?.porcentajeTeletrabajo ? `${state.diagnostico.resumen.porcentajeTeletrabajo}%` : '0%';
+            document.getElementById('kpi-co2e').textContent = state.diagnostico?.co2e?.totalToneladas ? `${state.diagnostico.co2e.totalToneladas}T` : '0T';
+            document.getElementById('kpi-paradas').textContent = state.transportePublico?.length || 0;
+            document.getElementById('kpi-flota').textContent = state.flota?.length || 0;
+            document.getElementById('kpi-medidas').textContent = state.medidas?.length || 0;
+            
+            // Gráficas
+            updateModalChart();
+            updateComparativasChart();
+            updateCO2eChart();
+            updateTransporteChart();
+        }
+        
+        function updateModalChart() {
+            const state = window.pmstApp.appState;
+            if (!state.empleados.length) return;
+            
+            const modos = {};
+            state.empleados.forEach(e => {
+                const modo = e.modo_principal || 'No especificado';
+                modos[modo] = (modos[modo] || 0) + 1;
+            });
+            
+            if (window.pmstApp.charts.modal) window.pmstApp.charts.modal.destroy();
+            window.pmstApp.charts.modal = createModalSplitChart('chart-modal', modos);
+        }
+        
+        function updateComparativasChart() {
+            const state = window.pmstApp.appState;
+            if (!state.empleados.length) return;
+            
+            const comparativas = getComparativas();
+            if (!comparativas) return;
+            
+            if (window.pmstApp.charts.comparativas) window.pmstApp.charts.comparativas.destroy();
+            window.pmstApp.charts.comparativas = createComparativasChart('chart-comparativas', comparativas);
+        }
+        
+        function updateCO2eChart() {
+            const state = window.pmstApp.appState;
+            if (!state.diagnostico?.co2e) return;
+            
+            const co2e = state.diagnostico.co2e;
+            if (window.pmstApp.charts.co2e) window.pmstApp.charts.co2e.destroy();
+            window.pmstApp.charts.co2e = createCO2eChart('chart-co2e', co2e);
+        }
+        
+        function updateTransporteChart() {
+            const state = window.pmstApp.appState;
+            if (!state.transportePublico?.length) return;
+            
+            const stats = getEstadisticasTransporte();
+            if (!stats) return;
+            
+            if (window.pmstApp.charts.transporte) window.pmstApp.charts.transporte.destroy();
+            window.pmstApp.charts.transporte = createCoberturaChart('chart-transporte', stats);
+        }
+        
+        // ═══════════════════════════════════════════
+        // FUNCIONES PÚBLICAS
+        // ═══════════════════════════════════════════
+        
+        window.pmstApp.initApp = initApp;
+        window.pmstApp.addEmpleado = function() {
+            const nombre = document.getElementById('emp-nombre').value;
+            const departamento = document.getElementById('emp-depto').value;
+            if (!nombre || !departamento) {
+                alert('Nombre y departamento son obligatorios');
+                return;
+            }
+            
+            const emp = addEmpleado({
+                nombre,
+                departamento,
+                puesto: document.getElementById('emp-puesto').value,
+                email: document.getElementById('emp-email').value,
+                modo_principal: document.getElementById('emp-modo').value,
+                distancia_km: parseFloat(document.getElementById('emp-distancia').value) || 0,
+                tiempo_viaje_min: parseInt(document.getElementById('emp-tiempo').value) || 0,
+            });
+            
+            window.pmstApp.appState.empleados.push(emp);
+            renderEmpleadosTable();
+            updateDashboard();
+            
+            // Limpiar formulario
+            document.getElementById('emp-nombre').value = '';
+            document.getElementById('emp-puesto').value = '';
+            document.getElementById('emp-email').value = '';
+            document.getElementById('emp-modo').value = '';
+            document.getElementById('emp-distancia').value = '';
+            document.getElementById('emp-tiempo').value = '';
+            
+            alert(`✅ Empleado ${nombre} añadido`);
+        };
+        
+        window.pmstApp.addVehiculo = function() {
+            const veh = addVehiculo({
+                tipo: document.getElementById('veh-tipo').value,
+                combustible: document.getElementById('veh-combustible').value,
+                matricula: document.getElementById('veh-matricula').value,
+                modelo: document.getElementById('veh-modelo').value,
+                km_anuales: parseInt(document.getElementById('veh-km').value) || 0,
+            });
+            
+            window.pmstApp.appState.flota.push(veh);
+            renderVehiculosTable();
+            updateFlotaKPIs();
+            
+            document.getElementById('veh-matricula').value = '';
+            document.getElementById('veh-modelo').value = '';
+            document.getElementById('veh-km').value = '';
+            
+            alert(`✅ Vehículo ${veh.id} añadido`);
+        };
+        
+        window.pmstApp.registrarKPI = function() {
+            const kpi = registrarSeguimiento(
+                document.getElementById('kpi-tipo').value,
+                parseFloat(document.getElementById('kpi-valor').value),
+                document.getElementById('kpi-nota').value,
+            );
+            
+            alert(`✅ KPI registrado: ${kpi.kpi} = ${kpi.valor}`);
+        };
+        
+        window.pmstApp.exportPDF = exportPDF;
+        window.pmstApp.exportDOCX = exportDOCX;
+        window.pmstApp.exportZIP = exportZIP;
+        
+        // ═══════════════════════════════════════════
+        // FUNCIONES AUXILIARES
+        // ═══════════════════════════════════════════
+        
+        function initDepartamentosSelect() {
+            const select = document.getElementById('emp-depto');
+            const deptos = getDepartamentos();
+            deptos.forEach(d => {
+                const option = document.createElement('option');
+                option.value = d;
+                option.textContent = d;
+                select.appendChild(option);
+            });
+        }
+        
+        function renderEmpleadosTable() {
+            const tbody = document.getElementById('empleados-tbody');
+            const emps = window.pmstApp.appState.empleados;
+            document.getElementById('empleados-count').textContent = emps.length;
+            
+            if (emps.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No hay empleados. Añade el primero.</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = emps.map(emp => `
+                <tr>
+                    <td>${emp.id}</td>
+                    <td>${emp.nombre}</td>
+                    <td>${emp.departamento}</td>
+                    <td>${emp.puesto || '-'}</td>
+                    <td>${emp.modo_principal || '-'}</td>
+                    <td>${emp.distancia_km || '-'}</td>
+                    <td>${emp.tiempo_viaje_min || '-'}</td>
+                    <td>${emp.encuesta_completada ? '✅' : '⏳'}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline" onclick="window.pmstApp.deleteEmpleado('${emp.id}')">🗑️</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        window.pmstApp.deleteEmpleado = function(id) {
+            if (!confirm('¿Eliminar este empleado?')) return;
+            window.pmstApp.appState.empleados = window.pmstApp.appState.empleados.filter(e => e.id !== id);
+            renderEmpleadosTable();
+            updateDashboard();
+        };
+        
+        function renderVehiculosTable() {
+            const tbody = document.getElementById('vehiculos-tbody');
+            const vehs = window.pmstApp.appState.flota;
+            document.getElementById('vehiculos-count').textContent = vehs.length;
+            
+            if (vehs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No hay vehículos en la flota</td></tr>';
+                return;
+            }
+            
+            const factores = { 'Gasolina': 2.3, 'Diésel': 2.1, 'Eléctrico': 0, 'Híbrido': 1.2, 'GLP': 1.5 };
+            
+            tbody.innerHTML = vehs.map(v => {
+                const co2e = ((v.km_anuales || 0) * (factores[v.combustible] || 2.3) / 1000).toFixed(1);
+                return `
+                    <tr>
+                        <td>${v.id}</td>
+                        <td>${v.tipo}</td>
+                        <td>${v.combustible}</td>
+                        <td>${v.matricula || '-'}</td>
+                        <td>${v.modelo || '-'}</td>
+                        <td>${v.km_anuales || 0}</td>
+                        <td>${co2e}T</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline" onclick="window.pmstApp.deleteVehiculo('${v.id}')">🗑️</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        window.pmstApp.deleteVehiculo = function(id) {
+            if (!confirm('¿Eliminar este vehículo?')) return;
+            window.pmstApp.appState.flota = window.pmstApp.appState.flota.filter(v => v.id !== id);
+            renderVehiculosTable();
+            updateFlotaKPIs();
+        };
+        
+        function updateFlotaKPIs() {
+            const vehs = window.pmstApp.appState.flota;
+            document.getElementById('kpi-flota-total').textContent = vehs.length;
+            
+            const totalKm = vehs.reduce((a, v) => a + (v.km_anuales || 0), 0);
+            document.getElementById('kpi-flota-km').textContent = totalKm.toLocaleString();
+            
+            const factores = { 'Gasolina': 2.3, 'Diésel': 2.1, 'Eléctrico': 0, 'Híbrido': 1.2, 'GLP': 1.5 };
+            let co2eTotal = 0;
+            vehs.forEach(v => {
+                const factor = factores[v.combustible] || 2.3;
+                co2eTotal += (v.km_anuales || 0) * factor / 1000;
+            });
+            document.getElementById('kpi-flota-co2e').textContent = co2eTotal.toFixed(1) + 'T';
+        }
     </script>
-
 </body>
 </html>
