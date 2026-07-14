@@ -30,7 +30,18 @@ export function calcularDiagnostico(state) {
     const centro = state.centro || {};
     const empresa = state.empresa || {};
     const encuesta = state.encuesta || {};
-    const agregados = encuesta.agregados || {};
+    let agregados = encuesta.agregados || {};
+    
+    // Si no hay encuesta pero sí empleados, derivar modal split de empleados
+    const empleados = state.empleados || [];
+    if (Object.keys(agregados.modalSplit || {}).length === 0 && empleados.length > 0) {
+        const modalSplit = {};
+        empleados.forEach(emp => {
+            const modo = emp.modo_principal || 'No especificado';
+            modalSplit[modo] = (modalSplit[modo] || 0) + 1;
+        });
+        agregados = { ...agregados, modalSplit };
+    }
     
     // 1. Reparto modal
     const repartoModal = calcularRepartoModal(agregados);

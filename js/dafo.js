@@ -214,7 +214,7 @@ export function calcularDAFO(diagnostico, encuesta) {
         fortalezas.push('🅿️ Infraestructura de aparcamiento bici ya disponible');
     }
     
-    if (indicadoresParked.consejo.includes('Disponible') || !indicadoresParked.consejo) {
+    if (indicadoresParked?.consejo?.includes('Disponible') || !indicadoresParked?.consejo) {
         fortalezas.push('✅ Aparcamiento de coches disponible');
     }
     

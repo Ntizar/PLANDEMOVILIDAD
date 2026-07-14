@@ -586,29 +586,55 @@
                  ═══════════════════════════════════════════ -->
             <section id="tab-seguimiento" class="tab-content">
                 <h2>📉 Seguimiento y Evaluación</h2>
-                <p>Registro de KPIs a lo largo del tiempo y evolución de indicadores.</p>
-                
-                <!-- Formulario registrar KPI -->
+                <p>Tabla multi-año de indicadores clave. Registra valores por año para visualizar la evolución del plan de movilidad.</p>
+
+                <!-- Tabla multi-año de KPIs -->
+                <div class="table-card">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem">
+                        <h3>📊 Indicadores por Año</h3>
+                        <div style="display:flex;gap:0.5rem;align-items:center">
+                            <button class="btn btn-sm btn-outline" onclick="window.pmstApp.addYearColumn()">➕ Añadir año</button>
+                            <button class="btn btn-sm btn-outline" onclick="window.pmstApp.autoFillFromDiagnostico()">🔄 Auto-rellenar</button>
+                            <button class="btn btn-sm btn-outline" onclick="window.pmstApp.exportKPICsv()">📥 CSV</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="kpi-matrix-table" class="kpi-matrix">
+                            <thead id="kpi-matrix-head"></thead>
+                            <tbody id="kpi-matrix-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Formulario rápido para registrar valor -->
                 <div class="form-card">
-                    <h3>Registrar nuevo KPI</h3>
-                    <form id="kpi-form" class="form-grid">
+                    <h3>📝 Registrar valor rápido</h3>
+                    <form class="form-grid">
                         <div class="form-group">
-                            <label for="kpi-tipo">Indicador</label>
+                            <label>Año</label>
+                            <select id="kpi-year"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Indicador</label>
                             <select id="kpi-tipo">
-                                <option value="porcentaje_sostenible">% modos sostenibles</option>
-                                <option value="porcentaje_motorizado">% modos motorizados</option>
-                                <option value="porcentaje_teletrabajo">% teletrabajo</option>
-                                <option value="co2e_total">CO2e total (kg)</option>
+                                <option value="pct_sostenible">% Modos sostenibles</option>
+                                <option value="pct_motorizado">% Modos motorizados</option>
+                                <option value="pct_teletrabajo">% Teletrabajo</option>
+                                <option value="co2e_total">CO₂e total (t/año)</option>
                                 <option value="distancia_media">Distancia media (km)</option>
-                                <option value="empleados_encuestados">Empleados encuestados</option>
+                                <option value="ocupacion_vehiculos">Ocupación media vehículos</option>
+                                <option value="encuestados">Empleados encuestados</option>
+                                <option value="plazas_bici">Plazas aparcamiento bici</option>
+                                <option value="pct_bici">% Uso bicicleta</option>
+                                <option value="paradas_500m">Paradas TP en 500m</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="kpi-valor">Valor</label>
+                            <label>Valor</label>
                             <input type="number" id="kpi-valor" placeholder="55" step="0.1">
                         </div>
                         <div class="form-group">
-                            <label for="kpi-nota">Nota</label>
+                            <label>Nota</label>
                             <input type="text" id="kpi-nota" placeholder="Observaciones...">
                         </div>
                         <div class="form-group form-actions">
@@ -616,32 +642,12 @@
                         </div>
                     </form>
                 </div>
-                
+
                 <!-- Gráfica de evolución -->
                 <div class="chart-card">
                     <h3>📈 Evolución de KPIs</h3>
                     <div class="chart-container">
                         <canvas id="chart-seguimiento"></canvas>
-                    </div>
-                </div>
-                
-                <!-- Tabla de registros -->
-                <div class="table-card">
-                    <h3>Historial de KPIs</h3>
-                    <div class="table-responsive">
-                        <table id="seguimiento-table">
-                            <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>KPI</th>
-                                    <th>Valor</th>
-                                    <th>Nota</th>
-                                </tr>
-                            </thead>
-                            <tbody id="seguimiento-tbody">
-                                <tr><td colspan="4" class="empty-state">No hay registros de KPIs</td></tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </section>
@@ -752,18 +758,19 @@
     <!-- ═══════════════════════════════════════════
          SCRIPTS
          ═══════════════════════════════════════════ -->
+    <!-- ═══════════════════════════════════════════
+         SCRIPTS — Orquestación principal
+         ═══════════════════════════════════════════ -->
     <script type="module">
-        import { initApp, addEmpleado, getEmpleados, getDepartamentos, getEstadisticasEmpleados, addVehiculo, getFlota, getEstadisticasFlota, cargarTransportePublico, getEstadisticasTransporte, registrarSeguimiento, getSeguimiento, getEstadisticasSeguimiento, getComparativas, DATOS_NACIONALES } from './js/app.js';
+        // ── Imports de módulos ──────────────────────────────
+        import { initApp, addEmpleado, getEmpleados, getDepartamentos, getEstadisticasEmpleados, addVehiculo, getFlota, getEstadisticasFlota, cargarTransportePublico, getEstadisticasTransporte, registrarSeguimiento, getSeguimiento, getEstadisticasSeguimiento, getComparativas } from './js/app.js';
         import { initMap, loadIsocrones, loadParadas, loadPOI, loadEmpleadosMarkers } from './js/mapa.js';
         import { createModalSplitChart, createEvolucionChart, createComparativasChart, createCO2eChart, createObjetivosChart, createDepartamentosChart, createDistanciasChart, createFlotaChart, createCoberturaChart, exportChartAsPNG } from './js/graficas.js';
         import { exportPDF, exportDOCX, exportZIP } from './js/export.js';
         import { CONFIG } from './js/config.js';
-        import { calcularDiagnostico, calcularDAFO, generarMedidas, generarObjetivos } from './js/main.js';
-        
-        // ═══════════════════════════════════════════
-        // INICIALIZACIÓN
-        // ═══════════════════════════════════════════
-        
+        import { calcularDiagnostico, calcularDAFO, generarMedidas, generarObjetivos } from './js/main.js?v=2';
+
+        // ── Estado global ───────────────────────────────────
         window.pmstApp = {
             appState: {
                 centro: {},
@@ -780,27 +787,44 @@
             },
             charts: {},
         };
-        
-        // Inicializar
+
+        // ── Inicialización ──────────────────────────────────
         document.addEventListener('DOMContentLoaded', () => {
             initApp();
             initDashboard();
             initDepartamentosSelect();
+            initKpiYearSelect();
+            renderKpiMatrix();
             console.log('✅ PLANDEMOVILIDAD v2.0 inicializado');
         });
-        
+
+        // ═══════════════════════════════════════════
+        // NAVEGACIÓN — showTab()
+        // ═══════════════════════════════════════════
+        window.showTab = function(tabName) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
+            // Desactivar todos los botones
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+            // Mostrar sección seleccionada
+            const section = document.getElementById('tab-' + tabName);
+            if (section) section.classList.add('active');
+
+            // Activar botón del sidebar
+            const btn = document.querySelector(`.nav-btn[data-tab="${tabName}"]`);
+            if (btn) btn.classList.add('active');
+        };
+
         // ═══════════════════════════════════════════
         // DASHBOARD
         // ═══════════════════════════════════════════
-        
         function initDashboard() {
-            // Cargar datos de ejemplo si no hay nada
             loadDemoData();
             updateDashboard();
         }
-        
+
         function loadDemoData() {
-            // Cargar datos demo para Nuevos Ministerios
             const demoEmpleados = [
                 { id: 'EMP-001', nombre: 'Ana García', departamento: 'Subdirección General de Movilidad', puesto: 'Técnico', modo_principal: '🚌 Autobús', distancia_km: 7, tiempo_viaje_min: 25, encuesta_completada: true },
                 { id: 'EMP-002', nombre: 'Carlos López', departamento: 'Subdirección General de Transportes', puesto: 'Jefe de servicio', modo_principal: '🚇 Metro / Tren', distancia_km: 5, tiempo_viaje_min: 15, encuesta_completada: true },
@@ -808,20 +832,13 @@
                 { id: 'EMP-004', nombre: 'Pedro Sánchez', departamento: 'Servicio de Planificación', puesto: 'Analista', modo_principal: '🚲 Bicicleta (estándar)', distancia_km: 3, tiempo_viaje_min: 12, encuesta_completada: true },
                 { id: 'EMP-005', nombre: 'Laura Fernández', departamento: 'Dirección General', puesto: 'Directora', modo_principal: '🚇 Metro / Tren', distancia_km: 8, tiempo_viaje_min: 20, encuesta_completada: true },
             ];
-            
-            demoEmpleados.forEach(emp => {
-                window.pmstApp.appState.empleados.push(emp);
-            });
-            
-            // Guardar en tabla
+            demoEmpleados.forEach(emp => window.pmstApp.appState.empleados.push(emp));
             renderEmpleadosTable();
             updateDashboard();
         }
-        
+
         function updateDashboard() {
             const state = window.pmstApp.appState;
-            
-            // KPIs
             document.getElementById('kpi-plantilla').textContent = state.centro.plantilla || state.empleados.length;
             document.getElementById('kpi-sostenible').textContent = state.diagnostico?.resumen?.porcentajeSostenible ? `${state.diagnostico.resumen.porcentajeSostenible}%` : '0%';
             document.getElementById('kpi-motorizado').textContent = state.diagnostico?.resumen?.porcentajeMotorizado ? `${state.diagnostico.resumen.porcentajeMotorizado}%` : '0%';
@@ -830,97 +847,189 @@
             document.getElementById('kpi-paradas').textContent = state.transportePublico?.length || 0;
             document.getElementById('kpi-flota').textContent = state.flota?.length || 0;
             document.getElementById('kpi-medidas').textContent = state.medidas?.length || 0;
-            
-            // Gráficas
             updateModalChart();
             updateComparativasChart();
             updateCO2eChart();
             updateTransporteChart();
         }
-        
+
         function updateModalChart() {
             const state = window.pmstApp.appState;
             if (!state.empleados.length) return;
-            
             const modos = {};
-            state.empleados.forEach(e => {
-                const modo = e.modo_principal || 'No especificado';
-                modos[modo] = (modos[modo] || 0) + 1;
-            });
-            
+            state.empleados.forEach(e => { const m = e.modo_principal || 'No especificado'; modos[m] = (modos[m] || 0) + 1; });
             if (window.pmstApp.charts.modal) window.pmstApp.charts.modal.destroy();
             window.pmstApp.charts.modal = createModalSplitChart('chart-modal', modos);
         }
-        
+
         function updateComparativasChart() {
             const state = window.pmstApp.appState;
             if (!state.empleados.length) return;
-            
             const comparativas = getComparativas();
             if (!comparativas) return;
-            
             if (window.pmstApp.charts.comparativas) window.pmstApp.charts.comparativas.destroy();
             window.pmstApp.charts.comparativas = createComparativasChart('chart-comparativas', comparativas);
         }
-        
+
         function updateCO2eChart() {
             const state = window.pmstApp.appState;
             if (!state.diagnostico?.co2e) return;
-            
-            const co2e = state.diagnostico.co2e;
             if (window.pmstApp.charts.co2e) window.pmstApp.charts.co2e.destroy();
-            window.pmstApp.charts.co2e = createCO2eChart('chart-co2e', co2e);
+            window.pmstApp.charts.co2e = createCO2eChart('chart-co2e', state.diagnostico.co2e);
         }
-        
+
         function updateTransporteChart() {
             const state = window.pmstApp.appState;
             if (!state.transportePublico?.length) return;
-            
             const stats = getEstadisticasTransporte();
             if (!stats) return;
-            
             if (window.pmstApp.charts.transporte) window.pmstApp.charts.transporte.destroy();
             window.pmstApp.charts.transporte = createCoberturaChart('chart-transporte', stats);
         }
-        
+
         // ═══════════════════════════════════════════
-        // FUNCIONES PÚBLICAS
+        // FUNCIONES PÚBLICAS — window.pmstApp
         // ═══════════════════════════════════════════
-        
-        window.pmstApp.initApp = initApp;
+        window.pmstApp.nuevaEmpresa = function() {
+            if (!confirm('¿Crear nueva empresa? Se borrarán los datos actuales.')) return;
+            window.pmstApp.appState = { centro: {}, empresa: {}, empleados: [], diagnostico: {}, dafo: {}, medidas: [], objetivos: [], seguimiento: [], flota: [], transportePublico: [], comparativas: {} };
+            renderEmpleadosTable();
+            renderVehiculosTable();
+            updateDashboard();
+            showTab('centro');
+        };
+
+        window.pmstApp.guardarCentro = function() {
+            window.pmstApp.appState.centro = {
+                nombre: document.getElementById('centro-nombre').value,
+                direccion: document.getElementById('centro-direccion').value,
+                actividad: document.getElementById('centro-actividad').value,
+                plantilla: parseInt(document.getElementById('centro-plantilla').value) || 0,
+                superficie: parseInt(document.getElementById('centro-superficie').value) || 0,
+                lat: parseFloat(document.getElementById('centro-lat').value) || 40.4168,
+                lon: parseFloat(document.getElementById('centro-lon').value) || -3.7038,
+                turnos: {
+                    manana: document.getElementById('centro-turno-manana').checked,
+                    tarde: document.getElementById('centro-turno-tarde').checked,
+                    partido: document.getElementById('centro-turno-partido').checked,
+                },
+            };
+            updateDashboard();
+            alert('✅ Centro guardado');
+        };
+
+        window.pmstApp.geolocalizarCentro = async function() {
+            const dir = document.getElementById('centro-direccion').value;
+            if (!dir) { alert('Escribe una dirección primero'); return; }
+            try {
+                const resp = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(dir)}&limit=1`, { headers: { 'User-Agent': 'PLANDEMOVILIDAD/2.0' } });
+                const data = await resp.json();
+                if (data.length > 0) {
+                    document.getElementById('centro-lat').value = data[0].lat;
+                    document.getElementById('centro-lon').value = data[0].lon;
+                    alert(`📍 Ubicación: ${data[0].display_name}`);
+                } else { alert('❌ No se encontró la dirección'); }
+            } catch (e) { alert('Error de geolocalización: ' + e.message); }
+        };
+
+        window.pmstApp.miUbicacion = function() {
+            if (!navigator.geolocation) { alert('Geolocalización no disponible'); return; }
+            navigator.geolocation.getCurrentPosition(pos => {
+                document.getElementById('centro-lat').value = pos.coords.latitude.toFixed(6);
+                document.getElementById('centro-lon').value = pos.coords.longitude.toFixed(6);
+                alert('📍 Ubicación actual cargada');
+            }, () => alert('No se pudo obtener tu ubicación'));
+        };
+
+        window.pmstApp.guardarEmpresa = function() {
+            window.pmstApp.appState.empresa = {
+                teletrabajo: parseInt(document.getElementById('emp-teletrabajo').value) || 0,
+                presencial: parseInt(document.getElementById('emp-presencial').value) || 3,
+                plazasCoche: parseInt(document.getElementById('emp-plazas-coche').value) || 0,
+                plazasBici: parseInt(document.getElementById('emp-plazas-bici').value) || 0,
+                duchas: document.getElementById('emp-duchas').checked,
+                recarga: document.getElementById('emp-recarga').checked,
+                ayudaTransporte: document.getElementById('emp-ayuda-transporte').checked,
+            };
+            alert('✅ Empresa guardada');
+        };
+
         window.pmstApp.addEmpleado = function() {
             const nombre = document.getElementById('emp-nombre').value;
             const departamento = document.getElementById('emp-depto').value;
-            if (!nombre || !departamento) {
-                alert('Nombre y departamento son obligatorios');
-                return;
-            }
-            
+            if (!nombre || !departamento) { alert('Nombre y departamento son obligatorios'); return; }
             const emp = addEmpleado({
-                nombre,
-                departamento,
+                nombre, departamento,
                 puesto: document.getElementById('emp-puesto').value,
                 email: document.getElementById('emp-email').value,
                 modo_principal: document.getElementById('emp-modo').value,
                 distancia_km: parseFloat(document.getElementById('emp-distancia').value) || 0,
                 tiempo_viaje_min: parseInt(document.getElementById('emp-tiempo').value) || 0,
             });
-            
             window.pmstApp.appState.empleados.push(emp);
             renderEmpleadosTable();
             updateDashboard();
-            
-            // Limpiar formulario
-            document.getElementById('emp-nombre').value = '';
-            document.getElementById('emp-puesto').value = '';
-            document.getElementById('emp-email').value = '';
-            document.getElementById('emp-modo').value = '';
-            document.getElementById('emp-distancia').value = '';
-            document.getElementById('emp-tiempo').value = '';
-            
+            ['emp-nombre', 'emp-puesto', 'emp-email', 'emp-modo', 'emp-distancia', 'emp-tiempo'].forEach(id => document.getElementById(id).value = '');
             alert(`✅ Empleado ${nombre} añadido`);
         };
-        
+
+        window.pmstApp.deleteEmpleado = function(id) {
+            if (!confirm('¿Eliminar este empleado?')) return;
+            window.pmstApp.appState.empleados = window.pmstApp.appState.empleados.filter(e => e.id !== id);
+            renderEmpleadosTable();
+            updateDashboard();
+        };
+
+        window.pmstApp.filtrarEmpleados = function() {
+            const q = document.getElementById('empleados-search').value.toLowerCase();
+            const rows = document.querySelectorAll('#empleados-tbody tr');
+            rows.forEach(r => { r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none'; });
+        };
+
+        window.pmstApp.importarEmpleadosCSV = function() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.csv';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    const lines = ev.target.result.split('\n').filter(l => l.trim());
+                    const header = lines[0].split(',').map(h => h.trim().toLowerCase());
+                    for (let i = 1; i < lines.length; i++) {
+                        const vals = lines[i].split(',');
+                        const emp = {};
+                        header.forEach((h, idx) => emp[h] = vals[idx]?.trim() || '');
+                        if (emp.nombre && emp.departamento) {
+                            window.pmstApp.appState.empleados.push(addEmpleado({
+                                nombre: emp.nombre, departamento: emp.departamento,
+                                puesto: emp.puesto || '', modo_principal: emp.modo || emp.modo_principal || '',
+                                distancia_km: parseFloat(emp.distancia) || 0, tiempo_viaje_min: parseInt(emp.tiempo) || 0,
+                            }));
+                        }
+                    }
+                    renderEmpleadosTable();
+                    updateDashboard();
+                    alert(`✅ CSV importado`);
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        };
+
+        window.pmstApp.exportarEmpleadosCSV = function() {
+            const emps = window.pmstApp.appState.empleados;
+            if (!emps.length) { alert('No hay empleados para exportar'); return; }
+            let csv = 'Nombre,Departamento,Puesto,Modo,Distancia,Tiempo\n';
+            emps.forEach(e => { csv += `"${e.nombre}","${e.departamento}","${e.puesto || ''}","${e.modo_principal || ''}",${e.distancia_km || 0},${e.tiempo_viaje_min || 0}\n`; });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'empleados.csv';
+            a.click();
+        };
+
         window.pmstApp.addVehiculo = function() {
             const veh = addVehiculo({
                 tipo: document.getElementById('veh-tipo').value,
@@ -929,57 +1038,317 @@
                 modelo: document.getElementById('veh-modelo').value,
                 km_anuales: parseInt(document.getElementById('veh-km').value) || 0,
             });
-            
             window.pmstApp.appState.flota.push(veh);
             renderVehiculosTable();
             updateFlotaKPIs();
-            
-            document.getElementById('veh-matricula').value = '';
-            document.getElementById('veh-modelo').value = '';
-            document.getElementById('veh-km').value = '';
-            
+            ['veh-matricula', 'veh-modelo', 'veh-km'].forEach(id => document.getElementById(id).value = '');
             alert(`✅ Vehículo ${veh.id} añadido`);
         };
-        
-        window.pmstApp.registrarKPI = function() {
-            const kpi = registrarSeguimiento(
-                document.getElementById('kpi-tipo').value,
-                parseFloat(document.getElementById('kpi-valor').value),
-                document.getElementById('kpi-nota').value,
-            );
-            
-            alert(`✅ KPI registrado: ${kpi.kpi} = ${kpi.valor}`);
+
+        window.pmstApp.deleteVehiculo = function(id) {
+            if (!confirm('¿Eliminar este vehículo?')) return;
+            window.pmstApp.appState.flota = window.pmstApp.appState.flota.filter(v => v.id !== id);
+            renderVehiculosTable();
+            updateFlotaKPIs();
         };
-        
+
+        window.pmstApp.cargarTransportePublico = async function() {
+            const centro = window.pmstApp.appState.centro;
+            const lat = centro.lat || 40.4168;
+            const lon = centro.lon || -3.7038;
+            const paradas = await cargarTransportePublico(lat, lon);
+            window.pmstApp.appState.transportePublico = paradas;
+            renderParadasTable();
+            updateTransporteChart();
+            document.getElementById('transporte-panel').style.display = '';
+            alert(`🚌 ${paradas.length} paradas encontradas`);
+        };
+
+        // ═══════════════════════════════════════════
+        // MATRIZ DE KPIs MULTI-AÑO
+        // ═══════════════════════════════════════════
+
+        const KPI_DEFINICIONES = [
+            { key: 'pct_sostenible', label: '% Modos sostenibles', unit: '%', decimals: 1 },
+            { key: 'pct_motorizado', label: '% Modos motorizados', unit: '%', decimals: 1 },
+            { key: 'pct_teletrabajo', label: '% Teletrabajo', unit: '%', decimals: 1 },
+            { key: 'co2e_total', label: 'CO₂e total', unit: 't/año', decimals: 1 },
+            { key: 'distancia_media', label: 'Distancia media', unit: 'km', decimals: 1 },
+            { key: 'ocupacion_vehiculos', label: 'Ocupación media vehículos', unit: 'pas/veh', decimals: 2 },
+            { key: 'encuestados', label: 'Empleados encuestados', unit: 'nº', decimals: 0 },
+            { key: 'plazas_bici', label: 'Plazas aparcamiento bici', unit: 'nº', decimals: 0 },
+            { key: 'pct_bici', label: '% Uso bicicleta', unit: '%', decimals: 1 },
+            { key: 'paradas_500m', label: 'Paradas TP en 500m', unit: 'nº', decimals: 0 },
+        ];
+
+        // Estructura: { "2024": { "pct_sostenible": 42.5, ... }, ... }
+        function getKpiMatrix() {
+            return window.pmstApp.appState.kpiMatrix || {};
+        }
+        function setKpiMatrix(m) { window.pmstApp.appState.kpiMatrix = m; }
+
+        function getYearColumns() {
+            const m = getKpiMatrix();
+            return Object.keys(m).sort();
+        }
+
+        function initKpiYearSelect() {
+            const sel = document.getElementById('kpi-year');
+            if (!sel) return;
+            const now = new Date();
+            sel.innerHTML = '';
+            for (let y = now.getFullYear() - 3; y <= now.getFullYear() + 2; y++) {
+                sel.innerHTML += `<option value="${y}" ${y === now.getFullYear() ? 'selected' : ''}>${y}</option>`;
+            }
+        }
+
+        function renderKpiMatrix() {
+            const thead = document.getElementById('kpi-matrix-head');
+            const tbody = document.getElementById('kpi-matrix-body');
+            if (!thead || !tbody) return;
+            const matrix = getKpiMatrix();
+            const years = getYearColumns();
+
+            // Si no hay años, crear columna base (año actual)
+            if (years.length === 0) {
+                const now = new Date().getFullYear().toString();
+                matrix[now] = {};
+                setKpiMatrix(matrix);
+                years.push(now);
+            }
+
+            // ── THEAD ──
+            let headHtml = '<tr><th>Indicador</th>';
+            years.forEach((y, i) => {
+                const prev = i > 0 ? years[i - 1] : null;
+                headHtml += `<th class="kpi-year-col">${y}${prev ? ' <span class="kpi-vs">vs ' + prev + '</span>' : ''}</th>`;
+            });
+            headHtml += '<th>Tendencia</th></tr>';
+            thead.innerHTML = headHtml;
+
+            // ── TBODY ──
+            let bodyHtml = '';
+            KPI_DEFINICIONES.forEach(kpi => {
+                bodyHtml += `<tr><td class="kpi-label">${kpi.label}</td>`;
+                years.forEach((y, i) => {
+                    const val = matrix[y]?.[kpi.key];
+                    const prevVal = i > 0 ? matrix[years[i - 1]]?.[kpi.key] : null;
+                    let cellClass = 'kpi-cell';
+                    let trend = '';
+                    if (val !== undefined && prevVal !== undefined) {
+                        const diff = val - prevVal;
+                        if (diff > 0.5) { cellClass += ' kpi-up'; trend = '↗️'; }
+                        else if (diff < -0.5) { cellClass += ' kpi-down'; trend = '↘️'; }
+                        else { cellClass += ' kpi-stable'; trend = '➡️'; }
+                    }
+                    bodyHtml += `<td class="${cellClass}"><input type="number" step="${kpi.decimals === 0 ? 1 : 0.1}" value="${val !== undefined ? val : ''}" placeholder="—" data-year="${y}" data-kpi="${kpi.key}" onchange="window.pmstApp.saveKpiCell(this)"></td>`;
+                });
+                // Tendencia global
+                const vals = years.map(y => matrix[y]?.[kpi.key]).filter(v => v !== undefined);
+                let globalTrend = '—';
+                if (vals.length >= 2) {
+                    const first = vals[0], last = vals[vals.length - 1];
+                    const diff = last - first;
+                    if (kpi.key === 'pct_motorizado' || kpi.key === 'co2e_total') {
+                        // Para estos KPI, bajar es bueno
+                        if (diff < -0.5) globalTrend = '✅ ↘️';
+                        else if (diff > 0.5) globalTrend = '⚠️ ↗️';
+                        else globalTrend = '➡️';
+                    } else {
+                        if (diff > 0.5) globalTrend = '✅ ↗️';
+                        else if (diff < -0.5) globalTrend = '❌ ↘️';
+                        else globalTrend = '➡️';
+                    }
+                }
+                bodyHtml += `<td class="kpi-trend">${globalTrend}</td></tr>`;
+            });
+            tbody.innerHTML = bodyHtml;
+        }
+        window.pmstApp.renderKpiMatrix = renderKpiMatrix;
+
+        window.pmstApp.saveKpiCell = function(input) {
+            const year = input.dataset.year;
+            const key = input.dataset.kpi;
+            const val = input.value === '' ? undefined : parseFloat(input.value);
+            const matrix = getKpiMatrix();
+            if (!matrix[year]) matrix[year] = {};
+            if (val !== undefined) matrix[year][key] = val;
+            else delete matrix[year][key];
+            setKpiMatrix(matrix);
+            renderKpiMatrix();
+            updateKpiChart();
+        };
+
+        window.pmstApp.registrarKPI = function() {
+            const tipo = document.getElementById('kpi-tipo').value;
+            const valor = parseFloat(document.getElementById('kpi-valor').value);
+            const nota = document.getElementById('kpi-nota').value;
+            const year = document.getElementById('kpi-year').value;
+            if (isNaN(valor)) { alert('⚠️ Introduce un valor válido'); return; }
+            const matrix = getKpiMatrix();
+            if (!matrix[year]) matrix[year] = {};
+            matrix[year][tipo] = valor;
+            if (nota) matrix[year][tipo + '_nota'] = nota;
+            setKpiMatrix(matrix);
+            renderKpiMatrix();
+            updateKpiChart();
+            document.getElementById('kpi-valor').value = '';
+            document.getElementById('kpi-nota').value = '';
+            alert(`✅ ${KPI_DEFINICIONES.find(k => k.key === tipo)?.label || tipo} = ${valor} (${year})`);
+        };
+
+        window.pmstApp.addYearColumn = function() {
+            const matrix = getKpiMatrix();
+            const years = getYearColumns();
+            const lastYear = years.length > 0 ? parseInt(years[years.length - 1]) : new Date().getFullYear();
+            const newYear = (lastYear + 1).toString();
+            if (!matrix[newYear]) matrix[newYear] = {};
+            setKpiMatrix(matrix);
+            renderKpiMatrix();
+            initKpiYearSelect();
+        };
+
+        window.pmstApp.autoFillFromDiagnostico = function() {
+            const state = window.pmstApp.appState;
+            const diag = state.diagnostico;
+            if (!diag) { alert('⚠️ Primero calcula el diagnóstico'); return; }
+            const now = new Date().getFullYear().toString();
+            const matrix = getKpiMatrix();
+            if (!matrix[now]) matrix[now] = {};
+
+            if (diag.resumen) {
+                if (diag.resumen.porcentajeSostenible !== undefined) matrix[now].pct_sostenible = diag.resumen.porcentajeSostenible;
+                if (diag.resumen.porcentajeMotorizado !== undefined) matrix[now].pct_motorizado = diag.resumen.porcentajeMotorizado;
+                if (diag.resumen.ocupacionMediaVehiculos !== undefined) matrix[now].ocupacion_vehiculos = diag.resumen.ocupacionMediaVehiculos;
+            }
+            if (diag.huellaCO2e) {
+                matrix[now].co2e_total = diag.huellaCO2e.totalCo2eTon;
+            }
+            const emp = state.empleados || [];
+            if (emp.length > 0) {
+                matrix[now].encuestados = emp.length;
+                const biciCount = emp.filter(e => e.modo_principal?.includes('Bicicleta')).length;
+                matrix[now].pct_bici = Math.round((biciCount / emp.length) * 1000) / 10;
+            }
+            if (state.empresa) {
+                matrix[now].plazas_bici = state.empresa.plazasBici || 0;
+            }
+            setKpiMatrix(matrix);
+            renderKpiMatrix();
+            updateKpiChart();
+            alert(`✅ Año ${now} auto-rellenado desde diagnóstico`);
+        };
+
+        window.pmstApp.exportKPICsv = function() {
+            const matrix = getKpiMatrix();
+            const years = getYearColumns();
+            if (years.length === 0) { alert('⚠️ No hay datos'); return; }
+            let csv = 'Indicador;' + years.join(';') + '\n';
+            KPI_DEFINICIONES.forEach(kpi => {
+                csv += kpi.label;
+                years.forEach(y => { csv += ';' + (matrix[y]?.[kpi.key] ?? ''); });
+                csv += '\n';
+            });
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = `kpis_${years[0]}-${years[years.length-1]}.csv`;
+            a.click(); URL.revokeObjectURL(url);
+        };
+
+        function updateKpiChart() {
+            const canvas = document.getElementById('chart-seguimiento');
+            if (!canvas || typeof Chart === 'undefined') return;
+            const matrix = getKpiMatrix();
+            const years = getYearColumns();
+            if (years.length === 0) return;
+            // Destruir chart anterior
+            if (window._kpiChart) window._kpiChart.destroy();
+            const datasets = KPI_DEFINICIONES.filter(k => k.unit === '%').map(kpi => ({
+                label: kpi.label,
+                data: years.map(y => matrix[y]?.[kpi.key] ?? null),
+                borderWidth: 2,
+                tension: 0.3,
+            }));
+            window._kpiChart = new Chart(canvas, {
+                type: 'line',
+                data: { labels: years, datasets },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: { y: { beginAtZero: true, max: 100 } },
+                },
+            });
+        }
+        window.pmstApp.updateKpiChart = updateKpiChart;
+
+        window.pmstApp.calcularDiagnostico = function() {
+            const state = window.pmstApp.appState;
+            state.diagnostico = calcularDiagnostico(state);
+            document.getElementById('diagnostico-panel').style.display = '';
+            updateDashboard();
+            alert('✅ Diagnóstico calculado');
+        };
+
+        window.pmstApp.calcularDAFO = function() {
+            const state = window.pmstApp.appState;
+            state.dafo = calcularDAFO(state.diagnostico, state.encuesta);
+            document.getElementById('dafo-panel').style.display = '';
+            ['fortalezas', 'debilidades', 'oportunidades', 'amenazas'].forEach(k => {
+                const ul = document.getElementById('dafo-' + k);
+                if (ul) ul.innerHTML = (state.dafo[k] || []).map(item => `<li>${item}</li>`).join('');
+            });
+            alert('✅ DAFO calculado');
+        };
+
+        window.pmstApp.calcularComparativas = function() {
+            const state = window.pmstApp.appState;
+            state.comparativas = getComparativas();
+            document.getElementById('comparativas-panel').style.display = '';
+            alert('✅ Comparativas calculadas');
+        };
+
+        window.pmstApp.generarMedidas = function() {
+            const state = window.pmstApp.appState;
+            state.medidas = generarMedidas(state);
+            document.getElementById('medidas-count').textContent = state.medidas.length;
+            renderMedidasTable();
+            updateDashboard();
+            alert(`✅ ${state.medidas.length} medidas generadas`);
+        };
+
+        window.pmstApp.generarObjetivos = function() {
+            const state = window.pmstApp.appState;
+            state.objetivos = generarObjetivos(state);
+            document.getElementById('objetivos-container').style.display = '';
+            alert(`✅ ${state.objetivos.length} objetivos SMART generados`);
+        };
+
         window.pmstApp.exportPDF = exportPDF;
         window.pmstApp.exportDOCX = exportDOCX;
         window.pmstApp.exportZIP = exportZIP;
-        
+
         // ═══════════════════════════════════════════
         // FUNCIONES AUXILIARES
         // ═══════════════════════════════════════════
-        
         function initDepartamentosSelect() {
             const select = document.getElementById('emp-depto');
-            const deptos = getDepartamentos();
-            deptos.forEach(d => {
+            getDepartamentos().forEach(d => {
                 const option = document.createElement('option');
                 option.value = d;
                 option.textContent = d;
                 select.appendChild(option);
             });
         }
-        
+
         function renderEmpleadosTable() {
             const tbody = document.getElementById('empleados-tbody');
             const emps = window.pmstApp.appState.empleados;
             document.getElementById('empleados-count').textContent = emps.length;
-            
             if (emps.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No hay empleados. Añade el primero.</td></tr>';
                 return;
             }
-            
             tbody.innerHTML = emps.map(emp => `
                 <tr>
                     <td>${emp.id}</td>
@@ -990,71 +1359,52 @@
                     <td>${emp.distancia_km || '-'}</td>
                     <td>${emp.tiempo_viaje_min || '-'}</td>
                     <td>${emp.encuesta_completada ? '✅' : '⏳'}</td>
-                    <td>
-                        <button class="btn btn-sm btn-outline" onclick="window.pmstApp.deleteEmpleado('${emp.id}')">🗑️</button>
-                    </td>
+                    <td><button class="btn btn-sm btn-outline" onclick="window.pmstApp.deleteEmpleado('${emp.id}')">🗑️</button></td>
                 </tr>
             `).join('');
         }
-        
-        window.pmstApp.deleteEmpleado = function(id) {
-            if (!confirm('¿Eliminar este empleado?')) return;
-            window.pmstApp.appState.empleados = window.pmstApp.appState.empleados.filter(e => e.id !== id);
-            renderEmpleadosTable();
-            updateDashboard();
-        };
-        
+
         function renderVehiculosTable() {
             const tbody = document.getElementById('vehiculos-tbody');
             const vehs = window.pmstApp.appState.flota;
             document.getElementById('vehiculos-count').textContent = vehs.length;
-            
             if (vehs.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No hay vehículos en la flota</td></tr>';
                 return;
             }
-            
             const factores = { 'Gasolina': 2.3, 'Diésel': 2.1, 'Eléctrico': 0, 'Híbrido': 1.2, 'GLP': 1.5 };
-            
             tbody.innerHTML = vehs.map(v => {
                 const co2e = ((v.km_anuales || 0) * (factores[v.combustible] || 2.3) / 1000).toFixed(1);
-                return `
-                    <tr>
-                        <td>${v.id}</td>
-                        <td>${v.tipo}</td>
-                        <td>${v.combustible}</td>
-                        <td>${v.matricula || '-'}</td>
-                        <td>${v.modelo || '-'}</td>
-                        <td>${v.km_anuales || 0}</td>
-                        <td>${co2e}T</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline" onclick="window.pmstApp.deleteVehiculo('${v.id}')">🗑️</button>
-                        </td>
-                    </tr>
-                `;
+                return `<tr><td>${v.id}</td><td>${v.tipo}</td><td>${v.combustible}</td><td>${v.matricula || '-'}</td><td>${v.modelo || '-'}</td><td>${v.km_anuales || 0}</td><td>${co2e}T</td><td><button class="btn btn-sm btn-outline" onclick="window.pmstApp.deleteVehiculo('${v.id}')">🗑️</button></td></tr>`;
             }).join('');
         }
-        
-        window.pmstApp.deleteVehiculo = function(id) {
-            if (!confirm('¿Eliminar este vehículo?')) return;
-            window.pmstApp.appState.flota = window.pmstApp.appState.flota.filter(v => v.id !== id);
-            renderVehiculosTable();
-            updateFlotaKPIs();
-        };
-        
+
+        function renderParadasTable() {
+            const tbody = document.getElementById('paradas-tbody');
+            const paradas = window.pmstApp.appState.transportePublico;
+            document.getElementById('paradas-count').textContent = paradas.length;
+            if (paradas.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="empty-state">Carga la oferta de transporte público</td></tr>';
+                return;
+            }
+            tbody.innerHTML = paradas.map(p => `<tr><td>${p.tipo}</td><td>${p.nombre}</td><td>${p.distancia}m</td></tr>`).join('');
+        }
+
+        function renderMedidasTable() {
+            const tbody = document.getElementById('medidas-tbody');
+            const medidas = window.pmstApp.appState.medidas;
+            if (medidas.length === 0) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Genera las medidas automáticas</td></tr>'; return; }
+            tbody.innerHTML = medidas.map((m, i) => `<tr><td>${i + 1}</td><td>${m.nombre || m.medida || '-'}</td><td>${m.categoria || '-'}</td><td>${m.prioridad || m.impacto || '-'}</td><td>${m.coste || '-'}</td><td>${m.plazo || '-'}</td></tr>`).join('');
+        }
+
         function updateFlotaKPIs() {
             const vehs = window.pmstApp.appState.flota;
             document.getElementById('kpi-flota-total').textContent = vehs.length;
-            
             const totalKm = vehs.reduce((a, v) => a + (v.km_anuales || 0), 0);
             document.getElementById('kpi-flota-km').textContent = totalKm.toLocaleString();
-            
             const factores = { 'Gasolina': 2.3, 'Diésel': 2.1, 'Eléctrico': 0, 'Híbrido': 1.2, 'GLP': 1.5 };
             let co2eTotal = 0;
-            vehs.forEach(v => {
-                const factor = factores[v.combustible] || 2.3;
-                co2eTotal += (v.km_anuales || 0) * factor / 1000;
-            });
+            vehs.forEach(v => { co2eTotal += (v.km_anuales || 0) * (factores[v.combustible] || 2.3) / 1000; });
             document.getElementById('kpi-flota-co2e').textContent = co2eTotal.toFixed(1) + 'T';
         }
     </script>

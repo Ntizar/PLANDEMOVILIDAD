@@ -88,7 +88,7 @@ export function generarObjetivosSMART(diagnostico, dafo, medidas, centro) {
         id: 'obj-05',
         descripcion: 'Mantener una encuesta de movilidad con al menos 20 respuestas válidas cada 6 meses para seguimiento continuo.',
         indicador: 'Número de respuestas por encuesta',
-        lineaBase: `${state.encuesta?.respuestas?.length || 0} respuestas`,
+        lineaBase: `0 respuestas`,
         meta: '20 respuestas cada 6 meses',
         plazo: 'Continuo',
         categoria: 'Seguimiento',
@@ -96,7 +96,7 @@ export function generarObjetivosSMART(diagnostico, dafo, medidas, centro) {
     });
     
     // Objetivo 6: Teletrabajo
-    const teletrabajoPct = state.empresa?.teletrabajoPct || 0;
+    const teletrabajoPct = 0; // Default sin datos de encuesta
     const metaTeletrabajo = Math.min(teletrabajoPct + 10, 40);
     if (metaTeletrabajo > teletrabajoPct) {
         objetivos.push({
