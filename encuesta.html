@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Movilidad — PLANDEMOVILIDAD</title>
+    <style>
+        /* ═══════════════════════════════════════════════════════
+           ENCUESTA DE MOVILIDAD — PLANDEMOVILIDAD
+           Estilo consistente con el sistema Aurora Ntizar
+           Autor: David Antizar
+           Hecho con ❤️ por David Antizar
+           ═══════════════════════════════════════════════════════ */
+        :root {
+            --blue: #2563eb;
+            --blue-dark: #1e40af;
+            --blue-light: #dbeafe;
+            --orange: #f97316;
+            --orange-light: #fff7ed;
+            --green: #16a34a;
+            --green-light: #dcfce7;
+            --red: #dc2626;
+            --red-light: #fef2f2;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --radius: 12px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        /* ─── HEADER ─── */
+        .header {
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+            color: white;
+            padding: 24px 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 4px; }
+        .header h1 span { color: var(--orange); }
+        .header p { opacity: 0.85; font-size: 0.9rem; }
+
+        /* ─── PROGRESS BAR ─── */
+        .progress-bar {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 16px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+        .progress-track {
+            background: var(--gray-200);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, var(--blue), var(--green));
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            margin-top: 6px;
+        }
+
+        /* ─── FORM CONTAINER ─── */
+        .form-container {
+            max-width: 720px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* ─── SECTION CARD ─── */
+        .section-card {
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            margin-bottom: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .section-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .section-number {
+            background: var(--blue);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+        .section-header h2 { font-size: 1.1rem; color: var(--gray-900); }
+        .section-header p { font-size: 0.8rem; color: var(--gray-500); margin-top: 2px; }
+        .section-body { padding: 24px; }
+
+        /* ─── FORM GROUPS ─── */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group:last-child { margin-bottom: 0; }
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 6px;
+        }
+        .form-label .required {
+            color: var(--red);
+            margin-left: 2px;
+        }
+        .form-hint {
+            font-size: 0.78rem;
+            color: var(--gray-400);
+            margin-top: 4px;
+        }
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--gray-800);
+            background: white;
+            transition: border-color 0.15s;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        .form-textarea { resize: vertical; min-height: 80px; }
+        .form-select { cursor: pointer; }
+
+        /* ─── RADIO/CHECK CARDS ─── */
+        .option-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+        }
+        .option-card {
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: center;
+        }
+        .option-card:hover {
+            border-color: var(--blue);
+            background: var(--blue-light);
+        }
+        .option-card.selected {
+            border-color: var(--blue);
+            background: var(--blue-light);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+        .option-card .icon { font-size: 1.8rem; margin-bottom: 4px; }
+        .option-card .label { font-size: 0.82rem; font-weight: 600; color: var(--gray-700); }
+        .option-card .sublabel { font-size: 0.72rem; color: var(--gray-500); margin-top: 2px; }
+        .option-card input { display: none; }
+
+        /* ─── SLIDER ─── */
+        .slider-container { position: relative; padding: 10px 0; }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.72rem;
+            color: var(--gray-400);
+            margin-top: 4px;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 4px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            background: var(--blue);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(37,99,235,0.3);
+        }
+        .slider-value {
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--blue);
+            margin-top: 6px;
+        }
+
+        /* ─── ROW LAYOUT ─── */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* ─── NAV BUTTONS ─── */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s;
+        }
+        .btn-primary {
+            background: var(--blue);
+            color: white;
+        }
+        .btn-primary:hover { background: var(--blue-dark); }
+        .btn-secondary {
+            background: var(--gray-200);
+            color: var(--gray-700);
+        }
+        .btn-secondary:hover { background: var(--gray-300); }
+        .btn-success {
+            background: var(--green);
+            color: white;
+        }
+        .btn-success:hover { background: #15803d; }
+        .btn-export {
+            background: var(--orange);
+            color: white;
+        }
+        .btn-export:hover { background: var(--orange-dark); }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ─── SUMMARY ─── */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .summary-card {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+        }
+        .summary-card .value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--blue);
+        }
+        .summary-card .label {
+            font-size: 0.78rem;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        /* ─── PREVIEW TABLE ─── */
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            margin-top: 16px;
+        }
+        .preview-table th {
+            background: var(--blue);
+            color: white;
+            padding: 8px 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .preview-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .preview-table tr:nth-child(even) { background: var(--gray-50); }
+
+        /* ─── FOOTER ─── */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray-400);
+            font-size: 0.75rem;
+            margin-top: 40px;
+        }
+        .footer strong { color: var(--orange); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 640px) {
+            .form-row { grid-template-columns: 1fr; }
+            .option-grid { grid-template-columns: 1fr 1fr; }
+            .summary-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <h1>📋 Encuesta de <span>Movilidad</span></h1>
+    <p>Plan de Movilidad Sostenible al Trabajo (PMST/PTST) — Ley 8/2021</p>
+</header>
+
+<div class="progress-bar">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text">
+        <span id="progressLabel">Sección 1 de 6</span>
+        <span id="progressPct">0%</span>
+    </div>
+</div>
+
+<form id="surveyForm" class="form-container">
+
+<!-- ═══════ SECCIÓN 1: DATOS PERSONALES ═══════ -->
+<div class="section-card" data-section="1">
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <div>
+            <h2>Datos Personales y Profesionales</h2>
+            <p>Información básica para segmentar los resultados</p>
+        </div>
+    </div>
+    <div class="section-body">
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Nombre <span class="required">*</span></label>
+                <input type="text" class="form-input" name="nombre" placeholder="Ej: María García López" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email corporativo</label>
+                <input type="email" class="form-input" name="email" placeholder="maria.garcia@empresa.com">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Departamento <span class="required">*</span></label>
+                <select class="form-select" name="departamento" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="Direccion">Dirección General</option>
+                    <option value="IT">IT / Tecnología</option>
+                    <option value="Consultoria">Consultoría</option>
+                    <option value="Administracion">Administración</option>
+                    <option value="RRHH">Recursos Humanos</option>
+                    <option value="Comercial">Comercial / Ventas</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Financiero">Financiero / Contabilidad</option>
+                    <option value="Legal">Legal</option>
+                    <option value="Operaciones">Operaciones</option>
+                    <option value="I+D">I+D / Innovación</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Puesto</label>
+                <input type="text" class="form-input" name="puesto" placeholder="Ej: Responsable de Proyectos">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Centro de trabajo <span class="required">*</span></label>
+            <select class="form-select" name="centro" required>
+                <option value="">Seleccionar centro...</option>
+                <option value="Centro Principal">Centro Principal</option>
+                <option value="Sede Secundaria">Sede Secundaria</option>
+                <option value="Oficina Regional">Oficina Regional</option>
+            </select>
+            <div class="form-hint">Si tu centro no aparece, selecciónalo y lo añadiremos</div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SECCIÓN 2: MODALIDAD DE TRABAJO ═══════ -->
+<div class="section-card" data-section="2">
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <div>
+            <h2>Modalidad de Trabajo</h2>
+            <p>Cómo organizas tu tiempo entre presencial y remoto</p>
+        </div>
+    </div>
+    <div class="section-body">
+        <div class="form-group">
+            <label class="form-label">¿Realizas teletrabajo? <span class="required">*</span></label>
+            <div class="option-grid">
+                <label class="option-card" onclick="selectOption(this, 'teletrabajo')">
+                    <input type="radio" name="teletrabajo" value="nunca" required>
+                    <div class="icon">🏢</div>
+                    <div class="label">Nunca</div>
+                    <div class="sublabel">100% presencial</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'teletrabajo')">
+                    <input type="radio" name="teletrabajo" value="ocasional">
+                    <div class="icon">🔄</div>
+                    <div class="label">Ocasional</div>
+                    <div class="sublabel">1-2 días/semana</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'teletrabajo')">
+                    <input type="radio" name="teletrabajo" value="habitual">
+                    <div class="icon">💻</div>
+                    <div class="label">Habitual</div>
+                    <div class="sublabel">3-4 días/semana</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'teletrabajo')">
+                    <input type="radio" name="teletrabajo" value="total">
+                    <div class="icon">🏠</div>
+                    <div class="label">Total</div>
+                    <div class="sublabel">100% remoto</div>
+                </label>
+            </div>
+        </div>
+        <div class="form-group" id="diasPresencialGroup" style="display:none">
+            <label class="form-label">¿Cuántos días a la semana vienes presencial? <span class="required">*</span></label>
+            <div class="slider-container">
+                <input type="range" name="diasPresencial" min="1" max="5" value="3" oninput="updateSlider(this, 'diasPresencialValue', ' días')">
+                <div class="slider-value" id="diasPresencialValue">3 días</div>
+                <div class="slider-labels">
+                    <span>1 día</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5 días</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SECCIÓN 3: MODOS DE TRANSPORTE ═══════ -->
+<div class="section-card" data-section="3">
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <div>
+            <h2>Tu Desplazamiento al Trabajo</h2>
+            <p>Cómo viajas habitualmente y cuánto tiempo inviertes</p>
+        </div>
+    </div>
+    <div class="section-body">
+        <div class="form-group">
+            <label class="form-label">Modo principal de transporte <span class="required">*</span></label>
+            <div class="option-grid" id="modoGrid">
+                <label class="option-card" onclick="selectOption(this, 'modo')">
+                    <input type="radio" name="modo_principal" value="coche_particular" required>
+                    <div class="icon">🚗</div>
+                    <div class="label">Coche particular</div>
+                    <div class="sublabel">Solo conductor</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'modo')">
+                    <input type="radio" name="modo_principal" value="coche_compartido">
+                    <div class="icon">🚙</div>
+                    <div class="label">Coche compartido</div>
+                    <div class="sublabel">2+ personas</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'modo')">
+                    <input type="radio" name="modo_principal" value="transporte_publico">
+                    <div class="icon">🚌</div>
+                    <div class="label">Transporte público</div>
+                    <div class="sublabel">Bus, metro, tren</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'modo')">
+                    <input type="radio" name="modo_principal" value="bicicleta">
+                    <div class="icon">🚲</div>
+                    <div class="label">Bicicleta</div>
+                    <div class="sublabel">Propia o compartida</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'modo')">
+                    <input type="radio" name="modo_principal" value="a_pie">
+                    <div class="icon">🚶</div>
+                    <div class="label">A pie</div>
+                    <div class="sublabel">Desplazamiento peatonal</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'modo')">
+                    <input type="radio" name="modo_principal" value="moto">
+                    <div class="icon">🏍️</div>
+                    <div class="label">Moto / Scooter</div>
+                    <div class="sublabel">Eléctrica o combustión</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'modo')">
+                    <input type="radio" name="modo_principal" value="otro">
+                    <div class="icon">❓</div>
+                    <div class="label">Otro</div>
+                    <div class="sublabel">Especificar abajo</div>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Distancia al trabajo (km) <span class="required">*</span></label>
+                <input type="number" class="form-input" name="distancia_km" placeholder="Ej: 8.5" min="0" max="200" step="0.1" required>
+                <div class="form-hint">Distancia desde tu domicilio al centro</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Tiempo de viaje (minutos) <span class="required">*</span></label>
+                <input type="number" class="form-input" name="tiempo_viaje_min" placeholder="Ej: 25" min="0" max="300" required>
+                <div class="form-hint">Tiempo total puerta a puerta</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">¿Usas algún modo secundario? <small>(combina con el principal)</small></label>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:6px">
+                <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="modo_secundario" value="coche_compartido"> 🚗 Coche compartido
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="modo_secundario" value="bicicleta"> 🚲 Bicicleta
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="modo_secundario" value="transporte_publico"> 🚌 TP
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="modo_secundario" value="a_pie"> 🚶 A pie
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Si usas coche, ¿cuántos ocupantes de media? <small>(incluyéndote)</small></label>
+            <div class="slider-container">
+                <input type="range" name="ocupacion_coche" min="1" max="5" value="1" oninput="updateSlider(this, 'ocupacionValue', ' personas')">
+                <div class="slider-value" id="ocupacionValue">1 persona</div>
+                <div class="slider-labels">
+                    <span>Solo</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5+</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SECCIÓN 4: PARADA DE TP MÁS CERCANA ═══════ -->
+<div class="section-card" data-section="4">
+    <div class="section-header">
+        <div class="section-number">4</div>
+        <div>
+            <h2>Transporte Público y Entorno</h2>
+            <p>Estaciones cercanas y cómo llegas a ellas</p>
+        </div>
+    </div>
+    <div class="section-body">
+        <div class="form-group">
+            <label class="form-label">¿Hay parada de TP en radio de 500m de tu domicilio? <span class="required">*</span></label>
+            <div class="option-grid" style="grid-template-columns: 1fr 1fr">
+                <label class="option-card" onclick="selectOption(this, 'parada_cercana')">
+                    <input type="radio" name="parada_cercana" value="si" required>
+                    <div class="icon">✅</div>
+                    <div class="label">Sí</div>
+                    <div class="sublabel">A menos de 5 min andando</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'parada_cercana')">
+                    <input type="radio" name="parada_cercana" value="no">
+                    <div class="icon">❌</div>
+                    <div class="label">No</div>
+                    <div class="sublabel">Más de 500m o sin cobertura</div>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group" id="tipoParadaGroup" style="display:none">
+            <label class="form-label">Tipo de estación más cercana</label>
+            <div class="option-grid" style="grid-template-columns: repeat(3, 1fr)">
+                <label class="option-card" onclick="selectOption(this, 'tipo_parada')">
+                    <input type="radio" name="tipo_parada" value="metro">
+                    <div class="icon">🚇</div>
+                    <div class="label">Metro</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'tipo_parada')">
+                    <input type="radio" name="tipo_parada" value="bus">
+                    <div class="icon">🚌</div>
+                    <div class="label">Autobús</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'tipo_parada')">
+                    <input type="radio" name="tipo_parada" value="cercanias">
+                    <div class="icon">🚆</div>
+                    <div class="label">Cercanías</div>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group" id="tiempoParadaGroup" style="display:none">
+            <label class="form-label">¿Cuánto tardas en llegar a la parada/estación?</label>
+            <div class="slider-container">
+                <input type="range" name="tiempo_a_parada" min="1" max="30" value="5" oninput="updateSlider(this, 'tiempoParadaValue', ' min')">
+                <div class="slider-value" id="tiempoParadaValue">5 min</div>
+                <div class="slider-labels"><span>1 min</span><span>15</span><span>30 min</span></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">¿Dispones de parking en el trabajo? <span class="required">*</span></label>
+            <div class="option-grid" style="grid-template-columns: 1fr 1fr 1fr">
+                <label class="option-card" onclick="selectOption(this, 'parking_trabajo')">
+                    <input type="radio" name="parking_trabajo" value="gratuito" required>
+                    <div class="icon">🅿️</div>
+                    <div class="label">Gratuito</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'parking_trabajo')">
+                    <input type="radio" name="parking_trabajo" value="pagando">
+                    <div class="icon">💰</div>
+                    <div class="label">De pago</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'parking_trabajo')">
+                    <input type="radio" name="parking_trabajo" value="no">
+                    <div class="icon">❌</div>
+                    <div class="label">No dispongo</div>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SECCIÓN 5: ACTITUD Y DISPONIBILIDAD ═══════ -->
+<div class="section-card" data-section="5">
+    <div class="section-header">
+        <div class="section-number">5</div>
+        <div>
+            <h2>Actitud hacia la Movilidad Sostenible</h2>
+            <p>Tu disposición a cambiar de hábitos de desplazamiento</p>
+        </div>
+    </div>
+    <div class="section-body">
+        <div class="form-group">
+            <label class="form-label">¿Estarías dispuesto/a a cambiar de modo de transporte? <span class="required">*</span></label>
+            <div class="option-grid" style="grid-template-columns: 1fr 1fr">
+                <label class="option-card" onclick="selectOption(this, 'dispuesto_cambiar')">
+                    <input type="radio" name="dispuesto_cambiar" value="si" required>
+                    <div class="icon">💪</div>
+                    <div class="label">Sí, me interesa</div>
+                    <div class="sublabel">Busco alternativas</div>
+                </label>
+                <label class="option-card" onclick="selectOption(this, 'dispuesto_cambiar')">
+                    <input type="radio" name="dispuesto_cambiar" value="no">
+                    <div class="icon">🔒</div>
+                    <div class="label">No, prefiero mantener mi modo</div>
+                    <div class="sublabel">No veo alternativa viable</div>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group" id="alternativasGroup" style="display:none">
+            <label class="form-label">¿Qué alternativas te interesan?</label>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:6px">
+                <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="alternativas" value="teletrabajo"> 💻 Teletrabajo más días
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="alternativas" value="transporte_publico"> 🚌 Bonos transporte
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="alternativas" value="bicicleta"> 🚲 Bici + duchas
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="alternativas" value="coche_compartido"> 🚗 Coche compartido
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="alternativas" value="desfase_horario"> ⏰ Horario flexible
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">¿Qué barreras identificas para cambiar?</label>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:6px">
+                <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="barreras" value="distancia"> 📏 Distancia excesiva
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="barreras" value="tiempo"> ⏱️ Tiempo de viaje
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="barreras" value="seguridad"> 🔒 Seguridad
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="barreras" value="infraestructura"> 🚧 Falta infraestructura
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="barreras" value="coste"> 💰 Coste
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;font-size:0.82rem">
+                    <input type="checkbox" name="barreras" value="comodidad"> 🛋️ Comodidad
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Comentarios adicionales</label>
+            <textarea class="form-textarea" name="comentarios" placeholder="¿Hay algo más que quieras contarnos sobre tu desplazamiento al trabajo? ¿Alguna sugerencia?"></textarea>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SECCIÓN 6: CONFIRMACIÓN Y EXPORT ═══════ -->
+<div class="section-card" data-section="6">
+    <div class="section-header">
+        <div class="section-number">6</div>
+        <div>
+            <h2>Resumen y Exportación</h2>
+            <p>Revisa tus datos y exporta el CSV</p>
+        </div>
+    </div>
+    <div class="section-body">
+        <div id="surveySummary" style="display:none">
+            <div class="summary-grid" id="summaryCards"></div>
+
+            <h3 style="font-size:0.95rem; color:var(--gray-700); margin-bottom:8px">📋 Vista previa del CSV</h3>
+            <div style="overflow-x:auto; border:1px solid var(--gray-200); border-radius:8px">
+                <table class="preview-table" id="previewTable"></table>
+            </div>
+
+            <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap">
+                <button type="button" class="btn btn-export" onclick="exportCSV()">
+                    📥 Exportar CSV
+                </button>
+                <button type="button" class="btn btn-primary" onclick="copyToClipboard()">
+                    📋 Copiar al portapapeles
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="clearSurvey()">
+                    🗑️ Limpiar encuesta
+                </button>
+            </div>
+        </div>
+        <div id="surveyIncomplete">
+            <p style="text-align:center; color:var(--gray-500); padding:30px 0">
+                Completa todas las secciones para ver el resumen y exportar el CSV.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ NAV BUTTONS ═══════ -->
+<div class="nav-buttons">
+    <button type="button" class="btn btn-secondary" id="btnPrev" onclick="prevSection()" disabled>← Anterior</button>
+    <button type="button" class="btn btn-primary" id="btnNext" onclick="nextSection()">Siguiente →</button>
+</div>
+
+</form>
+
+<div class="footer">
+    <strong>Encuesta de Movilidad</strong> — PLANDEMOVILIDAD v2.0<br>
+    Hecho con ❤️ por David Antizar — Los datos se procesan localmente, no se envían a ningún servidor
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// ENCUESTA DE MOVILIDAD — Lógica JavaScript
+// ═══════════════════════════════════════════
+
+let currentSection = 1;
+const totalSections = 6;
+
+// ─── NAVIGATION ───
+function nextSection() {
+    if (currentSection < totalSections) {
+        document.querySelector(`[data-section="${currentSection}"]`).style.display = 'none';
+        currentSection++;
+        document.querySelector(`[data-section="${currentSection}"]`).style.display = 'block';
+        updateProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (currentSection === totalSections) generateSummary();
+    }
+}
+
+function prevSection() {
+    if (currentSection > 1) {
+        document.querySelector(`[data-section="${currentSection}"]`).style.display = 'none';
+        currentSection--;
+        document.querySelector(`[data-section="${currentSection}"]`).style.display = 'block';
+        updateProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function updateProgress() {
+    const pct = Math.round((currentSection / totalSections) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = `Sección ${currentSection} de ${totalSections}`;
+    document.getElementById('progressPct').textContent = pct + '%';
+    document.getElementById('btnPrev').disabled = currentSection === 1;
+    document.getElementById('btnNext').textContent = currentSection === totalSections ? '✅ Finalizar' : 'Siguiente →';
+}
+
+// ─── OPTION SELECTION ───
+function selectOption(card, groupName) {
+    const group = card.closest('.option-grid');
+    group.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    card.querySelector('input').checked = true;
+
+    // Conditional visibility
+    if (groupName === 'teletrabajo') {
+        const val = card.querySelector('input').value;
+        document.getElementById('diasPresencialGroup').style.display = (val !== 'total' && val !== 'nunca') ? 'block' : 'none';
+    }
+    if (groupName === 'parada_cercana') {
+        const val = card.querySelector('input').value;
+        document.getElementById('tipoParadaGroup').style.display = val === 'si' ? 'block' : 'none';
+        document.getElementById('tiempoParadaGroup').style.display = val === 'si' ? 'block' : 'none';
+    }
+    if (groupName === 'dispuesto_cambiar') {
+        document.getElementById('alternativasGroup').style.display = card.querySelector('input').value === 'si' ? 'block' : 'none';
+    }
+}
+
+function updateSlider(input, valueId, suffix) {
+    document.getElementById(valueId).textContent = input.value + suffix;
+}
+
+// ─── GENERATE SUMMARY ───
+function generateSummary() {
+    const data = collectData();
+    if (!data) return;
+
+    document.getElementById('surveySummary').style.display = 'block';
+    document.getElementById('surveyIncomplete').style.display = 'none';
+
+    // Summary cards
+    const modoLabels = {
+        coche_particular: '🚗 Coche', coche_compartido: '🚙 Coche compartido',
+        transporte_publico: '🚌 TP', bicicleta: '🚲 Bici', a_pie: '🚶 A pie',
+        moto: '🏍️ Moto', otro: '❓ Otro'
+    };
+    document.getElementById('summaryCards').innerHTML = `
+        <div class="summary-card">
+            <div class="value">${data.nombre}</div>
+            <div class="label">Encuestado</div>
+        </div>
+        <div class="summary-card">
+            <div class="value">${modoLabels[data.modo_principal] || data.modo_principal}</div>
+            <div class="label">Modo principal</div>
+        </div>
+        <div class="summary-card">
+            <div class="value">${data.distancia_km} km / ${data.tiempo_viaje_min} min</div>
+            <div class="label">Distancia / Tiempo</div>
+        </div>
+    `;
+
+    // Preview table
+    const headers = Object.keys(data);
+    const table = document.getElementById('previewTable');
+    table.innerHTML = `
+        <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+        <tbody><tr>${headers.map(h => `<td>${data[h] || ''}</td>`).join('')}</tr></tbody>
+    `;
+}
+
+// ─── COLLECT DATA ───
+function collectData() {
+    const form = document.getElementById('surveyForm');
+    const fd = new FormData(form);
+
+    // Check required fields
+    const required = ['nombre', 'departamento', 'centro', 'teletrabajo', 'modo_principal', 'distancia_km', 'tiempo_viaje_min'];
+    for (const field of required) {
+        if (!fd.get(field)) {
+            alert(`Por favor, completa el campo: ${field.replace(/_/g, ' ')}`);
+            return null;
+        }
+    }
+
+    const secundarios = fd.getAll('modo_secundario');
+    const alternativas = fd.getAll('alternativas');
+    const barreras = fd.getAll('barreras');
+
+    return {
+        fecha: new Date().toISOString().split('T')[0],
+        nombre: fd.get('nombre'),
+        email: fd.get('email'),
+        departamento: fd.get('departamento'),
+        puesto: fd.get('puesto'),
+        centro: fd.get('centro'),
+        teletrabajo: fd.get('teletrabajo'),
+        dias_presenciales: fd.get('diasPresencial') || '',
+        modo_principal: fd.get('modo_principal'),
+        modo_secundario: secundarios.join('; '),
+        distancia_km: fd.get('distancia_km'),
+        tiempo_viaje_min: fd.get('tiempo_viaje_min'),
+        ocupacion_coche: fd.get('ocupacion_coche'),
+        parada_cercana: fd.get('parada_cercana'),
+        tipo_parada: fd.get('tipo_parada') || '',
+        tiempo_a_parada: fd.get('tiempo_a_parada') || '',
+        parking_trabajo: fd.get('parking_trabajo'),
+        dispuesto_cambiar: fd.get('dispuesto_cambiar'),
+        alternativas: alternativas.join('; '),
+        barreras: barreras.join('; '),
+        comentarios: fd.get('comentarios')
+    };
+}
+
+// ─── CSV EXPORT ───
+function exportCSV() {
+    const data = collectData();
+    if (!data) return;
+
+    const headers = Object.keys(data);
+    const csv = [
+        headers.join(','),
+        headers.map(h => `"${(data[h] || '').replace(/"/g, '""')}"`).join(',')
+    ].join('\n');
+
+    const BOM = '\uFEFF'; // UTF-8 BOM for Excel compatibility
+    const blob = new Blob([BOM + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `encuesta_movilidad_${data.nombre.replace(/\s+/g, '_')}_${data.fecha}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function copyToClipboard() {
+    const data = collectData();
+    if (!data) return;
+
+    const headers = Object.keys(data);
+    const csv = headers.join(',') + '\n' + headers.map(h => `"${(data[h] || '').replace(/"/g, '""')}"`).join(',');
+
+    navigator.clipboard.writeText(csv).then(() => {
+        const btn = event.target;
+        const original = btn.textContent;
+        btn.textContent = '✅ ¡Copiado!';
+        setTimeout(() => btn.textContent = original, 2000);
+    });
+}
+
+function clearSurvey() {
+    if (confirm('¿Seguro que quieres borrar todas las respuestas?')) {
+        document.getElementById('surveyForm').reset();
+        document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+        currentSection = 1;
+        document.querySelectorAll('[data-section]').forEach(s => s.style.display = 'none');
+        document.querySelector('[data-section="1"]').style.display = 'block';
+        updateProgress();
+        document.getElementById('surveySummary').style.display = 'none';
+        document.getElementById('surveyIncomplete').style.display = 'block';
+    }
+}
+
+// ─── INIT ───
+document.querySelectorAll('[data-section]').forEach((s, i) => {
+    s.style.display = i === 0 ? 'block' : 'none';
+});
+updateProgress();
+</script>
+
+</body>
+</html>
