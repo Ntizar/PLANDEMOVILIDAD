@@ -771,6 +771,9 @@
         import { CONFIG } from './js/config.js';
         import { calcularDiagnostico, calcularDAFO, generarMedidas, generarObjetivos } from './js/main.js?v=2';
         import { initEmpresas } from './js/empresa.js?v=1';
+        import './js/api-gbfs.js?v=1';
+        import './js/api-ors.js?v=1';
+        import './js/api-nominatim.js?v=1';
 
         // ── Estado global ───────────────────────────────────
         window.pmstApp = {
@@ -789,6 +792,11 @@
             },
             charts: {},
         };
+
+        // ── APIs (se inicializan después de appState) ──────────
+        import('./js/api-gbfs.js?v=2');
+        import('./js/api-ors.js?v=2');
+        import('./js/api-nominatim.js?v=2');
 
         // ── Inicialización ──────────────────────────────────
         document.addEventListener('DOMContentLoaded', () => {
