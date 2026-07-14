@@ -112,7 +112,7 @@ async function initSingleMap(container, type, lat, lon, app) {
         attributionControl: false
     });
     
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+L.tileLayer('https://www.ign.es/wmts/ign-base?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=IGNBase-gris&STYLE=default&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILECOL={x}&TILEROW={y}&FORMAT=image/jpeg', {attribution:'© IGN - Instituto Geogr\u00e1fico Nacional (CC BY 4.0)'})
         attribution: '&copy; OpenStreetMap'
     }).addTo(map);
     

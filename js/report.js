@@ -289,8 +289,11 @@ function getCSS() {
 /* Reset */
 * {
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    <style>
+        * { box-sizing: border-box; }
+        .map-container { overflow: hidden; page-break-inside: avoid; break-inside: avoid; }
+        .map-container img { max-width: 100%; height: auto; display: block; }
+        .map-container .leaflet-container { height: 100% !important; width: 100% !important; }
 }
 
 body {
@@ -1240,7 +1243,7 @@ function generarAnalisisEntorno(app) {
 
     <h2 class="section-title">5.4 Isocronas de Accesibilidad</h2>
 
-    <div class="map-container" style="height:450px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
+    <div class="map-container" style="height:450px;max-height:450px;overflow:hidden;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative;page-break-inside:avoid">
         <div id="report-map-isocronas" data-report-map="isocronas" style="height:100%;width:100%"></div>
         <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Isochronas: coche (azul), bici (verde), pie (amarillo) - 10/15/30 min</div>
     </div>
@@ -2442,7 +2445,7 @@ function generarOfertaTransporte(app) {
 
     <h2 class="section-title">13.1 Metodología de Análisis</h2>
 
-    <div class="map-container" style="height:450px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
+    <div class="map-container" style="height:450px;max-height:450px;overflow:hidden;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative;page-break-inside:avoid">
         <div id="report-map-tp" data-report-map="tp-gbfs" style="height:100%;width:100%"></div>
         <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Mapa: paradas TP + estaciones bicicleta publica</div>
     </div>
@@ -2469,7 +2472,7 @@ function generarOfertaTransporte(app) {
 
     <p>El radio de busqueda se ha establecido en ${safe(app, 'configuracion.gtfsStopRadius', 500)} metros desde el centro de trabajo, que corresponde aproximadamente a un paseo de 10 minutos a pie.</p>
 
-    <div class="map-container" style="height:400px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
+    <div class="map-container" style="height:400px;max-height:400px;overflow:hidden;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative;page-break-inside:avoid">
         <div id="report-map-entorno" data-report-map="entorno" style="height:100%;width:100%"></div>
         <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Mapa interactivo: puntos de interes del entorno</div>
     </div>

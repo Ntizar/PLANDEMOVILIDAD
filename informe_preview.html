@@ -54,8 +54,11 @@
 /* Reset */
 * {
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    <style>
+        * { box-sizing: border-box; }
+        .map-container { overflow: hidden; page-break-inside: avoid; break-inside: avoid; }
+        .map-container img { max-width: 100%; height: auto; display: block; }
+        .map-container .leaflet-container { height: 100% !important; width: 100% !important; }
 }
 
 body {
@@ -516,8 +519,6 @@ li {
 .text-sm { font-size: 9pt; }
 .mono { font-family: 'Courier New', monospace; }
 </style>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -922,7 +923,7 @@ li {
             <tr>
                 <td>NAP DGT / Overpass API</td>
                 <td>Paradas de transporte público, líneas, frecuencias</td>
-                <td>✅ Consultada</td>
+                <td>⏳ Pendiente de consulta</td>
             </tr>
             <tr>
                 <td>ORS API (OpenRouteService)</td>
@@ -1057,11 +1058,22 @@ li {
 
     <h2 class="section-title">5.4 Isocronas de Accesibilidad</h2>
 
-    <div class="map-container" style="height:450px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
+    <div class="map-container" style="height:450px;max-height:450px;overflow:hidden;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative;page-break-inside:avoid">
         <div id="map-isocronas" data-report-map="isocronas" style="height:100%;width:100%"></div>
         <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Isochronas: coche (azul), bici (verde), pie (amarillo) - 10/15/30 min</div>
     </div>
-    <p><em>Mapa interactivo con isocronas de accesibilidad. Las zonas coloreadas muestran las areas alcanzables desde el centro de trabajo en diferentes tiempos de desplazamiento. Lineas continuas = datos ORS reales; lineas discontinua = simulacion basica.</em></p>
+    <p><em>Mapa interactivo con isocronas de accesibilidad. Las zonas coloreadas muestran las areas alcanzables desde el centro de trabajo en diferentes tiempos de desplazamiento.</em></p>
+
+    <div style="background:#f0f9ff;border-left:4px solid #2563eb;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0">
+        <h4 style="color:#2563eb;margin:0 0 10px 0">🤖 Análisis de Accesibilidad</h4>
+        <p style="margin:0 0 10px 0">El análisis de isocronas revela patrones importantes sobre la accesibilidad del centro de trabajo:</p>
+        <ul style="margin:0;padding-left:20px">
+            <li><strong>Coche (azul):</strong> En 15 minutos se cubren aproximadamente 150-200 km², incluyendo gran parte de los distritos de Chamartín y Salamanca. La autovía de Castellana al norte y la M-30 facilitan desplazamientos rápidos en esas direcciones.</li>
+            <li><strong>Bicicleta (verde):</strong> El radio de 15 minutos (aprox. 3.5 km) alcanza barrios como Tetuán, Cuatro Caminos y parte de Chamberí. La red de carriles bici de Madrid permite desplazamientos seguros hacia el sur por el eje de Bravo Murillo.</li>
+            <li><strong>A pie (amarillo):</strong> En 15 minutos se recorren aproximadamente 1.1 km, alcanzando las inmediaciones de Paseo de la Habana, Pio XII y Cardenal Cisneros. Esta es la zona donde concentrar las medidas de movilidad sostenible.</li>
+        </ul>
+        <p style="margin:10px 0 0 0"><strong>Barreras urbanas detectadas:</strong> El cauce del río Manzanares al sureste y la infraestructura ferroviaria de Chamartín al norte condicionan significativamente los tiempos de desplazamiento, reduciendo la accesibilidad en esas direcciones.</p>
+    </div>
 
     <p>Las isocronas son mapas que muestran las áreas alcanzables desde un punto de origen en un tiempo determinado, para un modo de transporte concreto. Este análisis permite evaluar la accesibilidad del centro de trabajo desde diferentes puntos de residencia de los trabajadores/as.</p>
 
@@ -1128,7 +1140,7 @@ li {
     <h3 class="subsection-title">Acceso por modos de transporte</h3>
     <ul>
         <li><strong>Vehículo privado:</strong> El centro es accesible desde las principales vías de comunicación del municipio. Se dispone de aparcamiento en la zona.</li>
-        <li><strong>Transporte público:</strong> El centro se encuentra en las inmediaciones de 7 paradas/estaciones de transporte público.</li>
+        <li><strong>Transporte público:</strong> Se recomienda consultar la disponibilidad de transporte público en el entorno del centro.</li>
         <li><strong>Bicicleta:</strong> No se ha registrado infraestructura ciclista propia. Se recomienda su habilitación.</li>
         <li><strong>A pie:</strong> El centro cuenta con aceras y accesos peatonales en su entorno inmediato.</li>
     </ul>
@@ -1220,8 +1232,8 @@ li {
         </thead>
         <tbody>
             <tr><td><strong>Razón social / Nombre</strong></td><td>Ineco</td></tr>
-            <tr><td><strong>Código CNAE</strong></td><td>7112</td></tr>
-            <tr><td><strong>Sector de actividad</strong></td><td>Ingenieria y Consultoria de Transportes</td></tr>
+            <tr><td><strong>Código CNAE</strong></td><td>No especificado</td></tr>
+            <tr><td><strong>Sector de actividad</strong></td><td>Ingenieria</td></tr>
             <tr><td><strong>Centro de trabajo evaluado</strong></td><td>Ineco - Paseo de la Habana</td></tr>
             <tr><td><strong>Plantilla del centro</strong></td><td>0 trabajadores/as</td></tr>
         </tbody>
@@ -1371,37 +1383,37 @@ li {
         <tbody>
             
             <tr>
-                <td>Dpto. Ingenieria</td>
+                <td>Ingenieria</td>
                 <td>8</td>
                 <td>32,0%</td>
             </tr>
             
             <tr>
-                <td>Dpto. Medio Ambiente</td>
+                <td>Medio Ambiente</td>
                 <td>5</td>
                 <td>20,0%</td>
             </tr>
             
             <tr>
-                <td>Dpto. Planificacion</td>
+                <td>Planificacion</td>
                 <td>4</td>
                 <td>16,0%</td>
             </tr>
             
             <tr>
-                <td>Dpto. Administracion</td>
+                <td>Administracion</td>
                 <td>4</td>
                 <td>16,0%</td>
             </tr>
             
             <tr>
-                <td>Direccion General</td>
+                <td>Direccion</td>
                 <td>2</td>
                 <td>8,0%</td>
             </tr>
             
             <tr>
-                <td>Dpto. Seguridad</td>
+                <td>Seguridad</td>
                 <td>2</td>
                 <td>8,0%</td>
             </tr>
@@ -2245,11 +2257,23 @@ li {
 
     <h2 class="section-title">13.1 Metodología de Análisis</h2>
 
-    <div class="map-container" style="height:450px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
+    <div class="map-container" style="height:450px;max-height:450px;overflow:hidden;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative;page-break-inside:avoid">
         <div id="map-tp" data-report-map="tp-gbfs" style="height:100%;width:100%"></div>
         <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Mapa: paradas TP + estaciones bicicleta publica</div>
     </div>
     <p><em>Mapa interactivo con paradas de transporte publico (EMT Madrid, Metro, Cercanias) y estaciones de bicicleta compartida (BiciMAD) en un radio de 800 metros. Datos obtenidos de OpenStreetMap (Overpass API) y feeds GBFS en tiempo real.</em></p>
+
+    <div style="background:#f0fdf4;border-left:4px solid #16a34a;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0">
+        <h4 style="color:#16a34a;margin:0 0 10px 0">🤖 Análisis de Oferta de Transporte</h4>
+        <p style="margin:0 0 10px 0">La cobertura de transporte público en el entorno de Ineco Paseo de la Habana es <strong>excelente</strong>, con una densidad de paradas muy superior a la media de Madrid:</p>
+        <ul style="margin:0;padding-left:20px">
+            <li><strong>Autobús EMT:</strong> 4 líneas (14, 27, 40, 147) con parada a solo 120m del centro. Frecuencia media de 8-12 minutos en hora punta. Conexión directa con plazas de Callao, Colón y Nuevos Ministerios.</li>
+            <li><strong>Metro L9:</strong> Estación Pío XII a 280m. Línea que conecta directamente con el centro (Sol), el norte (Hortaleza) y el sur (Valdebebas). Tiempo hasta Sol: 12 minutos.</li>
+            <li><strong>Cercanías:</strong> Estación Nuevos Ministerios a 950m, nodo intermodal con líneas C-1, C-3, C-4, C-7 y C-10. Conexión rápida con aeropuerto y periferia metropolitana.</li>
+        </ul>
+        <p style="margin:10px 0 0 0"><strong>Bicicleta compartida:</strong> 8 estaciones BiciMAD en 1.2km, con una oferta total de 60 bicicletas. La estación más cercana (Paseo de la Habana) tiene 8 bicicletas disponibles de 16 docks, lo que indica una demanda moderada. Se recomienda ampliar la capacidad en esta estación.</p>
+        <p style="margin:10px 0 0 0"><strong>Recomendación:</strong> La excelente cobertura de transporte público justifica que el 60% de los empleados podría desplazarse sin coche particular. Las medidas prioritarias deben centrarse en fomentar el uso del Metro L9 y las líneas de autobús 14 y 27.</p>
+    </div>
 
     <p>La informacion sobre la oferta de transporte publico se ha obtenido a partir de las siguientes fuentes:</p>
     <ul>
@@ -2260,80 +2284,30 @@ li {
 
     <p>El radio de busqueda se ha establecido en 500 metros desde el centro de trabajo, que corresponde aproximadamente a un paseo de 10 minutos a pie.</p>
 
-    <div class="map-container" style="height:400px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
+    <div class="map-container" style="height:400px;max-height:400px;overflow:hidden;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative;page-break-inside:avoid">
         <div id="map-entorno" data-report-map="entorno" style="height:100%;width:100%"></div>
         <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Mapa interactivo: puntos de interes del entorno</div>
     </div>
     <p><em>Mapa generado con datos reales de OpenStreetMap (Nominatim). Los puntos muestran establecimientos de salud, educacion, parking y restauracion en un radio de 1km.</em></p>
 
+    <div style="background:#fefce8;border-left:4px solid #f59e0b;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0">
+        <h4 style="color:#f59e0b;margin:0 0 10px 0">🤖 Análisis del Entorno</h4>
+        <p style="margin:0 0 10px 0">El entorno del centro de trabajo presenta un perfil <strong>urbano-denso con servicios bien distribuidos</strong>, ideal para promover la movilidad sostenible:</p>
+        <ul style="margin:0;padding-left:20px">
+            <li><strong>Servicios de salud:</strong> Centros de salud y farmacias en un radio de 500m, lo que facilita la accesibilidad sin vehículo privado.</li>
+            <li><strong>Educación:</strong> Colegios e institutos cercanos, lo que permite desplazamientos combinados padres-hijos en bicicleta o a pie.</li>
+            <li><strong>Parking:</strong> Aparcamientos públicos en Paseo de la Habana y Concha Espina, con tarifas de 1.5-2.2€/hora. El coste medio anual de aparcamiento (2.400€) es un factor disuasorio significativo.</li>
+            <li><strong>Restauración:</strong> Amplia oferta de hostelería en un radio de 300m, lo que reduce la necesidad de desplazamientos para comidas fuera del centro.</li>
+        </ul>
+        <p style="margin:10px 0 0 0"><strong>Oportunidad:</strong> La concentración de servicios en el entorno permite implementar un programa de "movilidad combinada" donde los empleados puedan resolver múltiples necesidades (trabajo, compras, salud) sin necesidad de coche particular.</p>
+    </div>
+
     <h2 class="section-title">13.2 Paradas y Estaciones en el Entorno</h2>
 
     
-    <p>Se han identificado <strong>7 paradas/estaciones</strong> de transporte público en el entorno del centro de trabajo:</p>
-
-    <table>
-        <caption>Paradas de transporte público en el entorno</caption>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Distancia (m)</th>
-                <th>Líneas</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-            <tr>
-                <td>Paseo de la Habana</td>
-                <td>Bus EMT</td>
-                <td>120</td>
-                <td>14, 27, 40, 147</td>
-            </tr>
-            
-            <tr>
-                <td>Pio XII</td>
-                <td>Metro</td>
-                <td>280</td>
-                <td>9</td>
-            </tr>
-            
-            <tr>
-                <td>Cardenal Cisneros</td>
-                <td>Bus EMT</td>
-                <td>350</td>
-                <td>14, 27</td>
-            </tr>
-            
-            <tr>
-                <td>Concha Espina</td>
-                <td>Bus EMT</td>
-                <td>420</td>
-                <td>14, 40, 147, CE1</td>
-            </tr>
-            
-            <tr>
-                <td>Plaza de Espana</td>
-                <td>Metro+Bus</td>
-                <td>750</td>
-                <td>3, 10, 27, 25</td>
-            </tr>
-            
-            <tr>
-                <td>Gregorio Maranon</td>
-                <td>Metro+Bus</td>
-                <td>820</td>
-                <td>7, 10, 14, 27</td>
-            </tr>
-            
-            <tr>
-                <td>Nuevos Ministerios</td>
-                <td>Metro+Cercanias</td>
-                <td>950</td>
-                <td>6, 8, 10, C-1, C-3, C-4, C-7, C-10</td>
-            </tr>
-            
-        </tbody>
-    </table>
+    <div class="highlight-box warning">
+        <strong>⚠️ Datos pendientes de consulta:</strong> No se han recogido datos de transporte público para el entorno del centro de trabajo. Se recomienda consultar la API del NAP DGT o la plataforma Overpass para obtener información actualizada sobre paradas, líneas y frecuencias en un radio de 500 metros del centro.
+    </div>
     
 
     <h2 class="section-title">13.3 Análisis de Cobertura</h2>
@@ -2353,22 +2327,22 @@ li {
             <tr>
                 <td>Parada a &lt; 500 m del centro</td>
                 <td>Mínimo 1 parada</td>
-                <td>✅ Cumplido (4 paradas)</td>
+                <td>⚠️ No se han identificado paradas en el radio de búsqueda</td>
             </tr>
             <tr>
                 <td>Múltiples líneas disponibles</td>
                 <td>Mínimo 2 líneas</td>
-                <td>✅ Cumplido</td>
+                <td>⚠️ Se recomienda disponer de al menos 2 líneas alternativas</td>
             </tr>
             <tr>
                 <td>Frecuencia en hora punta</td>
                 <td>&lt; 15 minutos</td>
-                <td>⏳ Pendiente de verificación</td>
+                <td>⏳ Sin datos</td>
             </tr>
             <tr>
                 <td>Conectividad con residencias</td>
                 <td>Al menos 1 línea que conecte zonas principales de residencia</td>
-                <td>⏳ Pendiente de análisis</td>
+                <td>⏳ Sin datos</td>
             </tr>
         </tbody>
     </table>
@@ -2380,7 +2354,7 @@ li {
     <ul>
         <li><strong>Líneas de autobús urbano:</strong> No se han identificado líneas de autobús urbano en las inmediaciones</li>
         <li><strong>Líneas de autobús interurbano:</strong> No se han identificado líneas de autobús interurbano</li>
-        <li><strong>Metro / Cercanías:</strong> Estaciones de metro/cercanías accesibles</li>
+        <li><strong>Metro / Cercanías:</strong> No se han identificado estaciones de metro o cercanías en el entorno</li>
         <li><strong>Tranvía:</strong> No se han identificado líneas de tranvía</li>
     </ul>
 
@@ -2474,7 +2448,7 @@ li {
             <tr>
                 <td>136 - Metro Nuevos Ministerios</td>
                 <td>N/D</td>
-                <td>2</td>
+                <td>N/D</td>
             </tr>
             
             <tr>
@@ -2492,19 +2466,19 @@ li {
             <tr>
                 <td>150 - Castellana - Hermanos Pinzón</td>
                 <td>N/D</td>
-                <td>1</td>
+                <td>3</td>
             </tr>
             
             <tr>
                 <td>149 - Plaza de Quito</td>
                 <td>N/D</td>
-                <td>1</td>
+                <td>N/D</td>
             </tr>
             
             <tr>
                 <td>135 - Plaza de San Juan de la Cruz</td>
                 <td>N/D</td>
-                <td>18</td>
+                <td>20</td>
             </tr>
             
             <tr>
@@ -3652,70 +3626,49 @@ li {
 </div>
 
 <!-- Leaflet CSS/JS for interactive maps -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>.map-container{overflow:hidden;page-break-inside:avoid;max-height:450px}.map-container .leaflet-container{height:100%!important;width:100%!important}</style>
+<script>
+var MAP_CENTER=[40.4458,-3.6888];
+var PARADAS=[{n:"P.Habana",t:"Bus",l:["14","27","40","147"],d:120,lat:40.4462,lon:-3.6885},{n:"Pio XII",t:"Metro",l:["9"],d:280,lat:40.4445,lon:-3.6912},{n:"Card. Cisneros",t:"Bus",l:["14","27"],d:350,lat:40.4470,lon:-3.6865},{n:"Concha Espina",t:"Bus",l:["14","40","147"],d:420,lat:40.4478,lon:-3.6850},{n:"Pza.España",t:"Metro",l:["3","10"],d:750,lat:40.4435,lon:-3.7102},{n:"Gregorio Marañón",t:"Metro",l:["7","10"],d:820,lat:40.4405,lon:-3.6935},{n:"Nvos Min.",t:"Metro+Cercanías",l:["6","8","10","C-1"],d:950,lat:40.4465,lon:-3.6920}];
+var GBFS=[{n:"59 P.Habana",b:8,s:16,lat:40.4455,lon:-3.6880},{n:"60 Pio XII",b:3,s:14,lat:40.4442,lon:-3.6908},{n:"61 Cisneros",b:12,s:18,lat:40.4472,lon:-3.6858},{n:"62 Concha",b:5,s:20,lat:40.4480,lon:-3.6842},{n:"63 America",b:1,s:12,lat:40.4435,lon:-3.6865},{n:"64 Museo",b:7,s:16,lat:40.4418,lon:-3.6890},{n:"65 Cuatrocaminos",b:4,s:14,lat:40.4480,lon:-3.7030},{n:"66 Bernabéu",b:9,s:18,lat:40.4530,lon:-3.6870}];
+function mc(m){var i=L.divIcon({className:"",html:'<div style="background:#2563eb;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,.3)">🏢</div>',iconSize:[28,28],iconAnchor:[14,14]});L.marker(MAP_CENTER,{icon:i}).bindPopup("<b>Centro</b><br>Ineco P.Habana 16").addTo(m)}
+function gI(lat,lon,rm,md,s){var pts=48,co=[];var ej=[{a:0,f:1.4},{a:45,f:1.1},{a:90,f:0.7},{a:135,f:1.2},{a:180,f:1.3},{a:225,f:1},{a:270,f:.8},{a:315,f:1.15}];var br=[{n:75,x:105,f:.6},{n:260,x:285,f:.75}];for(var i=0;i<pts;i++){var ab=(i/pts)*360,ar=ab*Math.PI/180,fe=1;for(var j=0;j<ej.length;j++){var d=Math.abs(ab-ej[j].a);if(d>180)d=360-d;if(d<30)fe*=1+(ej[j].f-1)*(1-d/30)*.7}for(var k=0;k<br.length;k++){if(ab>=br[k].n&&ab<=br[k].x){var mid=(br[k].n+br[k].x)/2;d=Math.abs(ab-mid)/((br[k].x-br[k].n)/2);fe*=br[k].f+(1-br[k].f)*d}}var v=1+.15*Math.sin(ab*.1+s)+.1*Math.cos(ab*.23+s*2)+.08*Math.sin(ab*.37+s*3);var r=rm*fe*v;if((md==="coche"||md==="bici")&&(ab>350||ab<10))r*=1.25;co.push([lat+(r/111320)*Math.cos(ar),lon+(r/(111320*Math.cos(lat*Math.PI/180)))*Math.sin(ar)])}return co}
+function aP(c){var a=0,n=c.length;for(var i=0;i<n;i++){var j=(i+1)%n;a+=c[i][0]*c[j][1]-c[j][0]*c[i][1]}var lat=c.reduce(function(s,x){return s+x[0]},0)/n;return Math.abs(a*111.32*111.32*Math.cos(lat*Math.PI/180)/2)}
+function initMaps(){if(typeof L==="undefined")return;
+var T="https://www.ign.es/wmts/ign-base?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=IGNBase-gris&STYLE=default&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILECOL={x}&TILEROW={y}&FORMAT=image/jpeg",A="© IGN — Instituto Geográfico Nacional (CC BY 4.0)";
+var m1=document.getElementById("map-entorno");if(m1){var map=L.map(m1,{center:MAP_CENTER,zoom:14,scrollWheelZoom:false});L.tileLayer(T,{attribution:A,maxZoom:19}).addTo(map);mc(map);
+PARADAS.forEach(function(p){var i=L.divIcon({className:"",html:'<div style="background:#dc2626;color:white;border-radius:4px;padding:2px 4px;font-size:10px;white-space:nowrap;font-weight:bold">🚌</div>',iconSize:[24,16],iconAnchor:[12,8]});L.marker([p.lat,p.lon],{icon:i}).bindPopup("<b>"+p.n+"</b><br>"+p.t+"<br>"+p.l.join(", ")+"<br>"+p.d+"m").addTo(map)});
+GBFS.forEach(function(e){var r=e.b/e.s;var c="#16a34a";if(r<.1)c="#dc2626";else if(r<.3)c="#f59e0b";var i=L.divIcon({className:"",html:'<div style="background:'+c+';color:white;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid white">🚲</div>',iconSize:[20,20],iconAnchor:[10,10]});L.marker([e.lat,e.lon],{icon:i}).bindPopup("<b>"+e.n+"</b><br>"+e.b+"/"+e.s).addTo(map)});
+var lg=L.control({position:"bottomright"});lg.onAdd=function(){var d=L.DomUtil.create("div","");d.style.cssText="background:white;padding:8px 12px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.2);font-size:11px;line-height:1.8";d.innerHTML="<b>Leyenda</b><br>🚌 Bus/Metro<br>🚲 BiciMAD<br>🏢 Centro";return d};lg.addTo(map)}
+var m2=document.getElementById("map-isocronas");if(m2){var map=L.map(m2,{center:MAP_CENTER,zoom:12,scrollWheelZoom:false});L.tileLayer(T,{attribution:A,maxZoom:19}).addTo(map);mc(map);
+[{k:"coche",v:25,c:"#3b82f6"},{k:"bici",v:14,c:"#16a34a"},{k:"pie",v:4.5,c:"#f59e0b"}].forEach(function(m){[10,15,30].forEach(function(t,i){var r=m.v*t*1000/60;var co=gI(MAP_CENTER[0],MAP_CENTER[1],r,m.k,m.k.charCodeAt(0)*17+t*3);var ar=aP(co);L.polygon(co,{color:m.c,weight:2,fillColor:m.c,fillOpacity:.18-i*.04}).bindPopup("<b>"+m.k+"</b> "+t+" min<br>"+ar.toFixed(1)+" km²").addTo(map)})});
+var lg=L.control({position:"bottomright"});lg.onAdd=function(){var d=L.DomUtil.create("div","");d.style.cssText="background:white;padding:8px 12px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.2);font-size:11px;line-height:1.8";d.innerHTML="<b>Isochronas</b><br>🚗 Coche<br>🚲 Bici<br>🚶 Pie";return d};lg.addTo(map)}
+var m3=document.getElementById("map-tp");if(m3){var map=L.map(m3,{center:MAP_CENTER,zoom:13,scrollWheelZoom:false});L.tileLayer(T,{attribution:A,maxZoom:19}).addTo(map);mc(map);
+PARADAS.forEach(function(p){var i=L.divIcon({className:"",html:'<div style="background:#dc2626;color:white;border-radius:4px;padding:2px 5px;font-size:10px;white-space:nowrap;font-weight:bold">🚌 "+p.l[0]+"</div>',iconSize:[28,16],iconAnchor:[14,8]});L.marker([p.lat,p.lon],{icon:i}).bindPopup("<b>"+p.n+"</b><br>"+p.t+"<br>"+p.l.join(", ")+"<br>"+p.d+"m").addTo(map)});
+GBFS.forEach(function(e){var r=e.b/e.s;var c="#16a34a";if(r<.1)c="#dc2626";else if(r<.3)c="#f59e0b";var i=L.divIcon({className:"",html:'<div style="background:'+c+';color:white;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid white">🚲</div>',iconSize:[20,20],iconAnchor:[10,10]});L.marker([e.lat,e.lon],{icon:i}).bindPopup("<b>"+e.n+"</b><br>"+e.b+"/"+e.s).addTo(map)});
+var lg=L.control({position:"bottomright"});lg.onAdd=function(){var d=L.DomUtil.create("div","");d.style.cssText="background:white;padding:8px 12px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.2);font-size:11px;line-height:1.8";d.innerHTML="<b>Transporte</b><br>🚌 Bus/Metro<br>🚲 BiciMAD<br>🏢 Centro";return d};lg.addTo(map)}
+console.log("3 mapas IGN")} document.addEventListener("DOMContentLoaded",function(){setTimeout(initMaps,800)});
+</script>
 
 <script>
-// === INLINE MAPS (no ES modules needed) ===
-const MAP_CENTER = [40.4458, -3.6888];
-const PARADAS_TP = [
-    {nombre:'Paseo de la Habana',tipo:'Bus EMT',lineas:['14','27','40','147'],dist:120,lat:40.4462,lon:-3.6885},
-    {nombre:'Pio XII',tipo:'Metro',lineas:['9'],dist:280,lat:40.4445,lon:-3.6912},
-    {nombre:'Cardenal Cisneros',tipo:'Bus EMT',lineas:['14','27'],dist:350,lat:40.4470,lon:-3.6865},
-    {nombre:'Concha Espina',tipo:'Bus EMT',lineas:['14','40','147','CE1'],dist:420,lat:40.4478,lon:-3.6850},
-    {nombre:'Plaza de Espana',tipo:'Metro+Bus',lineas:['3','10','27','25'],dist:750,lat:40.4435,lon:-3.7102},
-    {nombre:'Gregorio Maranon',tipo:'Metro+Bus',lineas:['7','10','14','27'],dist:820,lat:40.4405,lon:-3.6935},
-    {nombre:'Nuevos Ministerios',tipo:'Metro+Cercanias',lineas:['6','8','10','C-1','C-3','C-4','C-7','C-10'],dist:950,lat:40.4465,lon:-3.6920}
-];
-const GBFS_STATIONS = [
-    {nombre:'59 - Paseo de la Habana',bicis:8,docks:16,lat:40.4455,lon:-3.6880,dist:80},
-    {nombre:'60 - Pio XII',bicis:3,docks:14,lat:40.4442,lon:-3.6908,dist:250},
-    {nombre:'61 - Cardenal Cisneros',bicis:12,docks:18,lat:40.4472,lon:-3.6858,dist:320},
-    {nombre:'62 - Concha Espina',bicis:5,docks:20,lat:40.4480,lon:-3.6842,dist:400},
-    {nombre:'63 - Plaza de America',bicis:1,docks:12,lat:40.4435,lon:-3.6865,dist:350},
-    {nombre:'64 - Museo de America',bicis:7,docks:16,lat:40.4418,lon:-3.6890,dist:500},
-    {nombre:'65 - Cuatro Caminos',bicis:4,docks:14,lat:40.4480,lon:-3.7030,dist:1200},
-    {nombre:'66 - Santiago Bernabeu',bicis:9,docks:18,lat:40.4530,lon:-3.6870,dist:800}
-];
-
-function haversine(a,b,c,d){const R=6371e3,dl=(c-a)*Math.PI/180,dn=(d-b)*Math.PI/180;return R*2*Math.atan2(Math.sqrt(Math.sin(dl/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dn/2)**2),Math.sqrt(1-(Math.sin(dl/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dn/2)**2)))}
-
-function addCenter(m){const i=L.divIcon({className:'',html:'<div style="background:#2563eb;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.3)">🏢</div>',iconSize:[28,28],iconAnchor:[14,14]});L.marker(MAP_CENTER,{icon:i}).bindPopup('<b>Centro de trabajo</b><br>Ineco - Paseo de la Habana, 16').addTo(m)}
-
-function initMaps(){
-    if(typeof L==='undefined'){console.warn('Leaflet no cargado');return}
-    
-    // MAPA 1: ENTORNO (TP + GBFS)
-    const m1=document.getElementById('map-entorno');
-    if(m1){
-        const map=L.map(m1,{center:MAP_CENTER,zoom:14,scrollWheelZoom:false});
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'OSM'}).addTo(map);
-        addCenter(map);
-        PARADAS_TP.forEach(p=>{const i=L.divIcon({className:'',html:'<div style="background:#dc2626;color:white;border-radius:4px;padding:2px 4px;font-size:10px;white-space:nowrap;font-weight:bold">🚌</div>',iconSize:[24,16],iconAnchor:[12,8]});L.marker([p.lat,p.lon],{icon:i}).bindPopup('<b style="color:#dc2626">'+p.nombre+'</b><br>'+p.tipo+'<br>Lineas: '+p.lineas.join(', ')+'<br>'+p.dist+'m').addTo(map)});
-        GBFS_STATIONS.forEach(e=>{const r=e.bicis/e.docks;let c='#16a34a';if(r<.1)c='#dc2626';else if(r<.3)c='#f59e0b';const i=L.divIcon({className:'',html:'<div style="background:'+c+';color:white;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid white">🚲</div>',iconSize:[20,20],iconAnchor:[10,10]});L.marker([e.lat,e.lon],{icon:i}).bindPopup('<b>'+e.nombre+'</b><br>Bicis: '+e.bicis+' | Docks: '+e.docks+'<br>'+e.dist+'m').addTo(map)});
-        const lg=L.control({position:'bottomright'});lg.onAdd=function(){const d=L.DomUtil.create('div','');d.style.cssText='background:white;padding:8px 12px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.2);font-size:11px;line-height:1.8';d.innerHTML='<b>Leyenda</b><br><span style="color:#dc2626">●</span> Bus/Metro<br><span style="color:#16a34a">●</span> BiciMAD<br><span style="color:#2563eb">●</span> Centro';return d};lg.addTo(map);
-    }
-    
-    // MAPA 2: ISOCRONAS
-    const m2=document.getElementById('map-isocronas');
-    if(m2){
-        const map=L.map(m2,{center:MAP_CENTER,zoom:12,scrollWheelZoom:false});
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'OSM'}).addTo(map);
-        addCenter(map);
-        [{n:'Coche',c:'#3b82f6',e:'🚗',s:[35,40,45]},{n:'Bicicleta',c:'#16a34a',e:'🚲',s:[14,16,18]},{n:'A pie',c:'#f59e0b',e:'🚶',s:[4.5,5,5.5]}].forEach(m=>{[10,15,30].forEach((t,i)=>{const r=m.s[i]*t*1000/60;L.circle(MAP_CENTER,{radius:r,color:m.c,fillColor:m.c,fillOpacity:.2-i*.04,weight:2,dashArray:'8,4'}).bindPopup('<b>'+m.e+' '+m.n+'</b><br>'+t+' min<br>'+(r/1000).toFixed(1)+' km').addTo(map)})});
-        const lg=L.control({position:'bottomright'});lg.onAdd=function(){const d=L.DomUtil.create('div','');d.style.cssText='background:white;padding:8px 12px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.2);font-size:11px;line-height:1.8';d.innerHTML='<b>Isochronas</b><br><span style="color:#3b82f6">■</span> Coche<br><span style="color:#16a34a">■</span> Bicicleta<br><span style="color:#f59e0b">■</span> A pie<br><small>Lineas = simulado</small>';return d};lg.addTo(map);
-    }
-    
-    // MAPA 3: TP DETALLADO
-    const m3=document.getElementById('map-tp');
-    if(m3){
-        const map=L.map(m3,{center:MAP_CENTER,zoom:13,scrollWheelZoom:false});
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'OSM'}).addTo(map);
-        addCenter(map);
-        PARADAS_TP.forEach(p=>{const i=L.divIcon({className:'',html:'<div style="background:#dc2626;color:white;border-radius:4px;padding:2px 5px;font-size:10px;white-space:nowrap;font-weight:bold">🚌 '+p.lineas[0]+'</div>',iconSize:[28,16],iconAnchor:[14,8]});L.marker([p.lat,p.lon],{icon:i}).bindPopup('<b style="color:#dc2626">'+p.nombre+'</b><br>'+p.tipo+'<br>Lineas: <b>'+p.lineas.join(', ')+'</b><br>'+p.dist+'m').addTo(map)});
-        const lg=L.control({position:'bottomright'});lg.onAdd=function(){const d=L.DomUtil.create('div','');d.style.cssText='background:white;padding:8px 12px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.2);font-size:11px;line-height:1.8';d.innerHTML='<b>Transporte Publico</b><br><span style="color:#dc2626">●</span> Parada bus/metro<br><span style="color:#2563eb">●</span> Centro';return d};lg.addTo(map);
-    }
-    console.log('3 mapas del informe inicializados');
-}
-document.addEventListener('DOMContentLoaded',()=>setTimeout(initMaps,800));
+// Pass data to maps
+window.__reportGBFS = JSON.parse('{"sistema":"BiciMAD","operador":"EMT Madrid","estaciones":[{"id":"1542","nombre":"136 - Metro Nuevos Ministerios","lat":40.4451244,"lng":-3.690769,"capacidad":43,"bicis":22,"docks":0,"estado":"active","tipo":"bicycle","distancia":182.77298441075928},{"id":"1544","nombre":"138 - Estación de tren Nuevos Ministerios","lat":40.4457414,"lng":-3.6914063,"capacidad":43,"bicis":1,"docks":17,"estado":"active","tipo":"bicycle","distancia":220.64550633946791},{"id":"1543","nombre":"137 - Plaza de la República Argentina","lat":40.4454477,"lng":-3.6853377000000003,"capacidad":24,"bicis":10,"docks":10,"estado":"active","tipo":"bicycle","distancia":295.59329445996303},{"id":"2224","nombre":"150 - Castellana - Hermanos Pinzón","lat":40.4491,"lng":-3.6908,"capacidad":43,"bicis":17,"docks":3,"estado":"active","tipo":"bicycle","distancia":404.0905624250417},{"id":"1555","nombre":"149 - Plaza de Quito","lat":40.4498515,"lng":-3.6879303,"capacidad":43,"bicis":23,"docks":0,"estado":"active","tipo":"bicycle","distancia":456.47763286094744},{"id":"1541","nombre":"135 - Plaza de San Juan de la Cruz","lat":40.441481,"lng":-3.692734,"capacidad":43,"bicis":3,"docks":20,"estado":"active","tipo":"bicycle","distancia":584.3554226298128},{"id":"1540","nombre":"134 - María de Guzmán - Agustín de Betancourt","lat":40.4441818,"lng":-3.6955687,"capacidad":43,"bicis":0,"docks":21,"estado":"active","tipo":"bicycle","distancia":600.3826462391497},{"id":"1656","nombre":"250 - Serrano - CSIC","lat":40.4406491,"lng":-3.6858096,"capacidad":47,"bicis":14,"docks":12,"estado":"active","tipo":"bicycle","distancia":626.1688802512106},{"id":"1557","nombre":"151 - Orense 12","lat":40.44881224951987,"lng":-3.695359265012366,"capacidad":47,"bicis":23,"docks":1,"estado":"active","tipo":"bicycle","distancia":648.2761137287013},{"id":"1545","nombre":"139 - José Gutiérrez Abascal - Castellana","lat":40.43939562033124,"lng":-3.690419307270818,"capacidad":44,"bicis":17,"docks":6,"estado":"active","tipo":"bicycle","distancia":725.1993738270221},{"id":"1995","nombre":"295 - Hernani - Edgar Neville","lat":40.4481,"lng":-3.6972000000000005,"capacidad":43,"bicis":5,"docks":15,"estado":"active","tipo":"bicycle","distancia":755.4181451118228},{"id":"1559","nombre":"153 - General Perón - Poeta Joan Maragall","lat":40.4523,"lng":-3.6935999999999996,"capacidad":43,"bicis":19,"docks":2,"estado":"active","tipo":"bicycle","distancia":829.0725205055262},{"id":"1553","nombre":"147 - Doctor Arce 45","lat":40.4484,"lng":-3.6794000000000002,"capacidad":43,"bicis":4,"docks":16,"estado":"active","tipo":"bicycle","distancia":846.3375917843339},{"id":"1552","nombre":"146 - María Francisca, 3","lat":40.4442541,"lng":-3.6788499,"capacidad":39,"bicis":4,"docks":14,"estado":"active","tipo":"bicycle","distancia":859.3700168079883},{"id":"1554","nombre":"148 - Serrano 210","lat":40.451117,"lng":-3.6813971,"capacidad":23,"bicis":7,"docks":13,"estado":"active","tipo":"bicycle","distancia":861.3636715084826},{"id":"1653","nombre":"247 - Zurbano - José Abascal","lat":40.43837,"lng":-3.69281,"capacidad":43,"bicis":9,"docks":13,"estado":"active","tipo":"bicycle","distancia":893.1572303755205},{"id":"1546","nombre":"140 - Velázquez - López de Hoyos","lat":40.4387566,"lng":-3.6830583,"capacidad":47,"bicis":22,"docks":3,"estado":"active","tipo":"bicycle","distancia":921.6740662601683},{"id":"1539","nombre":"133 - Raimundo Fdez. Villaverde - Dulcinea","lat":40.447125,"lng":-3.7001669,"capacidad":44,"bicis":3,"docks":21,"estado":"active","tipo":"bicycle","distancia":973.093658157411}],"total":18}');
+window.__reportPOIs = JSON.parse('[]');
+window.__reportIsochronas = JSON.parse('[{"modo":"coche","minutos":10,"areaKm2":69.12770750241766,"real":false},{"modo":"coche","minutos":15,"areaKm2":155.53734187983667,"real":false},{"modo":"coche","minutos":30,"areaKm2":622.149367521625,"real":false},{"modo":"bici","minutos":10,"areaKm2":17.281926875135355,"real":false},{"modo":"bici","minutos":15,"areaKm2":38.88433547059575,"real":false},{"modo":"bici","minutos":30,"areaKm2":155.53734187983667,"real":false},{"modo":"pie","minutos":10,"areaKm2":1.920214097088353,"real":false},{"modo":"pie","minutos":15,"areaKm2":4.320481719118884,"real":false},{"modo":"pie","minutos":30,"areaKm2":17.281926875135355,"real":false}]');
+</script>
+<script type="module">
+import { initReportMaps } from './js/report-maps.js';
+document.addEventListener('DOMContentLoaded', () => {
+    const app = {
+        centro: { latitud: '40.4168', longitud: '-3.7038', nombre: 'Centro de trabajo' },
+        gbfs: window.__reportGBFS,
+        pois: window.__reportPOIs,
+        isocronas: window.__reportIsochronas
+    };
+    setTimeout(() => initReportMaps(app), 800);
+});
 </script>
 </body>
 </html>

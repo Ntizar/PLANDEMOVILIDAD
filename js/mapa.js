@@ -33,8 +33,8 @@ let layers = {
 };
 
 const TILE_LAYERS = {
-    osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
+osm: L.tileLayer('https://www.ign.es/wmts/ign-base?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=IGNBase-gris&STYLE=default&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILECOL={x}&TILEROW={y}&FORMAT=image/jpeg', {
+        attribution: '© IGN - Instituto Geogr\u00e1fico Nacional (CC BY 4.0)',
         maxZoom: 19,
     }),
     ign: L.tileLayer('https://www.ign.es/wms-layers/NMT/MontanaColor', {
