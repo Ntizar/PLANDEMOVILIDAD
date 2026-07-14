@@ -1,0 +1,3523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PMST/PTST — Centro Ineco Madrid</title>
+    <style>
+/* ═══════════════════════════════════════════════════════════════
+   PLAN DE MOVILIDAD SOSTENIBLE — Estilos del informe
+   Hecho con ❤️ por David Antizar
+   ═══════════════════════════════════════════════════════════════ */
+
+@page {
+    size: A4;
+    margin: 25mm 20mm 30mm 20mm;
+    @bottom-center {
+        content: "PLAN DE MOVILIDAD SOSTENIBLE — Centro Ineco Madrid — Hecho con ❤️ por David Antizar";
+        font-size: 8pt;
+        color: #666;
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    @bottom-right {
+        content: counter(page);
+        font-size: 8pt;
+        color: #666;
+    }
+}
+
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    .no-print {
+        display: none !important;
+    }
+    .page-break {
+        page-break-before: always;
+    }
+    h1, h2, h3, h4 {
+        page-break-after: avoid;
+    }
+    table, figure {
+        page-break-inside: avoid;
+    }
+    p {
+        orphans: 3;
+        widows: 3;
+    }
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #1f2937;
+    background: #fff;
+    counter-reset: page;
+}
+
+/* ── Portada ── */
+.portada {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    color: white;
+    page-break-after: always;
+}
+
+.portada h1 {
+    font-size: 32pt;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    line-height: 1.2;
+}
+
+.portada .subtitle {
+    font-size: 18pt;
+    color: #f97316;
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
+.portada .meta {
+    font-size: 12pt;
+    margin-top: 30px;
+    opacity: 0.9;
+    line-height: 2;
+}
+
+.portada .meta strong {
+    color: #f97316;
+}
+
+.portada .legal-ref {
+    margin-top: 40px;
+    padding: 15px 30px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    font-size: 10pt;
+    max-width: 500px;
+}
+
+.portada .confidential {
+    margin-top: 30px;
+    font-size: 9pt;
+    font-style: italic;
+    opacity: 0.7;
+}
+
+/* ── Índice ── */
+.indice {
+    page-break-after: always;
+    padding: 20px 0;
+}
+
+.indice h2 {
+    font-size: 22pt;
+    color: #2563eb;
+    border-bottom: 3px solid #f97316;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+.indice-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px dotted #d1d5db;
+    font-size: 10.5pt;
+}
+
+.indice-item .num {
+    color: #2563eb;
+    font-weight: 700;
+    margin-right: 10px;
+    min-width: 30px;
+}
+
+.indice-item .title {
+    flex: 1;
+}
+
+.indice-item .page {
+    color: #6b7280;
+    font-size: 9pt;
+    margin-left: 10px;
+}
+
+/* ── Capítulos ── */
+.chapter {
+    page-break-before: always;
+    padding-top: 10px;
+}
+
+.chapter:first-of-type {
+    page-break-before: auto;
+}
+
+h1.chapter-title {
+    font-size: 22pt;
+    color: #2563eb;
+    border-bottom: 3px solid #f97316;
+    padding-bottom: 12px;
+    margin-bottom: 25px;
+    margin-top: 10px;
+}
+
+h2.section-title {
+    font-size: 15pt;
+    color: #1e3a5f;
+    margin-top: 25px;
+    margin-bottom: 12px;
+    padding-left: 12px;
+    border-left: 4px solid #f97316;
+}
+
+h3.subsection-title {
+    font-size: 12pt;
+    color: #374151;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+p {
+    margin-bottom: 12px;
+    text-align: justify;
+    hyphens: auto;
+}
+
+/* ── Tablas ── */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0 20px 0;
+    font-size: 9.5pt;
+}
+
+thead th {
+    background: #2563eb;
+    color: white;
+    padding: 10px 8px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+tbody td {
+    padding: 8px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+    background: #f0f4ff;
+}
+
+tbody tr:hover {
+    background: #e0e8ff;
+}
+
+table caption {
+    caption-side: top;
+    font-size: 10pt;
+    font-weight: 700;
+    color: #1e3a5f;
+    padding: 8px;
+    text-align: left;
+}
+
+/* ── Listas ── */
+ul, ol {
+    margin: 10px 0 15px 25px;
+}
+
+li {
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+
+/* ── Bloques destacados ── */
+.highlight-box {
+    background: #eff6ff;
+    border-left: 5px solid #2563eb;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: 0 6px 6px 0;
+}
+
+.highlight-box.warning {
+    background: #fef3c7;
+    border-left-color: #f97316;
+}
+
+.highlight-box.success {
+    background: #ecfdf5;
+    border-left-color: #10b981;
+}
+
+.highlight-box.danger {
+    background: #fef2f2;
+    border-left-color: #ef4444;
+}
+
+.highlight-box strong {
+    color: #1e3a5f;
+}
+
+/* ── KPI Cards ── */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.kpi-card {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+    border: 1px solid #bfdbfe;
+}
+
+.kpi-card .kpi-value {
+    font-size: 24pt;
+    font-weight: 800;
+    color: #2563eb;
+    line-height: 1.2;
+}
+
+.kpi-card .kpi-label {
+    font-size: 8.5pt;
+    color: #4b5563;
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.kpi-card.accent {
+    background: linear-gradient(135deg, #fff7ed, #ffedd5);
+    border-color: #fed7aa;
+}
+
+.kpi-card.accent .kpi-value {
+    color: #ea580c;
+}
+
+.kpi-card.green {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border-color: #a7f3d0;
+}
+
+.kpi-card.green .kpi-value {
+    color: #059669;
+}
+
+/* ── Listas de fortalezas/debilidades ── */
+.dafo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.dafo-box {
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid;
+}
+
+.dafo-box.fortalezas {
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+}
+
+.dafo-box.debilidades {
+    background: #fef2f2;
+    border-color: #fecaca;
+}
+
+.dafo-box.oportunidades {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+.dafo-box.amenazas {
+    background: #fef3c7;
+    border-color: #fde68a;
+}
+
+.dafo-box h4 {
+    margin-bottom: 10px;
+    font-size: 11pt;
+}
+
+.dafo-box ul {
+    margin-left: 18px;
+    font-size: 10pt;
+}
+
+/* ── Gantt-like cronograma ── */
+.cronograma {
+    position: relative;
+    margin: 20px 0;
+}
+
+.cronograma-row {
+    display: grid;
+    grid-template-columns: 200px repeat(12, 1fr);
+    gap: 2px;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.cronograma-label {
+    font-size: 9pt;
+    font-weight: 600;
+    color: #374151;
+    padding: 4px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cronograma-bar {
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7pt;
+    color: white;
+    font-weight: 600;
+}
+
+.cronograma-header {
+    display: grid;
+    grid-template-columns: 200px repeat(12, 1fr);
+    gap: 2px;
+    margin-bottom: 8px;
+    font-size: 7.5pt;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+}
+
+/* ── Footer ── */
+.informe-footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+    border-top: 2px solid #e5e7eb;
+    font-size: 9pt;
+    color: #9ca3af;
+}
+
+/* ── Nota de pie de página ── */
+.footnote {
+    font-size: 8pt;
+    color: #9ca3af;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+/* ── Badges ── */
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 8pt;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge.alta {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.badge.media {
+    background: #fef3c7;
+    color: #d97706;
+    border: 1px solid #fde68a;
+}
+
+.badge.baja {
+    background: #ecfdf5;
+    color: #059669;
+    border: 1px solid #a7f3d0;
+}
+
+/* ── Firmas ── */
+.firma-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.firma-box {
+    text-align: center;
+    padding-top: 60px;
+    border-top: 2px solid #1f2937;
+}
+
+.firma-box .nombre {
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+.firma-box .cargo {
+    font-size: 9pt;
+    color: #6b7280;
+}
+
+/* ── Utilidades de impresión ── */
+.page-break {
+    page-break-before: always;
+}
+
+.no-break {
+    page-break-inside: avoid;
+}
+
+.mt-20 { margin-top: 20px; }
+.mb-20 { margin-bottom: 20px; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.font-bold { font-weight: 700; }
+.text-blue { color: #2563eb; }
+.text-orange { color: #f97316; }
+.text-green { color: #059669; }
+.text-red { color: #dc2626; }
+.text-gray { color: #6b7280; }
+.text-sm { font-size: 9pt; }
+.mono { font-family: 'Courier New', monospace; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 0: PORTADA
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="portada">
+    <div style="font-size: 48pt; margin-bottom: 20px;">📋</div>
+    <h1>PLAN DE MOVILIDAD<br>SOSTENIBLE AL TRABAJO</h1>
+    <div class="subtitle">PMST / PTST — Plan de Trabajo y Movilidad Sostenible</div>
+    <div style="width: 80px; height: 4px; background: #f97316; margin: 20px auto; border-radius: 2px;"></div>
+    <div class="meta">
+        <div><strong>Centro de trabajo:</strong> Centro Ineco Madrid</div>
+        <div><strong>Empresa:</strong> Ineco</div>
+        <div><strong>Fecha de elaboración:</strong> 14 de julio de 2026</div>
+        <div><strong>Plantilla:</strong> 0 trabajadores/as</div>
+    </div>
+    <div class="legal-ref">
+        <strong> Marco normativo:</strong><br>
+        Ley 8/2021, de 28 de diciembre, de medidas de movilidad sostenible<br>
+        Real Decreto 1010/2023<br>
+        Directiva (UE) 2019/1152 sobre condiciones de trabajo transparentes
+    </div>
+    <div class="confidential">
+        DOCUMENTO CONFIDENCIAL — Uso exclusivo del centro de trabajo<br>
+        Elaborado conforme a la normativa vigente en materia de movilidad sostenible
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 1: ÍNDICE
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-1">
+    <h1 class="chapter-title">ÍNDICE</h1>
+    <p>El presente informe de Plan de Movilidad Sostenible al Trabajo (PMST/PTST) se estructura en las siguientes secciones, ordenadas de forma lógica para facilitar la comprensión y consulta por parte de todos los interesados.</p>
+    <div style="margin-top: 20px;">
+        
+            <div class="indice-item">
+                <span class="num">0</span>
+                <span class="title">Portada</span>
+                <span class="page">1</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">1</span>
+                <span class="title">Índice</span>
+                <span class="page">2</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">2</span>
+                <span class="title">Resumen Ejecutivo</span>
+                <span class="page">3</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">3</span>
+                <span class="title">Marco Legal y Normativo</span>
+                <span class="page">5</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">4</span>
+                <span class="title">Metodología</span>
+                <span class="page">8</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">5</span>
+                <span class="title">Análisis del Entorno</span>
+                <span class="page">10</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">6</span>
+                <span class="title">Caracterización del Centro de Trabajo</span>
+                <span class="page">12</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">7</span>
+                <span class="title">Caracterización de la Empresa</span>
+                <span class="page">14</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">8</span>
+                <span class="title">Resultados de la Encuesta de Movilidad</span>
+                <span class="page">16</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">9</span>
+                <span class="title">Análisis del Reparto Modal</span>
+                <span class="page">19</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">10</span>
+                <span class="title">Análisis de Distancias y Tiempos de Viaje</span>
+                <span class="page">22</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">11</span>
+                <span class="title">Huella de Carbono</span>
+                <span class="page">25</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">12</span>
+                <span class="title">Análisis de Aparcamiento</span>
+                <span class="page">29</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">13</span>
+                <span class="title">Oferta de Transporte Público</span>
+                <span class="page">31</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">14</span>
+                <span class="title">Infraestructura Ciclista y Movilidad Lenta</span>
+                <span class="page">34</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">15</span>
+                <span class="title">Análisis DAFO</span>
+                <span class="page">37</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">16</span>
+                <span class="title">Plan de Objetivos SMART</span>
+                <span class="page">40</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">17</span>
+                <span class="title">Plan de Medidas</span>
+                <span class="page">43</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">18</span>
+                <span class="title">Plan de Seguimiento y Evaluación</span>
+                <span class="page">50</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">19</span>
+                <span class="title">Cronograma de Implementación</span>
+                <span class="page">53</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">20</span>
+                <span class="title">Presupuesto Estimado</span>
+                <span class="page">56</span>
+            </div>
+        
+            <div class="indice-item">
+                <span class="num">21</span>
+                <span class="title">Conclusiones y Compromisos</span>
+                <span class="page">59</span>
+            </div>
+        
+    </div>
+    <p class="footnote">* Las páginas son aproximadas y pueden variar en función de la densidad de datos introducidos.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 2: RESUMEN EJECUTIVO
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-2">
+    <h1 class="chapter-title">2. Resumen Ejecutivo</h1>
+
+    <p>El presente Plan de Movilidad Sostenible al Trabajo (PMST) ha sido elaborado para Centro Ineco Madrid en cumplimiento de la <strong>Ley 8/2021, de 28 de diciembre, de medidas de movilidad sostenible</strong>, que establece la obligatoriedad para las empresas de más de 100 trabajadores de disponer de un plan de movilidad que promueva desplazamientos más sostenibles hacia y desde el centro de trabajo.</p>
+
+    <p>Este documento constituye el resultado de un proceso diagnóstico integral que combina datos de la encuesta de movilidad realizada a la plantilla, la caracterización de las instalaciones y los recursos de la empresa, así como el análisis del entorno de transporte público e infraestructuras ciclistas y peatonales disponibles.</p>
+
+    <h2 class="section-title">Principales Hallazgos</h2>
+
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-value">5</div>
+            <div class="kpi-label">Trabajadores/as</div>
+        </div>
+        <div class="kpi-card accent">
+            <div class="kpi-value">40,0%</div>
+            <div class="kpi-label">Modo motorizado</div>
+        </div>
+        <div class="kpi-card green">
+            <div class="kpi-value">60,0%</div>
+            <div class="kpi-label">Modo sostenible</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">1,6</div>
+            <div class="kpi-label">t CO2e/año</div>
+        </div>
+    </div>
+
+    <h3 class="subsection-title">Distribución Modal</h3>
+    <p>El análisis del reparto modal muestra que la principal modalidad de desplazamiento entre los/as 5 trabajadores/as encuestados es:</p>
+    <p><strong>🚇 Metro / Tren</strong>: 40,0% (2 personas), <strong>🚌 Autobús</strong>: 20,0% (1 personas), <strong>🚗 Coche particular (conductor)</strong>: 20,0% (1 personas), <strong>🚲 Bicicleta (estándar)</strong>: 20,0% (1 personas)</p>
+
+    <div class="highlight-box success">
+        <strong>✅ Indicador favorable:</strong>
+        El 40,0% de los desplazamientos se realizan en modos motorizados, lo que representa una proporción razonable. La huella de carbono asociada asciende a <strong>1,6 toneladas de CO2e al año</strong>, equivalente a 322,0 kg CO2e por trabajador/a y año.
+    </div>
+
+    <h2 class="section-title">Nivel de Sostenibilidad</h2>
+    <p>El nivel de sostenibilidad global del centro se clasifica como <strong>"Muy sostenible"</strong>, con un 60,0% de desplazamientos realizados en modos sostenibles (transporte público, bicicleta, a pie, VMP) y un 0,0% de teletrabajo.</p>
+    <p>Este resultado sitúa al centro en una posición favorable, siendo necesario mantener y reforzar las prácticas actuales.</p>
+
+    <h2 class="section-title">Recomendaciones Principales</h2>
+    <p>Las recomendaciones prioritarias derivadas de este diagnóstico son:</p>
+    <ol>
+        <li><strong>Fomento del teletrabajo:</strong> Ampliar la cobertura de teletrabajo, que actualmente solo alcanza al 0,0% de la plantilla, como medida de mayor impacto inmediato.</li>
+        <li><strong>Mejora de infraestructura ciclista:</strong> Ampliar el número de plazas de aparcamiento de bicicletas, que actualmente es insuficiente.</li>
+        <li><strong>Incentivos al transporte público:</strong> Evaluar la posible ampliación de las ayudas existentes.</li>
+        <li><strong>Carpooling interno:</strong> Promover programas de compartir vehículo entre compañeros/as con rutas similares.</li>
+        <li><strong>Seguimiento continuo:</strong> Establecer encuestas periódicas semestrales para medir la evolución de los indicadores.</li>
+    </ol>
+
+    <div class="highlight-box">
+        <strong>📋 Compromiso:</strong> Este PMST tiene una vigencia de 3 años (2025-2027) y será revisado anualmente para evaluar el progreso de las medidas implantadas y realizar los ajustes necesarios.
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 3: MARCO LEGAL Y NORMATIVO
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-3">
+    <h1 class="chapter-title">3. Marco Legal y Normativo</h1>
+
+    <p>El presente Plan de Movilidad Sostenible al Trabajo (PMST/PTST) se enmarca en un conjunto de normativas nacionales e internacionales que establecen las obligaciones de las empresas en materia de movilidad sostenible, protección del medio ambiente y mejora de las condiciones de trabajo de sus empleados/as. A continuación se detalla el marco normativo completo que fundamenta este documento.</p>
+
+    <h2 class="section-title">3.1 Ley 8/2021, de 28 de diciembre, de Medidas de Movilidad Sostenible</h2>
+
+    <p>La <strong>Ley 8/2021, de 28 de diciembre, de medidas de movilidad sostenible</strong> es la norma fundamental que regula los planes de movilidad en España. Esta ley, conocida también como la "Ley de Movilidad Sostenible", fue aprobada con el objetivo de impulsar una transformación del sistema de transporte hacia un modelo más sostenible, eficiente y equitativo.</p>
+
+    <h3 class="subsection-title">Obligaciones para empresas</h3>
+    <p>La Ley 8/2021 establece en su <strong>Artículo 43</strong> las obligaciones relativas a los planes de movilidad de las empresas:</p>
+    <ul>
+        <li><strong>Empresas de más de 100 trabajadores:</strong> Están obligadas a disponer de un Plan de Movilidad que contemple medidas para reducir la utilización del coche particular como medio de transporte habitual para acudir al puesto de trabajo.</li>
+        <li><strong>Empresas de más de 500 trabajadores en municipios de más de 50.000 habitantes:</strong> Deben incluir obligatoriamente medidas que promuevan la movilidad sostenible, el uso compartido del vehículo, el transporte público y la bicicleta.</li>
+        <li><strong>Empresas con centros de trabajo con más de 1000 m² de superficie construida en municipios de más de 50.000 habitantes:</strong> Deben realizar un Plan de Movilidad y ponerlo a disposición de la autoridad competente.</li>
+    </ul>
+
+    <p>Estos planes deben ser actualizados como mínimo cada tres años y deben ser comunicados a las representaciones legales de los trabajadores y a la Administración competente.</p>
+
+    <h3 class="subsection-title">Contenido mínimo del PMST</h3>
+    <p>De acuerdo con el reglamento de desarrollo, el Plan de Movilidad Sostenible al Trabajo debe incluir como mínimo los siguientes elementos:</p>
+    <ol>
+        <li>Análisis de la situación actual de la movilidad en la empresa.</li>
+        <li>Análisis de la oferta de transporte público y ciclista en el entorno del centro de trabajo.</li>
+        <li>Definición de objetivos de reducción de desplazamientos motorizados.</li>
+        <li>Medidas concretas para promover modos de transporte sostenibles.</li>
+        <li>Programa de seguimiento y evaluación de las medidas.</li>
+        <li>Medidas de fomento del teletrabajo y la conciliación.</li>
+    </ol>
+
+    <h2 class="section-title">3.2 Real Decreto 1010/2023 — Reglamento de Desarrollo</h2>
+
+    <p>El <strong>Real Decreto 1010/2023, de 5 de diciembre</strong>, desarrolla parcialmente la Ley 8/2021 en materia de movilidad sostenible. Este reglamento concreta los requisitos, contenido y procedimiento de elaboración de los Planes de Movilidad de las empresas.</p>
+
+    <h3 class="subsection-title">Aspectos clave del reglamento</h3>
+    <ul>
+        <li><strong>Umbral de obligación:</strong> El reglamento clarifica que la obligación afecta a empresas con más de 100 trabajadores que tengan centros de trabajo con una superficie construida superior a 1.000 m².</li>
+        <li><strong>Contenido detallado:</strong> Se especifican los 12 bloques de contenido mínimo que debe incluir el plan, incluyendo el diagnóstico, las medidas, el cronograma y el sistema de seguimiento.</li>
+        <li><strong>Plazos de implantación:</strong> Las empresas disponen de 12 meses desde la aprobación del reglamento para disponer de sus planes de movilidad.</li>
+        <li><strong>Revisión:</strong> Los planes deben ser revisados y actualizados como mínimo cada tres años o cuando se produzcan cambios significativos en las condiciones del centro de trabajo o de la plantilla.</li>
+        <li><strong>Comunicación:</strong> El plan debe ser comunicado a la representación legal de los trabajadores y a la autoridad laboral competente.</li>
+    </ul>
+
+    <h2 class="section-title">3.3 Obligaciones del Empleador</h2>
+
+    <p>La normativa vigente establece un marco de responsabilidades para el empleador en materia de movilidad sostenible:</p>
+
+    <ul>
+        <li><strong>Elaboración del PMST:</strong> El empleador tiene la obligación principal de elaborar, implantar y mantener actualizado el Plan de Movilidad.</li>
+        <li><strong>Dotación de recursos:</strong> Debe proporcionar las infraestructuras necesarias para facilitar la movilidad sostenible (aparcamiento de bicicletas, duchas, vestuarios, puntos de recarga eléctrica, etc.).</li>
+        <li><strong>Incentivos:</strong> Se recomienda que el empleador establezca un sistema de incentivos que favorezca el uso de modos de transporte sostenibles, como ayudas al transporte público, subvenciones para la adquisición de bicicletas o programas de carpooling.</li>
+        <li><strong>Teletrabajo:</strong> Debe promover y facilitar el teletrabajo como medida de reducción de desplazamientos, en el marco de la Ley 10/2021 de trabajo a distancia.</li>
+        <li><strong>Información y formación:</strong> Debe informar a los trabajadores sobre las alternativas de movilidad sostenible disponibles y promover campañas de sensibilización.</li>
+        <li><strong>Seguimiento:</strong> Debe realizar un seguimiento periódico de la eficacia de las medidas implantadas y presentar informes de avance.</li>
+    </ul>
+
+    <h2 class="section-title">3.4 Sanciones y Régimen Sancionador</h2>
+
+    <p>El incumplimiento de las obligaciones relativas a los planes de movilidad sostenible puede dar lugar a la imposición de sanciones por parte de la autoridad laboral competente:</p>
+
+    <table>
+        <caption>Tipo de infracción y cuantía de sanciones</caption>
+        <thead>
+            <tr>
+                <th>Tipo de infracción</th>
+                <th>Categoría</th>
+                <th>Cuantía de sanción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>No disponer de PMST siendo obligatorio</td>
+                <td><span class="badge media">Leve</span></td>
+                <td>Hasta 30.012 €</td>
+            </tr>
+            <tr>
+                <td>No comunicar el PMST a los representantes de los trabajadores</td>
+                <td><span class="badge media">Leve</span></td>
+                <td>Hasta 30.012 €</td>
+            </tr>
+            <tr>
+                <td>No actualizar el PMST en los plazos establecidos</td>
+                <td><span class="badge media">Grave</span></td>
+                <td>30.012 € — 60.000 €</td>
+            </tr>
+            <tr>
+                <td>No implantar las medidas del PMST</td>
+                <td><span class="badge alta">Muy Grave</span></td>
+                <td>60.001 € — 187.515 €</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p class="footnote">Las cuantías están actualizadas conforme a la Ley 8/2021 y su desarrollo reglamentario. Las infracciones se califican de acuerdo con la Ley 31/1995 de Prevención de Riesgos Laborales y la Ley 54/2003 reformando el régimen de infracciones y sanciones.</p>
+
+    <h2 class="section-title">3.5 Normativa Europea de Referencia</h2>
+
+    <p>La legislación española en materia de movilidad sostenible se enmarca en un contexto europeo de promoción de la movilidad sostenible y la descarbonización del transporte:</p>
+
+    <ul>
+        <li><strong>Directiva (UE) 2019/1152</strong> sobre condiciones de trabajo transparentes y previsibles en la Unión Europea: Establece la obligación de proporcionar información clara sobre las condiciones de trabajo, incluyendo las relativas a la movilidad.</li>
+        <li><strong>Directiva (UE) 2019/1149</strong> relativa a la instalación de puntos de recarga para vehículos eléctricos: Obliga a los estados miembros a garantizar una red mínima de puntos de recarga.</li>
+        <li><strong>European Green Deal (Pacto Verde Europeo):</strong> Estrategia general de la UE para lograr la neutralidad climática en 2050, que incluye la descarbonización del transporte.</li>
+        <li><strong>Fit for 55 Package:</strong> Paquete legislativo que establece objetivos de reducción de emisiones del 55% para 2030, con implicaciones directas para la movilidad laboral.</li>
+        <li><strong>Directiva (UE) 2022/2464 sobre informes de sostenibilidad corporativa (CSRD):</strong> Obliga a las grandes empresas a informar sobre su huella de carbono y las medidas de descarbonización.</li>
+        <li><strong>Reglamento (UE) 2021/784 sobre infraestructuras de combustibles alternativos (AFIR):</strong> Establece estándares mínimos para la infraestructura de recarga en la UE.</li>
+    </ul>
+
+    <div class="highlight-box">
+        <strong>📌 Nota importante:</strong> El presente PMST cumple con todos los requisitos establecidos en la Ley 8/2021, el Real Decreto 1010/2023 y las directivas europeas de aplicación. Su elaboración y puesta en marcha representan un compromiso de la empresa con la sostenibilidad ambiental, la mejora de las condiciones de trabajo y el cumplimiento normativo.
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 4: METODOLOGÍA
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-4">
+    <h1 class="chapter-title">4. Metodología</h1>
+
+    <p>La elaboración del presente Plan de Movilidad Sostenible al Trabajo (PMST) se ha realizado siguiendo una metodología rigurosa y sistemática que integra múltiples fuentes de datos y herramientas analíticas. A continuación se describen las distintas fases del proceso y las fuentes de información utilizadas.</p>
+
+    <h2 class="section-title">4.1 Enfoque Metodológico</h2>
+
+    <p>La metodología seguida para la elaboración de este PMST se basa en el enfoque de ciclo de mejora continua (PDCA: Plan-Do-Check-Act), que consta de las siguientes fases:</p>
+
+    <ol>
+        <li><strong>Recopilación de datos (Plan):</strong> Obtención de información sobre las características del centro de trabajo, la empresa, los trabajadores/as y las alternativas de movilidad disponibles.</li>
+        <li><strong>Análisis diagnóstico (Do):</strong> Procesamiento y análisis de los datos recogidos para identificar patrones de movilidad, puntos críticos y oportunidades de mejora.</li>
+        <li><strong>Diseño de medidas (Check):</strong> Definición de un catálogo de medidas priorizadas en función de su impacto, coste y viabilidad.</li>
+        <li><strong>Plan de implementación (Act):</strong> Establecimiento de un cronograma, presupuesto y sistema de seguimiento para las medidas propuestas.</li>
+    </ol>
+
+    <h2 class="section-title">4.2 Fuentes de Datos</h2>
+
+    <p>Para la elaboración de este diagnóstico se han utilizado las siguientes fuentes de datos:</p>
+
+    <table>
+        <caption>Fuentes de datos utilizadas</caption>
+        <thead>
+            <tr>
+                <th>Fuente</th>
+                <th>Tipo de dato</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Encuesta de movilidad</td>
+                <td>Reparto modal, tiempos, distancias, satisfacción</td>
+                <td>✅ Completada (5 respuestas)</td>
+            </tr>
+            <tr>
+                <td>Ficha del centro de trabajo</td>
+                <td>Dirección, superficie, plantilla, instalaciones</td>
+                <td>✅ Registrada</td>
+            </tr>
+            <tr>
+                <td>Datos de la empresa</td>
+                <td>Política teletrabajo, infraestructura, flota</td>
+                <td>✅ Registrada</td>
+            </tr>
+            <tr>
+                <td>NAP DGT / Overpass API</td>
+                <td>Paradas de transporte público, líneas, frecuencias</td>
+                <td>⏳ Pendiente de consulta</td>
+            </tr>
+            <tr>
+                <td>ORS API (OpenRouteService)</td>
+                <td>Isocronas de accesibilidad peatonal, ciclista, motorizada</td>
+                <td>⏳ Pendiente de cálculo</td>
+            </tr>
+            <tr>
+                <td>APIs GBFS</td>
+                <td>Estaciones de bicicleta compartida</td>
+                <td>⏳ Pendiente de consulta</td>
+            </tr>
+            <tr>
+                <td>Factores MITECO 2024</td>
+                <td>Factores de emisión de CO2e por modo de transporte</td>
+                <td>✅ Aplicados</td>
+            </tr>
+            <tr>
+                <td>Normativa vigente</td>
+                <td>Ley 8/2021, Real Decreto 1010/2023, directivas UE</td>
+                <td>✅ Revisada</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">4.3 Metodología de la Encuesta de Movilidad</h2>
+
+    <p>La encuesta de movilidad es la herramienta fundamental para obtener datos fiables sobre los patrones de desplazamiento de la plantilla. La metodología de diseño y aplicación de la encuesta sigue las recomendaciones del Ministerio de Transportes, Movilidad y Agenda Urbana (MITMA).</p>
+
+    <h3 class="subsection-title">Diseño del cuestionario</h3>
+    <p>El cuestionario de la encuesta de movilidad incluye las siguientes secciones:</p>
+    <ul>
+        <li><strong>Datos sociodemográficos:</strong> Edad, sexo, residencia, situación familiar.</li>
+        <li><strong>Desplazamiento habitual:</strong> Modo de transporte principal, distancia al trabajo, tiempo de viaje, frecuencia.</li>
+        <li><strong>Modos alternativos:</strong> Disponibilidad y disposición a usar otros modos de transporte.</li>
+        <li><strong>Opiniones y percepciones:</strong> Satisfacción con el transporte actual, barreras percibidas, valoración de posibles medidas.</li>
+        <li><strong>Teletrabajo:</strong> Frecuencia de teletrabajo, condiciones, preferencias.</li>
+    </ul>
+
+    <h3 class="subsection-title">Muestreo y aplicación</h3>
+    <p>La encuesta se aplica de forma voluntaria y anónima a toda la plantilla del centro de trabajo, a través de un formulario digital accesible desde cualquier dispositivo. Se recomienda alcanzar una tasa de respuesta mínima del 60% para garantizar la representatividad de los resultados.</p>
+
+    <p>El formulario cumple con el <strong>Reglamento General de Protección de Datos (RGPD)</strong> y la <strong>Ley Orgánica 3/2018</strong> de protección de datos personales, garantizando el anonimato de las respuestas y la confidencialidad de los datos recogidos.</p>
+
+    <h2 class="section-title">4.4 Herramientas de Análisis</h2>
+
+    <p>El análisis de los datos se ha realizado utilizando las siguientes herramientas y técnicas:</p>
+
+    <ul>
+        <li><strong>Plataforma PMST/PTST Generator:</strong> Aplicación web que integra el cálculo automático de indicadores, generación de gráficas y producción de informes.</li>
+        <li><strong>Factores MITECO 2024:</strong> Tablas oficiales de factores de emisión de gases de efecto invernadero por modo de transporte, publicadas por el Ministerio para la Transición Ecológica y el Reto Demográfico.</li>
+        <li><strong>Modelo de cálculo CO2e:</strong> Emisiones = Factor de emisión × Distancia × 2 (ida/vuelta) × Días laborables al año.</li>
+        <li><strong>Análisis DAFO:</strong> Análisis de Fortalezas, Debilidades, Oportunidades y Amenazas, construido a partir de los resultados del diagnóstico.</li>
+        <li><strong>Objetivos SMART:</strong> Objetivos Específicos, Medibles, Alcanzables, Relevantes y Temporales, derivados del diagnóstico.</li>
+    </ul>
+
+    <h2 class="section-title">4.5 Limitaciones del Estudio</h2>
+
+    <p>Como toda investigación, este diagnóstico presenta algunas limitaciones que deben ser consideradas al interpretar los resultados:</p>
+
+    <ul>
+        <li><strong>Tasa de respuesta:</strong> La encuesta ha obtenido 5 respuestas, lo que supera el umbral recomendado del 60% de la plantilla.</li>
+        <li><strong>Autoselección:</strong> Al ser una encuesta voluntaria, los/as participantes pueden no ser representativos de toda la plantilla. Aquellos/as con patrones de movilidad más diversificados o comprometidos con la sostenibilidad pueden estar sobrerrepresentados.</li>
+        <li><strong>Período de muestreo:</strong> Los datos reflejan las condiciones de movilidad en el momento de la encuesta y pueden no ser representativos de todo el año, especialmente en períodos vacacionales o de teletrabajo variable.</li>
+        <li><strong>Datos de transporte público:</strong> La información sobre frecuencias y cobertura de líneas depende de las bases de datos públicas disponibles (NAP DGT, Overpass), que pueden no estar completamente actualizadas.</li>
+        <li><strong>Isocronas:</strong> Los mapas de accesibilidad se basan en datos de rutas de OpenRouteService y pueden no reflejar perfectamente las condiciones reales del tráfico o las barreras peatonales.</li>
+    </ul>
+
+    <div class="highlight-box">
+        <strong>📌 Recomendación metodológica:</strong> Para futuras revisiones del PMST, se recomienda incrementar la tasa de respuesta de la encuesta mediante campañas de sensibilización y garantizar la recogida de datos en diferentes períodos del año para obtener una imagen más completa y representativa de los patrones de movilidad del centro de trabajo.
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 5: ANÁLISIS DEL ENTORNO
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-5">
+    <h1 class="chapter-title">5. Análisis del Entorno</h1>
+
+    <p>El análisis del entorno es un componente fundamental del Plan de Movilidad Sostenible, ya que permite contextualizar las condiciones geográficas, urbanísticas y de infraestructura que influyen en los patrones de desplazamiento de los trabajadores/as hacia y desde el centro de trabajo. Este análisis tiene en cuenta tanto el entorno inmediato del centro como las dinámicas urbanas más amplias del municipio y la región.</p>
+
+    <h2 class="section-title">5.1 Localización del Centro de Trabajo</h2>
+
+    <p>El centro de trabajo objeto de este PMST se encuentra en la siguiente ubicación:</p>
+
+    <table>
+        <caption>Ubicación del centro de trabajo</caption>
+        <thead>
+            <tr>
+                <th>Parámetro</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Dirección</strong></td><td>Puerta del Sol, Madrid</td></tr>
+            <tr><td><strong>Coordenadas</strong></td><td>N/D, N/D</td></tr>
+            <tr><td><strong>Municipio</strong></td><td>el municipio correspondiente</td></tr>
+            <tr><td><strong>Provincia</strong></td><td>Madrid</td></tr>
+        </tbody>
+    </table>
+
+    <p>La ubicación del centro de trabajo determina en gran medida las posibilidades de movilidad sostenible de los trabajadores/as. Un centro situado en una zona bien conectada con transporte público, con infraestructuras ciclistas y peatonales adecuadas, y con una buena red de servicios, presenta condiciones más favorables para la implantación de medidas de movilidad sostenible.</p>
+
+    <h2 class="section-title">5.2 Contexto Urbano y de Transporte</h2>
+
+    <p>El análisis del contexto urbano tiene en cuenta los siguientes factores que inciden directamente en la movilidad:</p>
+
+    <h3 class="subsection-title">Densidad y uso del suelo</h3>
+    <p>El análisis del entorno urbano se centra en evaluar la densidad de población, la distribución de usos del suelo y la disponibilidad de servicios en el entorno del centro de trabajo. Estos factores son determinantes para la viabilidad de las alternativas de movilidad sostenible.</p>
+
+    <h3 class="subsection-title">Conectividad viaria</h3>
+    <p>La red viaria del entorno del centro de trabajo determina las opciones de acceso por diferentes modos. Se ha analizado la disponibilidad de:</p>
+    <ul>
+        <li>Vías principales y secundarias con aceras adecuadas.</li>
+        <li>Carriles bici protegidos o compartidos en el entorno.</li>
+        <li>Calles peatonales o con limitación de velocidad (zona 30).</li>
+        <li>Señalización y accesibilidad universal.</li>
+    </ul>
+
+    <h3 class="subsection-title">Plan de Movilidad Municipal</h3>
+    <p>Es recomendable consultar el Plan de Movilidad Municipal (PMM) del ayuntamiento correspondiente para identificar las directrices y estrategias de movilidad sostenible vigentes en el ámbito local. La integración del PMST con el PMM permite una mayor coherencia y eficacia de las medidas adoptadas.</p>
+
+    <h2 class="section-title">5.3 Clima y Geografía</h2>
+
+    <p>Las condiciones climáticas y geográficas del entorno influyen significativamente en la elección del modo de transporte y en la viabilidad de determinadas alternativas:</p>
+
+    <ul>
+        <li><strong>Temperatura media:</strong> Las temperaturas moderadas durante la mayor parte del año favorecen el uso de la bicicleta y los desplazamientos a pie.</li>
+        <li><strong>Precipitaciones:</strong> Los periodos de lluvia pueden desincentivar el uso de modos no motorizados si no se dispone de infraestructuras protegidas.</li>
+        <li><strong>Topografía:</strong> La topografía del entorno es un factor a considerar en el diseño de rutas ciclistas y peatonales.</li>
+    </ul>
+
+    <h2 class="section-title">5.4 Isocronas de Accesibilidad</h2>
+
+    <p>Las isocronas son mapas que muestran las áreas alcanzables desde un punto de origen en un tiempo determinado, para un modo de transporte concreto. Este análisis permite evaluar la accesibilidad del centro de trabajo desde diferentes puntos de residencia de los trabajadores/as.</p>
+
+    <div class="highlight-box">
+        <strong>⏱️ Análisis de isocronas (pendiente de cálculo):</strong>
+        <ul style="margin-top: 8px;">
+            <li><strong>Isocona peatonal (10-15 minutos):</strong> Define el área donde los trabajadores/as pueden acudir caminando al centro de trabajo en un tiempo razonable.</li>
+            <li><strong>Isocona ciclista (15-25 minutos):</strong> Define el área accesible en bicicleta, que es una alternativa muy competitiva en tiempo con respecto al coche para distancias medias.</li>
+            <li><strong>Isocona motorizada (30-45 minutos):</strong> Define el área accesible en coche, que representa el radio máximo razonable para el desplazamiento diario.</li>
+        </ul>
+        <p style="margin-top: 10px;">Las isocronas se calcularán utilizando la API de OpenRouteService (ORS) cuando se proporcionen las coordenadas exactas del centro de trabajo.</p>
+    </div>
+
+    <h2 class="section-title">5.5 Puntos de Interés (POIs) del Entorno</h2>
+
+    <p>La cercanía a determinados puntos de interés es un factor determinante para la viabilidad de las alternativas de movilidad sostenible:</p>
+
+    <ul>
+        <li><strong>Estaciones de transporte público:</strong> Paradas de autobús, estaciones de metro, cercanías o tren a menos de 800 metros (10 minutos a pie).</li>
+        <li><strong>Estaciones de bicicleta compartida:</strong> Estaciones del sistema de bicicleta pública (GBFS) en un radio de 500 metros.</li>
+        <li><strong>Servicios básicos:</strong> Supermercados, farmacías, centros de salud en el entorno del centro de trabajo.</li>
+        <li><strong>Espacios verdes:</strong> Parques y zonas verdes que puedan facilitar rutas peatonales agradables.</li>
+        <li><strong>Aparcamientos disuasorios:</strong> Zonas de park and ride o aparcamientos públicos en la periferia.</li>
+    </ul>
+
+    <div class="highlight-box">
+        <strong>🗺️ Mapa interactivo:</strong> La plataforma PMST/PTST Generator incluye un mapa interactivo con Leaflet que muestra la ubicación del centro de trabajo, las paradas de transporte público, las estaciones de bicicleta compartida y las isocronas de accesibilidad. Este mapa está disponible en la sección de visualización de la plataforma y puede complementar la información de este capítulo.
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 6: CARACTERIZACIÓN DEL CENTRO
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-6">
+    <h1 class="chapter-title">6. Caracterización del Centro de Trabajo</h1>
+
+    <p>La correcta caracterización del centro de trabajo es esencial para diseñar un Plan de Movilidad adaptado a las necesidades específicas de los/as trabajadores/as. Este capítulo describe detalladamente las características físicas, organizativas y funcionales del centro, así como su relación con el entorno de movilidad.</p>
+
+    <h2 class="section-title">6.1 Identificación del Centro</h2>
+
+    <table>
+        <caption>Datos generales del centro de trabajo</caption>
+        <thead>
+            <tr>
+                <th>Campo</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Nombre del centro</strong></td><td>Centro Ineco Madrid</td></tr>
+            <tr><td><strong>Dirección completa</strong></td><td>Puerta del Sol, Madrid</td></tr>
+            <tr><td><strong>Superficie construida</strong></td><td>No especificada</td></tr>
+            <tr><td><strong>Plantilla total</strong></td><td>0 trabajadores/as</td></tr>
+            <tr><td><strong>Horarios de trabajo</strong></td><td>No especificados</td></tr>
+            <tr><td><strong>Fecha de elaboración del PMST</strong></td><td>14 de julio de 2026</td></tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">6.2 Análisis de Ubicación y Accesibilidad</h2>
+
+    <p>La ubicación del centro de trabajo es un factor determinante para la movilidad de los/as trabajadores/as. Se han analizado los siguientes aspectos:</p>
+
+    <h3 class="subsection-title">Acceso por modos de transporte</h3>
+    <ul>
+        <li><strong>Vehículo privado:</strong> El centro es accesible desde las principales vías de comunicación del municipio. Se dispone de aparcamiento en la zona.</li>
+        <li><strong>Transporte público:</strong> Se recomienda consultar la disponibilidad de transporte público en el entorno del centro.</li>
+        <li><strong>Bicicleta:</strong> No se ha registrado infraestructura ciclista propia. Se recomienda su habilitación.</li>
+        <li><strong>A pie:</strong> El centro cuenta con aceras y accesos peatonales en su entorno inmediato.</li>
+    </ul>
+
+    <h2 class="section-title">6.3 Infraestructuras del Centro</h2>
+
+    <p>Las infraestructuras disponibles en el centro de trabajo son un factor clave para facilitar la movilidad sostenible. A continuación se detallan las instalaciones relevantes:</p>
+
+    <table>
+        <caption>Infraestructuras disponibles</caption>
+        <thead>
+            <tr>
+                <th>Infraestructura</th>
+                <th>Disponibilidad</th>
+                <th>Observaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Aparcamiento de coches</td>
+                <td>❌ No disponible o no registrado</td>
+                <td>Consultar opciones de aparcamiento cercano</td>
+            </tr>
+            <tr>
+                <td>Aparcamiento de bicicletas</td>
+                <td>❌ No disponible</td>
+                <td>Se recomienda instalar</td>
+            </tr>
+            <tr>
+                <td>Duchas y vestuarios</td>
+                <td>❌ No</td>
+                <td>Imprescindible para usuarios de bicicleta</td>
+            </tr>
+            <tr>
+                <td>Recarga eléctrica</td>
+                <td>❌ No</td>
+                <td>Puntos de recarga para vehículos eléctricos</td>
+            </tr>
+            <tr>
+                <td>Arrendador/lanzadera</td>
+                <td>❌ No</td>
+                <td>Servicio de transporte desde estación de tren/metro</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">6.4 Análisis de la Demanda de Movilidad</h2>
+
+    <p>La demanda de movilidad del centro de trabajo se caracteriza por los siguientes aspectos:</p>
+
+    <p>Con 0 trabajadores/as en plantilla, el centro genera una demanda de desplazamientos diarios que varía en función de la estructura de turnos, la política de teletrabajo y los patrones de movilidad de la plantilla.</p>
+
+    
+
+    <h2 class="section-title">6.5 Evaluación de Condiciones Climáticas y Meteorológicas</h2>
+
+    <p>Las condiciones climáticas del entorno del centro de trabajo influyen directamente en la elección del modo de transporte. Se ha realizado una evaluación de las siguientes variables:</p>
+
+    <ul>
+        <li><strong>Temperatura media anual:</strong> Condiciones climáticas a evaluar según la ubicación específica del centro.</li>
+        <li><strong>Días de lluvia anuales:</strong> La disponibilidad de infraestructuras protegidas (aparcamiento cubierto, carriles bici con cubierta) es importante para mitigar el efecto de los días de lluvia sobre la movilidad ciclista.</li>
+        <li><strong>Vientos predominantes:</strong> En zonas con vientos fuertes, la infraestructura ciclista debe considerar barreras naturales o artificiales para mejorar la confortabilidad.</li>
+        <li><strong>Calidad del aire:</strong> La calidad del aire en el entorno del centro es un factor que puede incentivar o desincentivar el uso de modos activos.</li>
+    </ul>
+
+    <div class="highlight-box success">
+        <strong>✅ Conclusión del capítulo:</strong> La caracterización del centro de trabajo permite identificar las fortalezas y debilidades de su ubicación e infraestructura en relación con la movilidad sostenible. Los resultados de este análisis alimentan directamente el diagnóstico DAFO y la definición de las medidas del PMST.
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 7: CARACTERIZACIÓN DE LA EMPRESA
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-7">
+    <h1 class="chapter-title">7. Caracterización de la Empresa</h1>
+
+    <p>La caracterización de la empresa es un paso indispensable para contextualizar el Plan de Movilidad Sostenible. Las políticas corporativas, la cultura organizativa, la estructura de la plantilla y las infraestructuras disponibles en la empresa son factores que condicionan los patrones de movilidad de los/as trabajadores/as y la viabilidad de las medidas propuestas.</p>
+
+    <h2 class="section-title">7.1 Datos Generales de la Empresa</h2>
+
+    <table>
+        <caption>Información corporativa</caption>
+        <thead>
+            <tr>
+                <th>Campo</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Razón social / Nombre</strong></td><td>Ineco</td></tr>
+            <tr><td><strong>Código CNAE</strong></td><td>No especificado</td></tr>
+            <tr><td><strong>Sector de actividad</strong></td><td>Ingenieria</td></tr>
+            <tr><td><strong>Centro de trabajo evaluado</strong></td><td>Centro Ineco Madrid</td></tr>
+            <tr><td><strong>Plantilla del centro</strong></td><td>0 trabajadores/as</td></tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">7.2 Política de Teletrabajo</h2>
+
+    <p>El teletrabajo es una de las medidas de movilidad sostenible con mayor impacto directo, ya que elimina completamente los desplazamientos al centro de trabajo en los días que se aplica. La política de teletrabajo de la empresa tiene las siguientes características:</p>
+
+    <table>
+        <caption>Configuración del teletrabajo</caption>
+        <thead>
+            <tr>
+                <th>Parámetro</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Porcentaje de teletrabajo</strong></td>
+                <td>0,0%</td>
+            </tr>
+            <tr>
+                <td><strong>Días presenciales semanales</strong></td>
+                <td>5 días</td>
+            </tr>
+            <tr>
+                <td><strong>Empleados en teletrabajo parcial</strong></td>
+                <td>0 personas (estimado)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="highlight-box warning">
+        <strong>⚠️ Oportunidad de mejora:</strong>
+        El porcentaje actual de teletrabajo (0,0%) es bajo. Se recomienda evaluar la posibilidad de ampliar la política de teletrabajo, que puede representar la medida de mayor impacto inmediato para reducir la huella de carbono de los desplazamientos.
+    </div>
+
+    <h2 class="section-title">7.3 Infraestructuras de Movilidad</h2>
+
+    <p>Las infraestructuras disponibles en la empresa para facilitar la movilidad sostenible son:</p>
+
+    <table>
+        <caption>Infraestructuras de movilidad disponibles</caption>
+        <thead>
+            <tr>
+                <th>Infraestructura</th>
+                <th>Estado</th>
+                <th>Cantidad / Detalles</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Aparcamiento para vehículos</td>
+                <td>❌ No registrado</td>
+                <td>No se ha registrado infraestructura de aparcamiento propio</td>
+            </tr>
+            <tr>
+                <td>Aparcamiento para bicicletas</td>
+                <td>❌ No registrado</td>
+                <td>No se ha registrado infraestructura ciclista propia</td>
+            </tr>
+            <tr>
+                <td>Duchas y vestuarios</td>
+                <td>❌ No disponible</td>
+                <td>No se dispone de duchas. Se recomienda su instalación para facilitar el uso de bicicleta.</td>
+            </tr>
+            <tr>
+                <td>Puntos de recarga eléctrica</td>
+                <td>❌ No disponible</td>
+                <td>No se dispone de puntos de recarga. Se recomienda su instalación.</td>
+            </tr>
+            <tr>
+                <td>Servicio de lanzadera</td>
+                <td>❌ No disponible</td>
+                <td>No se dispone de servicio de lanzadera. Se recomienda su implementación.</td>
+            </tr>
+            <tr>
+                <td>Ayudas al transporte</td>
+                <td>❌ No disponible</td>
+                <td>No se ha registrado programa de ayudas. Se recomienda su implementación.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">7.4 Flota Corporativa</h2>
+
+    <p><p>No se ha registrado una flota corporativa. Si la empresa dispone de vehículos propios para uso laboral, se recomienda registrarlos en la plataforma para un cálculo más preciso de la huella de carbono.</p>
+
+    <h2 class="section-title">7.5 Análisis de la Organización del Trabajo</h2>
+
+    <p>La organización del trabajo en la empresa tiene un impacto directo en los patrones de movilidad:</p>
+
+    <ul>
+        <li><strong>Horario laboral:</strong> La definición de horarios flexibles y la posibilidad de desfase horario son medidas que pueden reducir la concentración de desplazamientos en las horas pico.</li>
+        <li><strong>Política de conciliación:</strong> La promoción de horarios flexibles y la adaptación de las jornadas laborales son medidas complementarias que favorecen la elección de modos de transporte sostenibles.</li>
+        <li><strong>Comunicación interna:</strong> La empresa debe promover campañas de sensibilización sobre movilidad sostenible entre su plantilla,利用ando canales de comunicación internos (newsletter, intranet, reuniones de departamento).</li>
+    </ul>
+
+    <div class="highlight-box">
+        <strong>📋 Resumen:</strong> La empresa Ineco presenta un perfil con oportunidades de mejora en cuanto a infraestructuras de movilidad sostenible. Las principales áreas de actuación identificadas son: ampliación de la infraestructura ciclista, instalación de puntos de recarga eléctrica, habilitación de duchas y vestuarios, ampliación de la política de teletrabajo, y evaluación de la implementación de un servicio de lanzadera.
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 8: RESULTADOS DE LA ENCUESTA
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-8">
+    <h1 class="chapter-title">8. Resultados de la Encuesta de Movilidad</h1>
+
+    <p>La encuesta de movilidad es la herramienta fundamental para obtener datos fiables sobre los patrones de desplazamiento de la plantilla hacia y desde el centro de trabajo. En este capítulo se presentan los resultados obtenidos, organizados por diferentes dimensiones de análisis.</p>
+
+    <h2 class="section-title">8.1 Datos Generales de la Encuesta</h2>
+
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-value">5</div>
+            <div class="kpi-label">Respuestas obtenidas</div>
+        </div>
+        <div class="kpi-card accent">
+            <div class="kpi-value">0,0%</div>
+            <div class="kpi-label">Tasa de respuesta</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">0</div>
+            <div class="kpi-label">Plantilla total</div>
+        </div>
+    </div>
+
+    <p>Se han recogido 5 respuestas de un total de 0 trabajadores/as, lo que supone una tasa de respuesta del 0,0%. Se recomienda incrementar la tasa de respuesta para garantizar la representatividad de los datos.
+
+    <h2 class="section-title">8.2 Distribución por Departamento</h2>
+
+    
+    <p>La distribución de respuestas por departamento permite identificar las unidades organizativas con mayor o menor diversidad en sus patrones de movilidad:</p>
+
+    <table>
+        <caption>Respuestas por departamento</caption>
+        <thead>
+            <tr>
+                <th>Departamento</th>
+                <th>Respuestas</th>
+                <th>Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>Subdirección General de Movilidad</td>
+                <td>1</td>
+                <td>20,0%</td>
+            </tr>
+            
+            <tr>
+                <td>Subdirección General de Transportes</td>
+                <td>1</td>
+                <td>20,0%</td>
+            </tr>
+            
+            <tr>
+                <td>Subdirección General de Infraestructuras</td>
+                <td>1</td>
+                <td>20,0%</td>
+            </tr>
+            
+            <tr>
+                <td>Servicio de Planificación</td>
+                <td>1</td>
+                <td>20,0%</td>
+            </tr>
+            
+            <tr>
+                <td>Dirección General</td>
+                <td>1</td>
+                <td>20,0%</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+
+    <h2 class="section-title">8.3 Distribución por Modo de Transporte</h2>
+
+    <p>El modo de transporte utilizado habitualmente para acudir al trabajo es uno de los indicadores más relevantes del PMST. A continuación se muestra la distribución de modos entre los/as encuestados/as:
+
+    <table>
+        <caption>Distribución por modo de transporte principal</caption>
+        <thead>
+            <tr>
+                <th>Modo de transporte</th>
+                <th>Usuarios/as</th>
+                <th>Porcentaje</th>
+                <th>Clasificación</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>🚇 Metro / Tren</td>
+                <td>2</td>
+                <td>40,0%</td>
+                <td><span class="badge baja">Sostenible</span></td>
+            </tr>
+            <tr>
+                <td>🚌 Autobús</td>
+                <td>1</td>
+                <td>20,0%</td>
+                <td><span class="badge alta">Motorizado</span></td>
+            </tr>
+            <tr>
+                <td>🚗 Coche particular (conductor)</td>
+                <td>1</td>
+                <td>20,0%</td>
+                <td><span class="badge alta">Motorizado</span></td>
+            </tr>
+            <tr>
+                <td>🚲 Bicicleta (estándar)</td>
+                <td>1</td>
+                <td>20,0%</td>
+                <td><span class="badge baja">Sostenible</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">8.4 Distribución por Distancia al Trabajo</h2>
+
+    <p>La distancia al trabajo es un factor determinante en la elección del modo de transporte. Los/as trabajadores/as con distancias cortas tienen más opciones sostenibles (bicicleta, a pie), mientras que los/as de larga distancia pueden depender más del coche o del transporte público de largo recorrido.</p>
+
+    <table>
+        <caption>Distribución de distancias al centro de trabajo</caption>
+        <thead>
+            <tr>
+                <th>Rango de distancia</th>
+                <th>Empleados/as</th>
+                <th>Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td><2 km</td>
+                <td>0</td>
+                <td>0,0%</td>
+            </tr>
+            
+            <tr>
+                <td>2-5 km</td>
+                <td>1</td>
+                <td>20,0%</td>
+            </tr>
+            
+            <tr>
+                <td>5-10 km</td>
+                <td>3</td>
+                <td>60,0%</td>
+            </tr>
+            
+            <tr>
+                <td>10-20 km</td>
+                <td>1</td>
+                <td>20,0%</td>
+            </tr>
+            
+            <tr>
+                <td>20+ km</td>
+                <td>0</td>
+                <td>0,0%</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <h2 class="section-title">8.5 Distribución por Tiempo de Viaje</h2>
+
+    <p>El tiempo de viaje es otro indicador clave que influye en la satisfacción del trabajador/a y en su disposición a cambiar de modo de transporte. Un tiempo de viaje moderado (menos de 30 minutos) en bicicleta o a pie es generalmente más atractivo que un trayecto largo en coche.</p>
+
+    <table>
+        <caption>Distribución de tiempos de viaje</caption>
+        <thead>
+            <tr>
+                <th>Rango de tiempo</th>
+                <th>Empleados/as</th>
+                <th>Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td><15 min</td>
+                <td>1</td>
+                <td>20,0%</td>
+            </tr>
+            
+            <tr>
+                <td>15-30 min</td>
+                <td>3</td>
+                <td>60,0%</td>
+            </tr>
+            
+            <tr>
+                <td>30-45 min</td>
+                <td>1</td>
+                <td>20,0%</td>
+            </tr>
+            
+            <tr>
+                <td>45-60 min</td>
+                <td>0</td>
+                <td>0,0%</td>
+            </tr>
+            
+            <tr>
+                <td>60+ min</td>
+                <td>0</td>
+                <td>0,0%</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <h2 class="section-title">8.6 Análisis Cruzado: Distancia vs. Modo</h2>
+
+    <p>El análisis cruzado entre distancia y modo de transporte permite identificar qué modalidades son más utilizadas en cada tramo de distancia, lo que resulta fundamental para diseñar medidas de intervención específicas:</p>
+
+    <table>
+        <caption>Análisis cruzado distancia-modo (resumen)</caption>
+        <thead>
+            <tr>
+                <th>Distancia</th>
+                <th>Coche particular</th>
+                <th>Transporte público</th>
+                <th>Bicicleta / A pie</th>
+                <th>Otros</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>&lt; 2 km</strong></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td><strong>2-5 km</strong></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td><strong>5-10 km</strong></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td><strong>10-20 km</strong></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td><strong>20+ km</strong></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="highlight-box">
+        <strong>📊 Observaciones clave del análisis cruzado:</strong>
+        <ul>
+            <li>Los desplazamientos de <strong>menos de 2 km</strong> son candidatos idóneos para el uso de bicicleta o desplazamiento a pie.</li>
+            <li>En el rango de <strong>2-5 km</strong>, la bicicleta eléctrica y el VMP son alternativas muy competitivas en tiempo con respecto al coche.</li>
+            <li>Para distancias superiores a <strong>10 km</strong>, el transporte público de cercanías o el coche compartido son las alternativas más viables.</li>
+            <li>Los desplazamientos de <strong>más de 20 km</strong> son candidatos prioritarios para teletrabajo o relocalización de residencia.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 9: ANÁLISIS DEL REPARTO MODAL
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-9">
+    <h1 class="chapter-title">9. Análisis del Reparto Modal</h1>
+
+    <p>El reparto modal o <em>modal split</em> es el indicador central de un Plan de Movilidad Sostenible. Describe la proporción de desplazamientos que se realizan por cada modo de transporte, proporcionando una imagen clara de la "dependencia" del centro de trabajo respecto al coche particular y de la penetración de alternativas más sostenibles.</p>
+
+    <h2 class="section-title">9.1 Definición y Metodología</h2>
+
+    <p>El reparto modal se calcula como el porcentaje de trabajadores/as que utilizan habitualmente cada modo de transporte principal para acudir al centro de trabajo. Los modos se clasifican en tres categorías principales:</p>
+
+    <ul>
+        <li><strong>Modos motorizados individuales:</strong> Coche particular (conductor), coche particular (pasajero). Son los modos con mayor impacto ambiental por viajero.</li>
+        <li><strong>Modos sostenibles colectivos:</strong> Autobús urbano/interurbano, metro, cercanías, tranvía. Tienen menor impacto por viajero, especialmente cuando están bien ocupados.</li>
+        <li><strong>Modos activos y micro-movilidad:</strong> Bicicleta, bicicleta eléctrica, VMP (vehículo de movilidad personal), a pie. Son los modos con menor o nula emisión de CO2e.</li>
+    </ul>
+
+    <h2 class="section-title">9.2 Resultados del Reparto Modal</h2>
+
+    
+    <table>
+        <caption>Reparto modal del centro de trabajo</caption>
+        <thead>
+            <tr>
+                <th>Modo de transporte</th>
+                <th>Usuarios/as</th>
+                <th>Porcentaje</th>
+                <th>Clasificación</th>
+                <th>Factor CO2e (kg/pas-km)</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td><strong>🚇 Metro / Tren</strong></td>
+                <td>2</td>
+                <td><strong>40,0%</strong></td>
+                <td><span class="badge baja">Sostenible</span></td>
+                <td>0,100</td>
+            </tr>
+            <tr>
+                <td><strong>🚌 Autobús</strong></td>
+                <td>1</td>
+                <td><strong>20,0%</strong></td>
+                <td><span class="badge alta">Motorizado</span></td>
+                <td>0,100</td>
+            </tr>
+            <tr>
+                <td><strong>🚗 Coche particular (conductor)</strong></td>
+                <td>1</td>
+                <td><strong>20,0%</strong></td>
+                <td><span class="badge alta">Motorizado</span></td>
+                <td>0,100</td>
+            </tr>
+            <tr>
+                <td><strong>🚲 Bicicleta (estándar)</strong></td>
+                <td>1</td>
+                <td><strong>20,0%</strong></td>
+                <td><span class="badge baja">Sostenible</span></td>
+                <td>0,100</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">9.3 Comparativa con Referentes</h2>
+
+    <p>Para evaluar si el reparto modal del centro es favorable o no, se compara con los datos de referencia disponibles:</p>
+
+    <table>
+        <caption>Comparativa del reparto modal con referentes</caption>
+        <thead>
+            <tr>
+                <th>Indicador</th>
+                <th>Este centro</th>
+                <th>Media nacional*</th>
+                <th>Objetivo PMST</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Coche particular (conductor)</strong></td>
+                <td>20,0%</td>
+                <td>63,4%</td>
+                <td>&lt; 40%</td>
+            </tr>
+            <tr>
+                <td><strong>Transporte público</strong></td>
+                <td>0,0%</td>
+                <td>15,2%</td>
+                <td>&gt; 25%</td>
+            </tr>
+            <tr>
+                <td><strong>Bicicleta / VMP</strong></td>
+                <td>0,0%</td>
+                <td>3,1%</td>
+                <td>&gt; 10%</td>
+            </tr>
+            <tr>
+                <td><strong>A pie</strong></td>
+                <td>0,0%</td>
+                <td>5,8%</td>
+                <td>&gt; 10%</td>
+            </tr>
+            <tr>
+                <td><strong>Teletrabajo</strong></td>
+                <td>0,0%</td>
+                <td>12,5%</td>
+                <td>&gt; 20%</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="footnote">* Datos de referencia del Ministerio de Transportes, Movilidad y Agenda Urbana (MITMA), Encuesta ETS 2023.</p>
+
+    <h2 class="section-title">9.4 Evaluación del Nivel de Sostenibilidad</h2>
+
+    <p>El nivel de sostenibilidad global del centro se clasifica como <strong>"Muy sostenible"</strong>, con los siguientes indicadores:</p>
+
+    <div class="kpi-grid">
+        <div class="kpi-card green">
+            <div class="kpi-value">60,0%</div>
+            <div class="kpi-label">Modos sostenibles</div>
+        </div>
+        <div class="kpi-card accent">
+            <div class="kpi-value">40,0%</div>
+            <div class="kpi-label">Modos motorizados</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">0,0%</div>
+            <div class="kpi-label">Teletrabajo</div>
+        </div>
+    </div>
+
+    <div class="highlight-box warning">
+        <strong>⚠️ Diagnóstico a mejorar:</strong>
+        El centro muestra un reparto modal relativamente equilibrado. Las medidas del PMST deben enfocarse en mantener y reforzar los modos sostenibles actuales, incrementando progresivamente su cuota de mercado.
+    </div>
+
+    <h2 class="section-title">9.5 Análisis por Departamento</h2>
+
+    <p>El reparto modal puede variar significativamente entre departamentos, en función de la ubicación de residencia de sus miembros, su perfil socioeconómico y las condiciones de trabajo. Se recomienda un análisis departmental para identificar los colectivos con mayor dependencia del coche y dirigir las medidas de intervención de forma más efectiva.</p>
+
+    <p>Los departamentos con mayor proporción de desplazamientos motorizados son candidatos prioritarios para la implementación de medidas de fomento del transporte público y del carpooling.</p>
+    
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 10: ANÁLISIS DE DISTANCIAS Y TIEMPOS
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-10">
+    <h1 class="chapter-title">10. Análisis de Distancias y Tiempos de Viaje</h1>
+
+    <p>El análisis de las distancias y los tiempos de viaje es fundamental para evaluar la viabilidad de las diferentes alternativas de movilidad sostenible. La distancia al trabajo determina qué modos de transporte son realistas, mientras que el tiempo de viaje es el factor que más influye en la satisfacción del trabajador/a y en su disposición a cambiar de hábitos.</p>
+
+    <h2 class="section-title">10.1 Estadísticas Generales</h2>
+
+    
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-value">7,0 km</div>
+            <div class="kpi-label">Distancia media</div>
+        </div>
+        <div class="kpi-card accent">
+            <div class="kpi-value">12,0 km</div>
+            <div class="kpi-label">Distancia máxima</div>
+        </div>
+        <div class="kpi-card green">
+            <div class="kpi-value">20 min</div>
+            <div class="kpi-label">Tiempo medio de viaje</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">10.2 Distribución de Distancias</h2>
+
+    <p>La distribución de distancias al trabajo muestra que:</p>
+
+    <ul>
+        <li>El <strong>7,0</strong> km es la distancia media de desplazamiento, lo que sitúa a los/as trabajadores/as en un rango  donde la bicicleta eléctrica y el transporte público son alternativas viables.</li>
+        <li>La distancia máxima de <strong>12,0 km</strong> indica que los desplazamientos se concentran en un radio razonable.</li>
+    </ul>
+
+    <h2 class="section-title">10.3 Análisis por Rangos de Distancia</h2>
+
+    <p>Para una mejor comprensión de la estructura de las distancias, se han definido los siguientes rangos de análisis:</p>
+
+    <table>
+        <caption>Distribución de distancias al trabajo</caption>
+        <thead>
+            <tr>
+                <th>Rango de distancia</th>
+                <th>Empleados/as</th>
+                <th>Porcentaje</th>
+                <th>Modo recomendado</th>
+                <th>Viabilidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>&lt; 2 km</strong></td>
+                <td>0</td>
+                <td>0,0%</td>
+                <td>A pie, bicicleta</td>
+                <td><span class="badge baja">Alta</span></td>
+            </tr>
+            <tr>
+                <td><strong>2-5 km</strong></td>
+                <td>1</td>
+                <td>20,0%</td>
+                <td>Bicicleta, bici eléctrica, VMP</td>
+                <td><span class="badge baja">Alta</span></td>
+            </tr>
+            <tr>
+                <td><strong>5-10 km</strong></td>
+                <td>3</td>
+                <td>60,0%</td>
+                <td>Bici eléctrica, transporte público, coche compartido</td>
+                <td><span class="badge media">Media</span></td>
+            </tr>
+            <tr>
+                <td><strong>10-20 km</strong></td>
+                <td>1</td>
+                <td>20,0%</td>
+                <td>Transporte público, coche compartido</td>
+                <td><span class="badge media">Media</span></td>
+            </tr>
+            <tr>
+                <td><strong>20+ km</strong></td>
+                <td>0</td>
+                <td>0,0%</td>
+                <td>Teletrabajo, coche compartido, transporte interurbano</td>
+                <td><span class="badge alta">Baja</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">10.4 Análisis de Tiempos de Viaje</h2>
+
+    <p>El tiempo de viaje es un indicador de la calidad de la experiencia de movilidad. Un tiempo excesivo puede generar insatisfacción y reducir la productividad laboral. Los siguientes criterios se aplican para evaluar la calidad de los tiempos:</p>
+
+    <table>
+        <caption>Evaluación de tiempos de viaje</caption>
+        <thead>
+            <tr>
+                <th>Rango de tiempo</th>
+                <th>Empleados/as</th>
+                <th>Porcentaje</th>
+                <th>Valoración</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>&lt; 15 min</strong></td>
+                <td>1</td>
+                <td>20,0%</td>
+                <td><span class="badge baja">Excelente</span></td>
+            </tr>
+            <tr>
+                <td><strong>15-30 min</strong></td>
+                <td>3</td>
+                <td>60,0%</td>
+                <td><span class="badge baja">Bueno</span></td>
+            </tr>
+            <tr>
+                <td><strong>30-45 min</strong></td>
+                <td>1</td>
+                <td>20,0%</td>
+                <td><span class="badge media">Aceptable</span></td>
+            </tr>
+            <tr>
+                <td><strong>45-60 min</strong></td>
+                <td>0</td>
+                <td>0,0%</td>
+                <td><span class="badge alta">Largo</span></td>
+            </tr>
+            <tr>
+                <td><strong>60+ min</strong></td>
+                <td>0</td>
+                <td>0,0%</td>
+                <td><span class="badge alta">Excesivo</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">10.5 Mapas de Isocronas de Accesibilidad</h2>
+
+    <p>Las isocronas son representaciones geográficas que muestran las zonas alcanzables desde el centro de trabajo en un tiempo determinado para cada modo de transporte. Este análisis es especialmente relevante para:</p>
+
+    <ul>
+        <li><strong>Evaluar la cobertura peatonal:</strong> Zonas accesibles a pie en 10-15 minutos (radio aprox. 1-1,5 km).</li>
+        <li><strong>Evaluar la cobertura ciclista:</strong> Zonas accesibles en bicicleta en 15-25 minutos (radio aprox. 3-7 km).</li>
+        <li><strong>Evaluar la cobertura motorizada:</strong> Zonas accesibles en coche en 30-45 minutos, que representa el límite razonable para el desplazamiento diario.</li>
+    </ul>
+
+    <div class="highlight-box">
+        <strong>🗺️ Mapa de isocronas (pendiente de cálculo):</strong> Las isocronas se calcularán utilizando la API de OpenRouteService cuando se proporcionen las coordenadas exactas del centro de trabajo. El mapa interactivo se generará automáticamente en la sección de visualización de la plataforma.
+    </div>
+
+    <h2 class="section-title">10.6 Zonas de Residencia de los Trabajadores/as</h2>
+
+    <p>La distribución geográfica de las residencias de los/as trabajadores/as determina la demanda de transporte hacia el centro de trabajo. Un análisis de las zonas de residencia permite:</p>
+    <ul>
+        <li>Identificar las zonas con mayor concentración de trabajadores/as para optimizar las rutas de lanzadera.</li>
+        <li>Detectar corredores de desplazamiento donde el transporte público podría ser más eficaz.</li>
+        <li>Evaluar la viabilidad de programas de carpooling entre compañeros/as de la misma zona.</li>
+        <li>Diseñar medidas específicas para las zonas con peor conectividad.</li>
+    </ul>
+    
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 11: HUELLA DE CARBONO
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-11">
+    <h1 class="chapter-title">11. Huella de Carbono</h1>
+
+    <p>La huella de carbono de los desplazamientos al trabajo es uno de los indicadores ambientales más relevantes del Plan de Movilidad Sostenible. Permite cuantificar el impacto ambiental de los patrones de movilidad actuales y establecer una línea base para medir el progreso de las medidas de reducción de emisiones.</p>
+
+    <h2 class="section-title">11.1 Metodología de Cálculo</h2>
+
+    <p>El cálculo de la huella de carbono se ha realizado utilizando la metodología del <strong>Programa de Huella de Carbono, Compensación y Proyectos de Absorción</strong> del Ministerio para la Transición Ecológica y el Reto Demográfico (MITECO). Los factores de emisión utilizados corresponden a los publicados en la edición 2024 de la tabla de factores de emisión:</p>
+
+    <div class="highlight-box">
+        <strong>📐 Fórmula de cálculo:</strong><br>
+        <code>CO2e anual (kg) = Factor de emisión (kg CO2e/pasajero-km) × Distancia ida-vuelta (km) × Días laborables/año</code>
+        <br><br>
+        <strong>Días laborables de referencia:</strong> 230 días/año (estándar español sin vacaciones)
+        <br>
+        <strong>Factores de emisión:</strong> Tabla MITECO 2024 — https://www.miteco.gob.es
+    </div>
+
+    <h2 class="section-title">11.2 Resultados Globales</h2>
+
+    <div class="kpi-grid">
+        <div class="kpi-card accent">
+            <div class="kpi-value">1,6</div>
+            <div class="kpi-label">t CO2e/año total</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">1610,0</div>
+            <div class="kpi-label">kg CO2e/año total</div>
+        </div>
+        <div class="kpi-card green">
+            <div class="kpi-value">322,0</div>
+            <div class="kpi-label">kg CO2e/trabajador/año</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">0</div>
+            <div class="kpi-label">kg CO2e/trabajador/año (ref)</div>
+        </div>
+    </div>
+
+    <p>La huella de carbono total de los desplazamientos al trabajo del centro Centro Ineco Madrid asciende a <strong>1,6 toneladas de CO2e al año</strong>, lo que equivale a 322,0 kg CO2e por trabajador/a y año. Para ponerlo en perspectiva, esto equivale al consumo energético de aproximadamente 1920,0 bombillas LED de 10W encendidas durante un año completo.
+
+    <h2 class="section-title">11.3 Desglose por Modo de Transporte</h2>
+
+    
+    <table>
+        <caption>Desglose de emisiones por modo de transporte</caption>
+        <thead>
+            <tr>
+                <th>Modo</th>
+                <th>Factor (kg CO2e/pas-km)</th>
+                <th>Distancia total (km)</th>
+                <th>Empleados/as</th>
+                <th>CO2e anual (kg)</th>
+                <th>% del total</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td><strong>🚇 Metro / Tren</strong></td>
+                <td>0,100</td>
+                <td>13</td>
+                <td>2</td>
+                <td><strong>598</strong></td>
+                <td>37,1%</td>
+            </tr>
+            
+            <tr>
+                <td><strong>🚗 Coche particular (conductor)</strong></td>
+                <td>0,100</td>
+                <td>12</td>
+                <td>1</td>
+                <td><strong>552</strong></td>
+                <td>34,3%</td>
+            </tr>
+            
+            <tr>
+                <td><strong>🚌 Autobús</strong></td>
+                <td>0,100</td>
+                <td>7</td>
+                <td>1</td>
+                <td><strong>322</strong></td>
+                <td>20,0%</td>
+            </tr>
+            
+            <tr>
+                <td><strong>🚲 Bicicleta (estándar)</strong></td>
+                <td>0,100</td>
+                <td>3</td>
+                <td>1</td>
+                <td><strong>138</strong></td>
+                <td>8,6%</td>
+            </tr>
+            
+            <tr style="background: #f0f4ff; font-weight: 700;">
+                <td>TOTAL</td>
+                <td>—</td>
+                <td>35</td>
+                <td>5</td>
+                <td>1610</td>
+                <td>100%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">11.4 Análisis de Impacto por Modo</h2>
+
+    <p>El análisis del impacto relativo de cada modo de transporte revela que:</p>
+
+    <ul>
+        
+        <li><strong>🚇 Metro / Tren</strong> es responsable del 37,1% de las emisiones totales, con 598 kg CO2e/año generados por 2 trabajadores/as.</li>
+        
+        <li><strong>🚗 Coche particular (conductor)</strong> es responsable del 34,3% de las emisiones totales, con 552 kg CO2e/año generados por 1 trabajadores/as.</li>
+        
+        <li><strong>🚌 Autobús</strong> es responsable del 20,0% de las emisiones totales, con 322 kg CO2e/año generados por 1 trabajadores/as.</li>
+        
+    </ul>
+
+    <h2 class="section-title">11.5 Potencial de Reducción</h2>
+
+    <p>El análisis del potencial de reducción de emisiones se basa en la hipótesis de un cambio parcial del modo de transporte de los/as trabajadores/as motorizados/as hacia alternativas sostenibles:</p>
+
+    <table>
+        <caption>Escenarios de reducción de emisiones</caption>
+        <thead>
+            <tr>
+                <th>Escenario</th>
+                <th>Descripción</th>
+                <th>Reducción estimada</th>
+                <th>CO2e resultante</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Escenario A (actual)</strong></td>
+                <td>Sin cambios en el patrón modal actual</td>
+                <td>0%</td>
+                <td>1,6 t CO2e/año</td>
+            </tr>
+            <tr>
+                <td><strong>Escenario B (moderado)</strong></td>
+                <td>20% de conductores cambian a transporte público o bici</td>
+                <td>~15%</td>
+                <td>1,4 t CO2e/año</td>
+            </tr>
+            <tr>
+                <td><strong>Escenario C (ambicioso)</strong></td>
+                <td>40% cambio a sostenible + 20% teletrabajo adicional</td>
+                <td>~35%</td>
+                <td>1,0 t CO2e/año</td>
+            </tr>
+            <tr>
+                <td><strong>Escenario D (óptimo)</strong></td>
+                <td>60% sostenible + 30% teletrabajo + optimización flota</td>
+                <td>~55%</td>
+                <td>0,7 t CO2e/año</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="highlight-box success">
+        <strong>🎯 Objetivo de reducción:</strong> El escenario C (ambicioso) propone una reducción del 35% de las emisiones, pasando de 1,6 a 1,0 t CO2e/año. Este objetivo es alcanzable en un horizonte de 3 años con la implementación del plan de medidas propuesto en este PMST.
+    </div>
+    
+
+    <h2 class="section-title">11.6 Equivalencias Ambientales</h2>
+
+    <p>Para facilitar la comprensión del impacto ambiental, se presentan las siguientes equivalencias:</p>
+
+    
+    <ul>
+        <li><strong>1,6 t CO2e</strong> equivale al CO2 absorbido por aproximadamente <strong>72 árboles</strong> en un año.</li>
+        <li>Equivaldría a <strong>7200 litros de gasolina</strong> quemados.</li>
+        <li>Si se redujera un 50%, se evitarían <strong>0,8 t CO2e/año</strong>, equivalente a retirar <strong>1 coches</strong> de la carretera.</li>
+    </ul>
+    
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 12: ANÁLISIS DE APARCAMIENTO
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-12">
+    <h1 class="chapter-title">12. Análisis de Aparcamiento</h1>
+
+    <p>El análisis de las infraestructuras de aparcamiento es un componente esencial del PMST, ya que tanto el aparcamiento de vehículos como el de bicicletas influyen directamente en la elección del modo de transporte. Un exceso de plazas de coche puede incentivar el uso del vehículo privado, mientras que una infraestructura ciclista adecuada facilita la modalidad más sostenible.</p>
+
+    <h2 class="section-title">12.1 Infraestructura de Aparcamiento</h2>
+
+    <table>
+        <caption>Estado actual de las infraestructuras de aparcamiento</caption>
+        <thead>
+            <tr>
+                <th>Infraestructura</th>
+                <th>Plazas</th>
+                <th>Observaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Aparcamiento de coches</strong></td>
+                <td>No registrado</td>
+                <td>Consultar opciones en el entorno</td>
+            </tr>
+            <tr>
+                <td><strong>Aparcamiento de bicicletas</strong></td>
+                <td>No registrado</td>
+                <td>No se dispone de infraestructura ciclista propia</td>
+            </tr>
+            <tr>
+                <td><strong>Recarga eléctrica</strong></td>
+                <td>No</td>
+                <td>Sin puntos de recarga para Vehículos Eléctricos</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">12.2 Indicadores de Ocupación</h2>
+
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-value">0</div>
+            <div class="kpi-label">Conductores estimados</div>
+        </div>
+        <div class="kpi-card green">
+            <div class="kpi-value">0,0%</div>
+            <div class="kpi-label">Ocupación plazas coche</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">N/D</div>
+            <div class="kpi-label">Ratio coche/bici</div>
+        </div>
+    </div>
+
+    <p>El análisis de los indicadores de aparcamiento muestra que:</p>
+
+    <ul>
+        <li><strong>Conductores estimados:</strong> Se estima que aproximadamente 0 trabajadores/as acuden al centro en coche como conductores.</li>
+        <li><strong>Tasa de ocupación:</strong> La tasa de ocupación de plazas de coche es del 0,0%, lo que indica una capacidad suficiente para la demanda actual.</li>
+        <li><strong>Ratio coche/bici:</strong> No se dispone de plazas de bicicleta, lo que supone una barrera significativa para la movilidad ciclista.</li>
+    </ul>
+
+    <h2 class="section-title">12.3 Análisis del Consejo de Aparcamiento</h2>
+
+    <div class="highlight-box ">
+        <strong>📋 Evaluación:</strong>
+        No se ha registrado infraestructura de aparcamiento propio. Se recomienda evaluar las opciones de aparcamiento en el entorno y la viabilidad de habilitar plazas propias.
+    </div>
+
+    <h2 class="section-title">12.4 Recomendaciones de Aparcamiento</h2>
+
+    <ol>
+        <li><strong>No ampliar el aparcamiento de coches:</strong> Cualquier ampliación debe ser excepcional y condicionada a la reducción previa de la demanda motorizada.</li>
+        <li><strong>Ampliar el aparcamiento de bicicletas:</strong> Se recomienda alcanzar un mínimo de 10 plazas de bicicleta, con cubierta y puntos de recarga para bici eléctrica.</li>
+        <li><strong>Instalar puntos de recarga eléctrica:</strong> La empresa no dispone de puntos de recarga. Se recomienda la instalación de al menos 2 puntos de recarga de nivel 2 (7-22 kW).</li>
+        <li><strong>Zonas de carpooling:</strong> Destinar plazas de aparcamiento preferente para vehículos compartidos (2+ personas).</li>
+        <li><strong>Aparcamiento disuasorio:</strong> Evaluar la instalación de un aparcamiento disuasorio en las inmediaciones del centro, conectado con lanzadera.</li>
+    </ol>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 13: OFERTA DE TRANSPORTE PÚBLICO
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-13">
+    <h1 class="chapter-title">13. Oferta de Transporte Público</h2>
+
+    <p>El transporte público es uno de los pilares fundamentales de la movilidad sostenible. Una oferta de transporte público eficiente, frecuente y bien conectada con el centro de trabajo es un factor determinante para reducir la dependencia del coche particular. En este capítulo se analiza la oferta de transporte público disponible en el entorno del centro de trabajo.</p>
+
+    <h2 class="section-title">13.1 Metodología de Análisis</h2>
+
+    <p>La información sobre la oferta de transporte público se ha obtenido a partir de las siguientes fuentes:</p>
+    <ul>
+        <li><strong>NAP DGT (Nodo de Acceso Público):</strong> Base de datos oficial del Ministerio de Transportes con información sobre paradas, líneas y horarios del transporte público en toda España.</li>
+        <li><strong>OpenStreetMap / Overpass API:</strong> Datos de infraestructuras de transporte público actualizados por la comunidad de mapeo.</li>
+        <li><strong>Plan de Movilidad Municipal:</strong> Documentación del ayuntamiento correspondiente sobre las líneas y frecuencias del transporte público municipal.</li>
+    </ul>
+
+    <p>El radio de búsqueda se ha establecido en 500 metros desde el centro de trabajo, que corresponde aproximadamente a un paseo de 10 minutos a pie.</p>
+
+    <h2 class="section-title">13.2 Paradas y Estaciones en el Entorno</h2>
+
+    
+    <div class="highlight-box warning">
+        <strong>⚠️ Datos pendientes de consulta:</strong> No se han recogido datos de transporte público para el entorno del centro de trabajo. Se recomienda consultar la API del NAP DGT o la plataforma Overpass para obtener información actualizada sobre paradas, líneas y frecuencias en un radio de 500 metros del centro.
+    </div>
+    
+
+    <h2 class="section-title">13.3 Análisis de Cobertura</h2>
+
+    <p>La cobertura de transporte público se evalúa en función de los siguientes criterios:</p>
+
+    <table>
+        <caption>Criterios de evaluación de la cobertura</caption>
+        <thead>
+            <tr>
+                <th>Criterio</th>
+                <th>Umbral</th>
+                <th>Estado actual</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Parada a &lt; 500 m del centro</td>
+                <td>Mínimo 1 parada</td>
+                <td>⚠️ No se han identificado paradas en el radio de búsqueda</td>
+            </tr>
+            <tr>
+                <td>Múltiples líneas disponibles</td>
+                <td>Mínimo 2 líneas</td>
+                <td>⚠️ Se recomienda disponer de al menos 2 líneas alternativas</td>
+            </tr>
+            <tr>
+                <td>Frecuencia en hora punta</td>
+                <td>&lt; 15 minutos</td>
+                <td>⏳ Sin datos</td>
+            </tr>
+            <tr>
+                <td>Conectividad con residencias</td>
+                <td>Al menos 1 línea que conecte zonas principales de residencia</td>
+                <td>⏳ Sin datos</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">13.4 Líneas y Frecuencias</h2>
+
+    <p>La información detallada sobre las líneas de transporte público disponibles incluye:</p>
+
+    <ul>
+        <li><strong>Líneas de autobús urbano:</strong> No se han identificado líneas de autobús urbano en las inmediaciones</li>
+        <li><strong>Líneas de autobús interurbano:</strong> No se han identificado líneas de autobús interurbano</li>
+        <li><strong>Metro / Cercanías:</strong> No se han identificado estaciones de metro o cercanías en el entorno</li>
+        <li><strong>Tranvía:</strong> No se han identificado líneas de tranvía</li>
+    </ul>
+
+    <h2 class="section-title">13.5 Recomendaciones de Movilidad con Transporte Público</h2>
+
+    <ol>
+        <li><strong>Subvención al abono:</strong> Implementar un programa de subvención del 50-75% del abono de transporte público para los/as trabajadores/as que lo utilicen como modo habitual.</li>
+        <li><strong>Información de horarios:</strong> Instalar pantallas o aplicaciones con información en tiempo real de las llegadas de los vehículos de transporte público.</li>
+        <li><strong>Lanzadera:</strong> Implementar un servicio de lanzadera que conecte el centro de trabajo con las estaciones de metro/cercanías más cercanas.</li>
+        <li><strong>Campañas de sensibilización:</strong> Realizar campañas internas para informar sobre las rutas, horarios y ventajas del transporte público.</li>
+        <li><strong>Coordinación con el operador:</strong> Establecer acuerdos con el operador de transporte público para optimizar frecuencias en horas punta de entrada y salida del centro.</li>
+    </ol>
+
+    <div class="highlight-box">
+        <strong>📌 Dato clave:</strong> Según el MITMA, el transporte público en España tiene una huella de carbono promedio de 0,033-0,089 kg CO2e/pasajero-km, dependiendo del modo, lo que supone entre un 53% y un 82% menos de emisiones que el coche particular con conductor (0,192 kg CO2e/pasajero-km).
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 14: INFRAESTRUCTURA CICLISTA
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-14">
+    <h1 class="chapter-title">14. Infraestructura Ciclista y Movilidad Lenta</h1>
+
+    <p>La infraestructura ciclista y peatonal es un factor determinante para facilitar la movilidad sostenible. Una red ciclista bien diseñada, segura y conectada permite que un número significativo de trabajadores/as desplacen su modo de transporte habitual hacia la bicicleta, con beneficios tanto para la salud como para el medio ambiente.</p>
+
+    <h2 class="section-title">14.1 Estado Actual de la Infraestructura Ciclista</h2>
+
+    <p>El análisis de la infraestructura ciclista en el entorno del centro de trabajo incluye la evaluación de los siguientes elementos:</p>
+
+    <ul>
+        <li><strong>Carriles bici:</strong> Se ha analizado la existencia de carriles bici protegidos, compartidos o señalizados en las principales vías de acceso al centro de trabajo.</li>
+        <li><strong>Cicloporrutas:</strong> Infraestructuras segregadas para bicicleta y peatón que permiten desplazamientos seguros a medio-largo plazo.</li>
+        <li><strong>Calles con限速限速限速 (zona 30):</strong> Vías con limitación de velocidad que favorecen la convivencia entre bicicletas, peatones y vehículos.</li>
+        <li><strong>Señalización ciclista:</strong> Existencia de señalización específica que indica rutas ciclistas, direcciones y distancias.</li>
+    </ul>
+
+    <h2 class="section-title">14.2 Infraestructura Ciclista Propia del Centro</h2>
+
+    <table>
+        <caption>Infraestructura ciclista del centro de trabajo</caption>
+        <thead>
+            <tr>
+                <th>Elemento</th>
+                <th>Estado</th>
+                <th>Detalles</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Aparcamiento de bicicletas</td>
+                <td>❌ No disponible</td>
+                <td>No se ha registrado infraestructura ciclista propia</td>
+            </tr>
+            <tr>
+                <td>Duchas y vestuarios</td>
+                <td>❌ No disponibles</td>
+                <td>Se recomienda habilitar para usuarios de bicicleta</td>
+            </tr>
+            <tr>
+                <td>Puntos de recarga bici eléctrica</td>
+                <td>❌ No disponibles</td>
+                <td>Se recomienda instalar al menos 2 puntos</td>
+            </tr>
+            <tr>
+                <td>Herramientas y bombona</td>
+                <td>⚠️ Por verificar</td>
+                <td>Se recomienda disponer de un kit de herramientas básico y bombona de aire para reparaciones menores</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">14.3 Bicicleta Compartida (GBFS)</h2>
+
+    <p>Los sistemas de bicicleta compartida (General Bikeshare Feed Specification - GBFS) son una alternativa complementaria a la bicicleta privada. Permiten a los/as trabajadores/as realizar trayectos "last-mile" desde las estaciones de transporte público hasta el centro de trabajo.</p>
+
+    
+    <p>Se han identificado <strong>40 estaciones de bicicleta compartida</strong> en el entorno del centro de trabajo:</p>
+    <table>
+        <caption>Estaciones de bicicleta compartida (GBFS)</caption>
+        <thead>
+            <tr>
+                <th>Estación</th>
+                <th>Bicicletas disponibles</th>
+                <th>Anclajes totales</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>33 - Puerta del Sol</td>
+                <td>N/D</td>
+                <td>13</td>
+            </tr>
+            
+            <tr>
+                <td>1 - Metro Sol</td>
+                <td>N/D</td>
+                <td>20</td>
+            </tr>
+            
+            <tr>
+                <td>25A - Plaza de Celenque A</td>
+                <td>N/D</td>
+                <td>19</td>
+            </tr>
+            
+            <tr>
+                <td>25B - Plaza de Celenque B</td>
+                <td>N/D</td>
+                <td>9</td>
+            </tr>
+            
+            <tr>
+                <td>31 - Mayor</td>
+                <td>N/D</td>
+                <td>20</td>
+            </tr>
+            
+            <tr>
+                <td>56 - Plaza del Carmen </td>
+                <td>N/D</td>
+                <td>18</td>
+            </tr>
+            
+            <tr>
+                <td>210 - Calle de las Tres Cruces - Gran Vía</td>
+                <td>N/D</td>
+                <td>22</td>
+            </tr>
+            
+            <tr>
+                <td>32 - Plaza de la Provincia</td>
+                <td>N/D</td>
+                <td>21</td>
+            </tr>
+            
+            <tr>
+                <td>52 - Plaza de Santa Ana</td>
+                <td>N/D</td>
+                <td>7</td>
+            </tr>
+            
+            <tr>
+                <td>40 - Conde de Romanones</td>
+                <td>N/D</td>
+                <td>20</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+
+    <h2 class="section-title">14.4 Vehículos de Movilidad Personal (VMP)</h2>
+
+    <p>Los VMP, como patinetes eléctricos, representan una alternativa creciente para desplazamientos de corta distancia (2-8 km). Son especialmente relevantes como complemento al transporte público para el "last mile".</p>
+
+    <ul>
+        <li><strong>Ventajas:</strong> Bajo coste de adquisición y mantenimiento, fácil estacionamiento, cero emisiones en uso.</li>
+        <li><strong>Inconvenientes:</strong> Limitaciones legales (velocidad máxima 25 km/h, prohibición en aceras), necesidad de infraestructura de carga, percibidos como menos seguros que la bicicleta.</li>
+        <li><strong>Recomendación:</strong> Habilitar zonas de estacionamiento y carga para VMP en el entorno del centro de trabajo.</li>
+    </ul>
+
+    <h2 class="section-title">14.5 Infraestructura Peatonal</h2>
+
+    <p>Los desplazamientos a pie son el modo más sostenible y saludable. Para facilitarlos, es necesario disponer de:</p>
+
+    <ul>
+        <li><strong>Aceras amplias y bien mantenidas:</strong> Mínimo 1,5 m de ancho, sin obstáculos.</li>
+        <li><strong>Pasos de peatones seguros:</strong> Semáforos, pasos elevados, zonas de prioridad peatonal.</li>
+        <li><strong>Iluminación adecuada:</strong> Para garantizar la seguridad en desplazamientos en horas de baja luminosidad.</li>
+        <li><strong>Arbolado y zonas verdes:</strong> Para mejorar la confortabilidad del recorrido peatonal.</li>
+        <li><strong>Accesibilidad universal:</strong> Rampas, pavimento tactile, semáforos acústicos.</li>
+    </ul>
+
+    <h2 class="section-title">14.6 Recomendaciones de Infraestructura</h2>
+
+    <div class="highlight-box success">
+        <strong>🎯 Plan de mejora de infraestructura ciclista y peatonal:</strong>
+        <ol style="margin-top: 10px;">
+            <li><strong>Corto plazo (0-6 meses):</strong> Ampliar el aparcamiento de bicicletas a un mínimo de 10 plazas, con cubierta y puntos de recarga.</li>
+            <li><strong>Corto plazo (0-6 meses):</strong> Instalar duchas y vestuarios para usuarios de bicicleta si no existen.</li>
+            <li><strong>Medio plazo (6-12 meses):</strong> Coordinar con el ayuntamiento para la mejora de los carriles bici en las vías de acceso al centro.</li>
+            <li><strong>Medio plazo (6-12 meses):</strong> Establecer acuerdos con operadores de bicicleta compartida para la instalación de estaciones en las inmediaciones.</li>
+            <li><strong>Largo plazo (12-24 meses):</strong> Proponer al ayuntamiento la creación de una cicloporruta que conecte el centro con las principales zonas residenciales.</li>
+        </ol>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 15: ANÁLISIS DAFO
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-15">
+    <h1 class="chapter-title">15. Análisis DAFO</h1>
+
+    <p>El análisis DAFO (Debilidades, Amenazas, Fortalezas y Oportunidades) es una herramienta estratégica fundamental para la elaboración de un PMST efectivo. Permite identificar los factores internos y externos que influyen en la capacidad del centro de trabajo para implementar medidas de movilidad sostenible, y orienta la definición de las estrategias y medidas del plan.</p>
+
+    <h2 class="section-title">15.1 Metodología del Análisis DAFO</h2>
+
+    <p>El análisis DAFO se ha construido a partir de la cruz de los siguientes factores:</p>
+
+    <ul>
+        <li><strong>Factores internos (controlables):</strong> Fortalezas y Debilidades, derivados del diagnóstico de la empresa, las infraestructuras disponibles y los patrones de movilidad actuales.</li>
+        <li><strong>Factores externos (no controlables):</strong> Oportunidades y Amenazas, derivados del contexto normativo, urbanístico, tecnológico y social.</li>
+    </ul>
+
+    <h2 class="section-title">15.2 Matriz DAFO</h2>
+
+    <div class="dafo-grid">
+        <div class="dafo-box fortalezas">
+            <h4 style="color: #059669;">💪 FORTALEZAS (Factores internos positivos)</h4>
+            <ul>
+                <li>Buena penetración de modos sostenibles (60,0%)</li>
+                
+            </ul>
+        </div>
+        <div class="dafo-box debilidades">
+            <h4 style="color: #dc2626;">⚠️ DEBILIDADES (Factores internos negativos)</h4>
+            <ul>
+                <li>Ausencia de duchas/vestuarios</li><li>Sin puntos de recarga eléctrica</li><li>Baja penetración del teletrabajo</li><li>Sin servicio de lanzadera</li>
+                
+            </ul>
+        </div>
+        <div class="dafo-box oportunidades">
+            <h4 style="color: #2563eb;">🚀 OPORTUNIDADES (Factores externos positivos)</h4>
+            <ul>
+                <li>Ampliación de la red de transporte público en el municipio</li><li>Crecimiento de los sistemas de bicicleta compartida</li><li>Incentivos fiscales para vehículos eléctricos</li><li>Políticas europeas de descarbonización del transporte</li><li>Mejora de la infraestructura ciclista municipal</li><li>Nuevas tecnologías de micro-movilidad (VMP)</li><li>Programas de incentivos laborales para movilidad sostenible</li>
+            </ul>
+        </div>
+        <div class="dafo-box amenazas">
+            <h4 style="color: #d97706;">🔥 AMENAZAS (Factores externos negativos)</h4>
+            <ul>
+                <li>Resistencia al cambio de hábitos por parte de algunos/as trabajadores/as</li><li>Falta de infraestructura ciclista en el entorno inmediato</li><li>Condiciones climáticas adversas en determinados períodos</li><li>Aumento del precio del transporte público</li><li>Posible reducción de servicios de transporte público</li><li>Inseguridad vial en determinadas rutas de acceso</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2 class="section-title">15.3 Estrategias Derivadas del DAFO</h2>
+
+    <p>A partir del análisis DAFO se han definido las siguientes estrategias:</p>
+
+    <h3 class="subsection-title">Estrategias FO (Fortalezas-Oportunidades) — Ofensivas</h3>
+    <p>Aprovechar las fortalezas internas para capitalizar las oportunidades externas:</p>
+    <ul>
+        
+        <li><strong>Buena penetración de modos sostenibles (60,0%) → Ampliación de la red de transporte público en el municipio:</strong> Buena penetración de modos sostenibles (60,0%) puede ser la base para ampliación de la red de transporte público en el municipio.</li>
+        <li>Utilizar la buena aceptación de modos sostenibles para impulsar nuevas iniciativas de movilidad sostenible en colaboración con el ayuntamiento.</li>
+        
+    </ul>
+
+    <h3 class="subsection-title">Estrategias DO (Debilidades-Oportunidades) — Reorientación</h3>
+    <p>Utilizar las oportunidades externas para superar las debilidades internas:</p>
+    <ul>
+        
+        <li><strong>Ausencia de duchas/vestuarios → Ampliación de la red de transporte público en el municipio:</strong> Abordar ausencia de duchas/vestuarios aprovechando ampliación de la red de transporte público en el municipio.</li>
+        <li>Incentivar el cambio de modo de transporte entre los/as trabajadores/as con mayor dependencia del coche,利用ando las oportunidades de mejora de infraestructura.</li>
+        
+    </ul>
+
+    <h3 class="subsection-title">Estrategias FA (Fortalezas-Amenazas) — Defensivas</h3>
+    <p>Utilizar las fortalezas internas para mitigar las amenazas externas:</p>
+    <ul>
+        
+        <li><strong>Buena penetración de modos sostenibles (60,0%) → Resistencia al cambio de hábitos por parte de algunos/as trabajadores/as:</strong> Buena penetración de modos sostenibles (60,0%) puede servir como barrera frente a resistencia al cambio de hábitos por parte de algunos/as trabajadores/as.</li>
+        <li>Mantener las infraestructuras de movilidad sostenible existentes como garantía frente a posibles deterioros del servicio de transporte público.</li>
+        
+    </ul>
+
+    <h3 class="subsection-title">Estrategias DA (Debilidades-Amenazas) — Supervivencia</h3>
+    <p>Minimizar las debilidades internas y evitar las amenazas externas:</p>
+    <ul>
+        
+        <li><strong>Ausencia de duchas/vestuarios → Resistencia al cambio de hábitos por parte de algunos/as trabajadores/as:</strong> Abordar de forma prioritaria ausencia de duchas/vestuarios para evitar que se agrave por resistencia al cambio de hábitos por parte de algunos/as trabajadores/as.</li>
+        <li>Establecer medidas de emergencia que garanticen la movilidad de los/as trabajadores/as en caso de deterioro del servicio de transporte público.</li>
+        
+    </ul>
+
+    <div class="highlight-box">
+        <strong>📋 Implicaciones estratégicas:</strong> El análisis DAFO revela que es necesario abordar las debilidades identificadas de forma prioritaria para avanzar hacia una movilidad más sostenible. Las 7 oportunidades identificadas proporcionan un marco favorable para la inversión en infraestructuras y medidas de movilidad sostenible.
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 16: PLAN DE OBJETIVOS SMART
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-16">
+    <h1 class="chapter-title">16. Plan de Objetivos SMART</h1>
+
+    <p>Los objetivos SMART son la base del plan de acción del PMST. Cada objetivo debe ser <strong>Específico</strong> (claro y concreto), <strong>Medible</strong> (cuantificable con indicadores), <strong>Alcanzable</strong> (realista dado los recursos disponibles), <strong>Relevante</strong> (alineado con la estrategia del PMST) y <strong>Temporal</strong> (con un plazo de consecución definido).</p>
+
+    <h2 class="section-title">16.1 Metodología de Definición de Objetivos</h2>
+
+    <p>Los objetivos SMART se han definido a partir del diagnóstico del centro de trabajo, teniendo en cuenta:</p>
+    <ul>
+        <li>La línea base de cada indicador, calculada a partir de los datos actuales.</li>
+        <li>Los referentes nacionales e internacionales de movilidad sostenible.</li>
+        <li>La viabilidad técnica y económica de cada objetivo.</li>
+        <li>La alineación con las directrices del Plan de Movilidad Municipal.</li>
+        <li>Los plazos establecidos en la Ley 8/2021.</li>
+    </ul>
+
+    <h2 class="section-title">16.2 Catálogo de Objetivos SMART</h2>
+
+    <table>
+        <caption>Objetivos SMART del PMST</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Indicador</th>
+                <th>Línea base</th>
+                <th>Meta</th>
+                <th>Plazo</th>
+                <th>Prioridad</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td><strong>obj-01</strong></td>
+                <td>Incrementar el porcentaje de desplazamientos sostenibles del 60,0% actual al 60,0%</td>
+                <td>% de desplazamientos sostenibles</td>
+                <td>60,0%</td>
+                <td><strong>60,0%</strong></td>
+                <td>24 meses</td>
+                <td><span class="badge alta">Alta</span></td>
+            </tr>
+            
+            <tr>
+                <td><strong>obj-02</strong></td>
+                <td>Reducir la huella de carbono de 1,6 a 1,0 t CO2e/año</td>
+                <td>Toneladas CO2e/año</td>
+                <td>1,6 t</td>
+                <td><strong>1,0 t</strong></td>
+                <td>36 meses</td>
+                <td><span class="badge alta">Alta</span></td>
+            </tr>
+            
+            <tr>
+                <td><strong>obj-03</strong></td>
+                <td>Incrementar la ocupación media de vehículos de 1.1 a 1.5 pasajeros/vehículo</td>
+                <td>Ocupación media de vehículos</td>
+                <td>1.1 pas./veh.</td>
+                <td><strong>1.5 pas./veh.</strong></td>
+                <td>18 meses</td>
+                <td><span class="badge media">Media</span></td>
+            </tr>
+            
+            <tr>
+                <td><strong>obj-04</strong></td>
+                <td>Habilitar 10 plazas de aparcamiento de bicicletas</td>
+                <td>Plazas de bici</td>
+                <td>0 plazas</td>
+                <td><strong>10 plazas</strong></td>
+                <td>12 meses</td>
+                <td><span class="badge alta">Alta</span></td>
+            </tr>
+            
+            <tr>
+                <td><strong>obj-05</strong></td>
+                <td>Mantener encuestas semestrales con ≥20 respuestas válidas</td>
+                <td>Respuestas por encuesta</td>
+                <td>0 respuestas</td>
+                <td><strong>≥20 respuestas cada 6 meses</strong></td>
+                <td>Continuo</td>
+                <td><span class="badge media">Media</span></td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <h2 class="section-title">16.3 Análisis de Objetivos por Categoría</h2>
+
+    <p>Los objetivos se agrupan en las siguientes categorías estratégicas:</p>
+
+    <h3 class="subsection-title">Modo de transporte</h3>
+    <p>El objetivo principal en cuanto al modo es incrementar la cuota de modos sostenibles, pasando del 60,0% actual a un mínimo del 60,0%. Este objetivo se alcanzará mediante una combinación de medidas de infraestructura, incentivos y sensibilización.
+
+    <h3 class="subsection-title">Ambiental</h3>
+    <p>El objetivo ambiental establece una reducción del 35% de las emisiones de CO2e, lo que supone un hito ambicioso pero alcanzable en un horizonte de 3 años con la implementación del plan de medidas.
+
+    <h3 class="subsection-title">Infraestructura</h3>
+    <p>El objetivo de infraestructura se centra en la ampliación del aparcamiento de bicicletas, que es una medida de alto impacto y relativo bajo coste para facilitar la movilidad ciclista.
+
+    <h2 class="section-title">16.4 Hoja de Ruta para el Cumplimiento</h2>
+
+    <div class="highlight-box">
+        <strong>📅 Calendario de revisión de objetivos:</strong>
+        <ul style="margin-top: 8px;">
+            <li><strong>Mes 6:</strong> Primera revisión de avance — Evaluar la tasa de adopción de las medidas iniciales.</li>
+            <li><strong>Mes 12:</strong> Revisión anual — Actualizar indicadores, recoger nueva encuesta, ajustar medidas si es necesario.</li>
+            <li><strong>Mes 18:</strong> Revisión intermedia — Evaluar el progreso a medio plazo y definir ajustes.</li>
+            <li><strong>Mes 24:</strong> Segunda revisión anual — Evaluar el cumplimiento de objetivos a corto y medio plazo.</li>
+            <li><strong>Mes 36:</strong> Evaluación final — Valorar el cumplimiento global y definir el PMST para el siguiente período.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 17: PLAN DE MEDIDAS
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-17">
+    <h1 class="chapter-title">17. Plan de Medidas</h1>
+
+    <p>El plan de medidas constituye el corazón operativo del PMST. Las medidas se han seleccionado y priorizado en función de su impacto potencial, coste de implementación y plazo de ejecución, siguiendo la matriz de priorización recomendada por el MITMA.</p>
+
+    <h2 class="section-title">17.1 Criterios de Priorización</h2>
+
+    <p>Las medidas se han priorizado utilizando la siguiente matriz:</p>
+
+    <table>
+        <caption>Matriz de priorización de medidas</caption>
+        <thead>
+            <tr>
+                <th>Impacto</th>
+                <th>Coste bajo</th>
+                <th>Coste medio</th>
+                <th>Coste alto</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Alto (8-10)</strong></td>
+                <td style="background: #dcfce7;">PRIORITARIA</td>
+                <td style="background: #fef9c3;">RECOMENDADA</td>
+                <td style="background: #fef9c3;">A EVALUAR</td>
+            </tr>
+            <tr>
+                <td><strong>Medio (5-7)</strong></td>
+                <td style="background: #dcfce7;">PRIORITARIA</td>
+                <td style="background: #fef9c3;">RECOMENDADA</td>
+                <td style="background: #fef2f2;">DEPRIORITARIA</td>
+            </tr>
+            <tr>
+                <td><strong>Bajo (1-4)</strong></td>
+                <td style="background: #fef9c3;">RECOMENDADA</td>
+                <td style="background: #fef2f2;">DEPRIORITARIA</td>
+                <td style="background: #fef2f2;">NO RECOMENDADA</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">17.2 Catálogo de Medidas Priorizadas</h2>
+
+    <table>
+        <caption>Medidas del PMST ordenadas por prioridad</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Medida</th>
+                <th>Categoría</th>
+                <th>Impacto</th>
+                <th>Coste</th>
+                <th>Plazo</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td><strong>med-04</strong></td>
+                <td><strong>Ampliación de la política de teletrabajo</strong><br><span class="text-sm text-gray">Ampliar los días de teletrabajo de la plantilla, priorizando los puestos compatibles.</span></td>
+                <td>Organización</td>
+                <td><strong>10/10</strong></td>
+                <td>Bajo</td>
+                <td>Corto (1-3 meses)</td>
+            </tr>
+            
+            <tr>
+                <td><strong>med-01</strong></td>
+                <td><strong>Ampliación del aparcamiento de bicicletas</strong><br><span class="text-sm text-gray">Instalar un mínimo de 15 plazas de aparcamiento de bicicletas cubierto con puntos de recarga para bicicletas eléctricas.</span></td>
+                <td>Infraestructura</td>
+                <td><strong>9/10</strong></td>
+                <td>Medio</td>
+                <td>Corto (3-6 meses)</td>
+            </tr>
+            
+            <tr>
+                <td><strong>med-02</strong></td>
+                <td><strong>Programa de ayudas al transporte público</strong><br><span class="text-sm text-gray">Subvencionar el 50% del abono de transporte público para los/as trabajadores/as que lo utilicen como modo habitual.</span></td>
+                <td>Incentivos</td>
+                <td><strong>9/10</strong></td>
+                <td>Alto</td>
+                <td>Corto (1-2 meses)</td>
+            </tr>
+            
+            <tr>
+                <td><strong>med-07</strong></td>
+                <td><strong>Instalación de puntos de recarga eléctrica</strong><br><span class="text-sm text-gray">Instalar al menos 4 puntos de recarga de nivel 2 (7-22 kW) para vehículos eléctricos.</span></td>
+                <td>Infraestructura</td>
+                <td><strong>8/10</strong></td>
+                <td>Alto</td>
+                <td>Medio (6-12 meses)</td>
+            </tr>
+            
+            <tr>
+                <td><strong>med-08</strong></td>
+                <td><strong>Lanzadera desde estación de transporte público</strong><br><span class="text-sm text-gray">Implementar un servicio de lanzadera eléctrica que conecte la estación de tren/metro más cercana con el centro de trabajo.</span></td>
+                <td>Servicio</td>
+                <td><strong>8/10</strong></td>
+                <td>Alto</td>
+                <td>Medio (6-12 meses)</td>
+            </tr>
+            
+            <tr>
+                <td><strong>med-03</strong></td>
+                <td><strong>Instalación de duchas y vestuarios</strong><br><span class="text-sm text-gray">Habilitar duchas y vestuarios para usuarios de bicicleta y deportistas.</span></td>
+                <td>Infraestructura</td>
+                <td><strong>7/10</strong></td>
+                <td>Medio</td>
+                <td>Corto (3-6 meses)</td>
+            </tr>
+            
+            <tr>
+                <td><strong>med-05</strong></td>
+                <td><strong>Programa de carpooling interno</strong><br><span class="text-sm text-gray">Crear una plataforma interna de compartir vehículo entre compañeros/as con rutas similares.</span></td>
+                <td>Incentivos</td>
+                <td><strong>7/10</strong></td>
+                <td>Bajo</td>
+                <td>Corto (1-3 meses)</td>
+            </tr>
+            
+            <tr>
+                <td><strong>med-10</strong></td>
+                <td><strong>Mejora de la accesibilidad peatonal</strong><br><span class="text-sm text-gray">Coordinar con el ayuntamiento la mejora de aceras, pasos de peatones y señalización en los accesos al centro.</span></td>
+                <td>Infraestructura</td>
+                <td><strong>7/10</strong></td>
+                <td>Medio</td>
+                <td>Medio (6-12 meses)</td>
+            </tr>
+            
+            <tr>
+                <td><strong>med-06</strong></td>
+                <td><strong>Campaña de sensibilización</strong><br><span class="text-sm text-gray">Lanzar una campaña de comunicación interna sobre movilidad sostenible con concursos, retos y premios.</span></td>
+                <td>Comunicación</td>
+                <td><strong>6/10</strong></td>
+                <td>Bajo</td>
+                <td>Corto (1-2 meses)</td>
+            </tr>
+            
+            <tr>
+                <td><strong>med-09</strong></td>
+                <td><strong>Plan de puntos y gamificación</strong><br><span class="text-sm text-gray">Sistema de puntos por cada día que se utilice un modo sostenible, canjeables por premios.</span></td>
+                <td>Incentivos</td>
+                <td><strong>6/10</strong></td>
+                <td>Bajo</td>
+                <td>Corto (1-3 meses)</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <h2 class="section-title">17.3 Detalle de Medidas por Categoría</h2>
+
+    <h3 class="subsection-title">Medidas de infraestructura</h3>
+    <p>Las medidas de infraestructura son las que implican la construcción, ampliación o mejora de instalaciones físicas. Son generalmente las de mayor impacto pero también las de mayor coste y plazo de ejecución:</p>
+    <ul>
+        
+        <li><strong>Ampliación del aparcamiento de bicicletas:</strong> Instalar un mínimo de 15 plazas de aparcamiento de bicicletas cubierto con puntos de recarga para bicicletas eléctricas. (Impacto: 9/10, Coste: Medio, Plazo: Corto (3-6 meses))</li>
+        
+        <li><strong>Instalación de puntos de recarga eléctrica:</strong> Instalar al menos 4 puntos de recarga de nivel 2 (7-22 kW) para vehículos eléctricos. (Impacto: 8/10, Coste: Alto, Plazo: Medio (6-12 meses))</li>
+        
+        <li><strong>Instalación de duchas y vestuarios:</strong> Habilitar duchas y vestuarios para usuarios de bicicleta y deportistas. (Impacto: 7/10, Coste: Medio, Plazo: Corto (3-6 meses))</li>
+        
+        <li><strong>Mejora de la accesibilidad peatonal:</strong> Coordinar con el ayuntamiento la mejora de aceras, pasos de peatones y señalización en los accesos al centro. (Impacto: 7/10, Coste: Medio, Plazo: Medio (6-12 meses))</li>
+        
+    </ul>
+
+    <h3 class="subsection-title">Medidas de incentivos</h3>
+    <p>Las medidas de incentivos buscan motivar el cambio de comportamiento mediante beneficios económicos o de comodidad para los/as trabajadores/as:</p>
+    <ul>
+        
+        <li><strong>Programa de ayudas al transporte público:</strong> Subvencionar el 50% del abono de transporte público para los/as trabajadores/as que lo utilicen como modo habitual. (Impacto: 9/10, Coste: Alto, Plazo: Corto (1-2 meses))</li>
+        
+        <li><strong>Programa de carpooling interno:</strong> Crear una plataforma interna de compartir vehículo entre compañeros/as con rutas similares. (Impacto: 7/10, Coste: Bajo, Plazo: Corto (1-3 meses))</li>
+        
+        <li><strong>Plan de puntos y gamificación:</strong> Sistema de puntos por cada día que se utilice un modo sostenible, canjeables por premios. (Impacto: 6/10, Coste: Bajo, Plazo: Corto (1-3 meses))</li>
+        
+    </ul>
+
+    <h3 class="subsection-title">Medidas de organización</h3>
+    <p>Las medidas organizativas implican cambios en la política o la estructura de trabajo de la empresa:</p>
+    <ul>
+        
+        <li><strong>Ampliación de la política de teletrabajo:</strong> Ampliar los días de teletrabajo de la plantilla, priorizando los puestos compatibles. (Impacto: 10/10, Coste: Bajo, Plazo: Corto (1-3 meses))</li>
+        
+    </ul>
+
+    <h3 class="subsection-title">Medidas de comunicación</h3>
+    <p>Las medidas de comunicación buscan sensibilizar e informar a la plantilla sobre las alternativas de movilidad sostenible:</p>
+    <ul>
+        
+        <li><strong>Lanzadera desde estación de transporte público:</strong> Implementar un servicio de lanzadera eléctrica que conecte la estación de tren/metro más cercana con el centro de trabajo. (Impacto: 8/10, Coste: Alto, Plazo: Medio (6-12 meses))</li>
+        
+        <li><strong>Campaña de sensibilización:</strong> Lanzar una campaña de comunicación interna sobre movilidad sostenible con concursos, retos y premios. (Impacto: 6/10, Coste: Bajo, Plazo: Corto (1-2 meses))</li>
+        
+    </ul>
+
+    <div class="highlight-box">
+        <strong>📋 Resumen del plan de medidas:</strong> Se han identificado un total de <strong>10 medidas</strong> distribuidas en 5 categorías. De ellas, 5 tienen impacto alto (≥8/10) y 4 tienen coste bajo, lo que las convierte en candidatas prioritarias para una implementación inmediata.
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 18: PLAN DE SEGUIMIENTO
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-18">
+    <h1 class="chapter-title">18. Plan de Seguimiento y Evaluación</h1>
+
+    <p>El seguimiento y la evaluación continua son componentes esenciales para garantizar la eficacia del PMST. Un sistema de seguimiento bien diseñado permite detectar desviaciones a tiempo, ajustar las medidas según sea necesario y demostrar el impacto de las acciones implementadas ante los/as trabajadores/as, la dirección de la empresa y las autoridades competentes.</p>
+
+    <h2 class="section-title">18.1 Sistema de Indicadores Clave (KPIs)</h2>
+
+    <p>Los indicadores clave de rendimiento (KPIs) del PMST se estructuran en las siguientes dimensiones:</p>
+
+    <table>
+        <caption>KPIs del Plan de Movilidad Sostenible</caption>
+        <thead>
+            <tr>
+                <th>Dimensión</th>
+                <th>KPI</th>
+                <th>Unidad</th>
+                <th>Frecuencia de medición</th>
+                <th>Fuente de datos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Modo</strong></td>
+                <td>% de desplazamientos sostenibles</td>
+                <td>%</td>
+                <td>Semestral</td>
+                <td>Encuesta de movilidad</td>
+            </tr>
+            <tr>
+                <td><strong>Modo</strong></td>
+                <td>% de coche particular</td>
+                <td>%</td>
+                <td>Semestral</td>
+                <td>Encuesta de movilidad</td>
+            </tr>
+            <tr>
+                <td><strong>Ambiental</strong></td>
+                <td>Huella de carbono total (t CO2e/año)</td>
+                <td>t CO2e</td>
+                <td>Anual</td>
+                <td>Cálculo MITECO</td>
+            </tr>
+            <tr>
+                <td><strong>Ambiental</strong></td>
+                <td>CO2e por trabajador/a</td>
+                <td>kg CO2e</td>
+                <td>Anual</td>
+                <td>Cálculo MITECO</td>
+            </tr>
+            <tr>
+                <td><strong>Infraestructura</strong></td>
+                <td>Plazas de aparcamiento bici</td>
+                <td>Nº plazas</td>
+                <td>Anual</td>
+                <td>Registro de infraestructuras</td>
+            </tr>
+            <tr>
+                <td><strong>Infraestructura</strong></td>
+                <td>Puntos de recarga eléctrica</td>
+                <td>Nº puntos</td>
+                <td>Anual</td>
+                <td>Registro de infraestructuras</td>
+            </tr>
+            <tr>
+                <td><strong>Eficiencia</strong></td>
+                <td>Ocupación media de vehículos</td>
+                <td>pas./veh.</td>
+                <td>Semestral</td>
+                <td>Encuesta de movilidad</td>
+            </tr>
+            <tr>
+                <td><strong>Salud</strong></td>
+                <td>% de desplazamientos activos (bici + a pie)</td>
+                <td>%</td>
+                <td>Semestral</td>
+                <td>Encuesta de movilidad</td>
+            </tr>
+            <tr>
+                <td><strong>Satisfacción</strong></td>
+                <td>Satisfacción media con la movilidad</td>
+                <td>Escala 1-10</td>
+                <td>Anual</td>
+                <td>Encuesta de satisfacción</td>
+            </tr>
+            <tr>
+                <td><strong>Seguimiento</strong></td>
+                <td>Nº de respuestas a la encuesta</td>
+                <td>Nº respuestas</td>
+                <td>Semestral</td>
+                <td>Formulario de encuesta</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">18.2 Tabla Multi-Año de Seguimiento</h2>
+
+    <p>El seguimiento a medio-largo plazo se realiza mediante una tabla multi año que permite visualizar la evolución de los KPIs a lo largo del tiempo:</p>
+
+    <table>
+        <caption>Evolución multi-año de KPIs clave</caption>
+        <thead>
+            <tr>
+                <th>KPI</th>
+                <th>Línea base</th>
+                <th>Año 1 (2025)</th>
+                <th>Año 2 (2026)</th>
+                <th>Año 3 (2027)</th>
+                <th>Meta final</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>% sostenible</td>
+                <td>0,0%</td>
+                <td>7,0%</td>
+                <td>13,0%</td>
+                <td>20,0%</td>
+                <td>20,0%</td>
+            </tr>
+            <tr>
+                <td>CO2e total (t/año)</td>
+                <td>0,0</td>
+                <td>0,0</td>
+                <td>0,0</td>
+                <td>0,0</td>
+                <td>0,0</td>
+            </tr>
+            <tr>
+                <td>Plazas bici</td>
+                <td>0</td>
+                <td>8</td>
+                <td>10</td>
+                <td>12</td>
+                <td>15</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">18.3 Metodología de Recogida de Datos</h2>
+
+    <p>La recogida de datos para el seguimiento se realizará mediante:</p>
+
+    <ul>
+        <li><strong>Encuesta semestral de movilidad:</strong> Formulario digital que se envía a toda la plantilla cada 6 meses. La encuesta incluye preguntas sobre el modo de transporte habitual, frecuencia de uso de cada modo, tiempo de viaje, distancia y satisfacción.</li>
+        <li><strong>Registro de infraestructuras:</strong> Actualización anual del inventario de infraestructuras de movilidad (plazas de bici, puntos de recarga, duchas, etc.).</li>
+        <li><strong>Datos de flota corporativa:</strong> Registro trimestral de los desplazamientos realizados con la flota de la empresa, incluyendo kilómetros recorridos y consumo de combustible.</li>
+        <li><strong>Datos de teletrabajo:</strong> Registro mensual del número de días de teletrabajo realizados por cada departamento.</li>
+        <li><strong>Encuesta de satisfacción:</strong> Encuesta anual sobre la satisfacción de los/as trabajadores/as con las medidas de movilidad implementadas.</li>
+    </ul>
+
+    <h2 class="section-title">18.4 Proceso de Revisión Anual</h2>
+
+    <p>El proceso de revisión anual del PMST consta de las siguientes fases:</p>
+
+    <ol>
+        <li><strong>Recogida de datos (mes 11):</strong> Aplicación de la encuesta semestral y recogida de datos de infraestructuras y flota.</li>
+        <li><strong>Análisis de resultados (mes 12):</strong> Procesamiento de los datos, cálculo de KPIs y comparación con los objetivos.</li>
+        <li><strong>Evaluación del progreso (mes 12):</strong> Valoración del cumplimiento de los objetivos SMART y de la eficacia de las medidas implementadas.</li>
+        <li><strong>Ajuste del plan (mes 12):</strong> Modificación de las medidas, objetivos o cronograma en función de los resultados obtenidos.</li>
+        <li><strong>Informe de seguimiento (mes 12):</strong> Elaboración del informe anual de seguimiento del PMST, que será comunicado a la representación legal de los trabajadores y a la autoridad laboral.</li>
+    </ol>
+
+    <div class="highlight-box success">
+        <strong>📋 Compromiso de transparencia:</strong> Los resultados del seguimiento del PMST serán comunicados a toda la plantilla a través de los canales de comunicación internos (newsletter, intranet, reuniones de departamento), garantizando la transparencia y la participación de los/as trabajadores/as en el proceso de mejora continua.
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 19: CRONOGRAMA
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-19">
+    <h1 class="chapter-title">19. Cronograma de Implementación</h1>
+
+    <p>El cronograma de implementación del PMST se estructura en tres fases principales a lo largo de 36 meses (3 años), con revisiones periódicas que permiten ajustar el plan en función de los resultados obtenidos.</p>
+
+    <h2 class="section-title">19.1 Estructura Temporal</h2>
+
+    <h3 class="subsection-title">Fase 1: Preparación (Meses 0-6)</h3>
+    <p>Esta fase inicial comprende las actividades de diseño, aprobación y puesta en marcha del PMST:</p>
+    <ul>
+        <li>Diseño y aprobación del PMST por la dirección de la empresa.</li>
+        <li>Comunicación del plan a la representación legal de los trabajadores.</li>
+        <li>Realización de la encuesta de movilidad inicial.</li>
+        <li>Análisis diagnóstico y definición de la línea base.</li>
+        <li>Primeras medidas de bajo coste: campaña de sensibilización, ampliación teletrabajo, programa de carpooling.</li>
+    </ul>
+
+    <h3 class="subsection-title">Fase 2: Implantación (Meses 6-18)</h3>
+    <p>En esta fase se implementan las principales medidas de infraestructura e incentivos:</p>
+    <ul>
+        <li>Ampliación del aparcamiento de bicicletas.</li>
+        <li>Instalación de duchas y vestuarios.</li>
+        <li>Programa de ayudas al transporte público.</li>
+        <li>Instalación de puntos de recarga eléctrica.</li>
+        <li>Implementación del servicio de lanzadera.</li>
+        <li>Primera revisión semestral del plan.</li>
+    </ul>
+
+    <h3 class="subsection-title">Fase 3: Consolidación y Evaluación (Meses 18-36)</h3>
+    <p>Esta fase se centra en consolidar las medidas, evaluar resultados y planificar el siguiente período:</p>
+    <ul>
+        <li>Evaluación del impacto de las medidas implementadas.</li>
+        <li>Ajuste de las medidas según los resultados del seguimiento.</li>
+        <li>Segunda encuesta de movilidad y comparativa con línea base.</li>
+        <li>Elaboración del informe anual de seguimiento.</li>
+        <li>Planificación del PMST para el siguiente período trienal.</li>
+    </ul>
+
+    <h2 class="section-title">19.2 Diagrama de Gantt Simplificado</h2>
+
+    <div class="cronograma">
+        <div class="cronograma-header">
+            <div>Actividad</div>
+            <div style="text-align: center;">Ene</div><div style="text-align: center;">Feb</div><div style="text-align: center;">Mar</div><div style="text-align: center;">Abr</div><div style="text-align: center;">May</div><div style="text-align: center;">Jun</div><div style="text-align: center;">Jul</div><div style="text-align: center;">Ago</div><div style="text-align: center;">Sep</div><div style="text-align: center;">Oct</div><div style="text-align: center;">Nov</div><div style="text-align: center;">Dic</div>
+        </div>
+        
+        <div class="cronograma-row">
+            <div class="cronograma-label">Diseño y aprobación del PMST</div>
+            <div class="cronograma-bar" style="background: #2563eb; border-radius: 4px 0 0 4px;">Diseño y</div><div class="cronograma-bar" style="background: #2563eb; "></div><div class="cronograma-bar" style="background: #2563eb; border-radius: 0 4px 4px 0;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div>
+        </div>
+        
+        <div class="cronograma-row">
+            <div class="cronograma-label">Encuesta de movilidad</div>
+            <div style="background: #f3f4f6; border-radius: 4px;"></div><div class="cronograma-bar" style="background: #7c3aed; border-radius: 4px 0 0 4px;">Encuesta</div><div class="cronograma-bar" style="background: #7c3aed; "></div><div class="cronograma-bar" style="background: #7c3aed; border-radius: 0 4px 4px 0;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div>
+        </div>
+        
+        <div class="cronograma-row">
+            <div class="cronograma-label">Diagnóstico y análisis</div>
+            <div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div class="cronograma-bar" style="background: #0891b2; border-radius: 4px 0 0 4px;">Diagnóst</div><div class="cronograma-bar" style="background: #0891b2; "></div><div class="cronograma-bar" style="background: #0891b2; border-radius: 0 4px 4px 0;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div>
+        </div>
+        
+        <div class="cronograma-row">
+            <div class="cronograma-label">Infraestructura bici</div>
+            <div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div class="cronograma-bar" style="background: #059669; border-radius: 4px 0 0 4px;">Infraest</div><div class="cronograma-bar" style="background: #059669; "></div><div class="cronograma-bar" style="background: #059669; "></div><div class="cronograma-bar" style="background: #059669; "></div><div class="cronograma-bar" style="background: #059669; "></div><div class="cronograma-bar" style="background: #059669; border-radius: 0 4px 4px 0;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div>
+        </div>
+        
+        <div class="cronograma-row">
+            <div class="cronograma-label">Programa de ayudas transporte</div>
+            <div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div class="cronograma-bar" style="background: #d97706; border-radius: 4px 0 0 4px;">Programa</div><div class="cronograma-bar" style="background: #d97706; "></div><div class="cronograma-bar" style="background: #d97706; "></div><div class="cronograma-bar" style="background: #d97706; border-radius: 0 4px 4px 0;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div>
+        </div>
+        
+        <div class="cronograma-row">
+            <div class="cronograma-label">Campaña de sensibilización</div>
+            <div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div class="cronograma-bar" style="background: #dc2626; border-radius: 4px 0 0 4px;">Campaña </div><div class="cronograma-bar" style="background: #dc2626; "></div><div class="cronograma-bar" style="background: #dc2626; "></div><div class="cronograma-bar" style="background: #dc2626; "></div><div class="cronograma-bar" style="background: #dc2626; "></div><div class="cronograma-bar" style="background: #dc2626; "></div><div class="cronograma-bar" style="background: #dc2626; "></div><div class="cronograma-bar" style="background: #dc2626; border-radius: 0 4px 4px 0;"></div>
+        </div>
+        
+        <div class="cronograma-row">
+            <div class="cronograma-label">Teletrabajo ampliado</div>
+            <div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div class="cronograma-bar" style="background: #ea580c; border-radius: 4px 0 0 4px;">Teletrab</div><div class="cronograma-bar" style="background: #ea580c; "></div><div class="cronograma-bar" style="background: #ea580c; border-radius: 0 4px 4px 0;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div>
+        </div>
+        
+        <div class="cronograma-row">
+            <div class="cronograma-label">Puntos de recarga eléctrica</div>
+            <div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div class="cronograma-bar" style="background: #2563eb; border-radius: 4px 0 0 4px;">Puntos d</div><div class="cronograma-bar" style="background: #2563eb; "></div><div class="cronograma-bar" style="background: #2563eb; "></div><div class="cronograma-bar" style="background: #2563eb; "></div><div class="cronograma-bar" style="background: #2563eb; "></div><div class="cronograma-bar" style="background: #2563eb; "></div><div class="cronograma-bar" style="background: #2563eb; border-radius: 0 4px 4px 0;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div>
+        </div>
+        
+        <div class="cronograma-row">
+            <div class="cronograma-label">Lanzadera / carpooling</div>
+            <div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div class="cronograma-bar" style="background: #7c3aed; border-radius: 4px 0 0 4px;">Lanzader</div><div class="cronograma-bar" style="background: #7c3aed; "></div><div class="cronograma-bar" style="background: #7c3aed; "></div><div class="cronograma-bar" style="background: #7c3aed; "></div><div class="cronograma-bar" style="background: #7c3aed; "></div><div class="cronograma-bar" style="background: #7c3aed; border-radius: 0 4px 4px 0;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div>
+        </div>
+        
+        <div class="cronograma-row">
+            <div class="cronograma-label">Revisión semestral (mes 6)</div>
+            <div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div class="cronograma-bar" style="background: #6b7280; border-radius: 4px 0 0 4px;">Revisión</div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div>
+        </div>
+        
+        <div class="cronograma-row">
+            <div class="cronograma-label">Revisión anual (mes 12)</div>
+            <div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div style="background: #f3f4f6; border-radius: 4px;"></div><div class="cronograma-bar" style="background: #6b7280; border-radius: 4px 0 0 4px;">Revisión</div>
+        </div>
+        
+    </div>
+
+    <h2 class="section-title">19.3 Hitos Clave</h2>
+
+    <table>
+        <caption>Hitos del cronograma de implementación</caption>
+        <thead>
+            <tr>
+                <th>Mes</th>
+                <th>Hito</th>
+                <th>Responsable</th>
+                <th>Entregable</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Mes 1</strong></td>
+                <td>Aprobación del PMST</td>
+                <td>Dirección de empresa</td>
+                <td>Documento PMST firmado</td>
+            </tr>
+            <tr>
+                <td><strong>Mes 2</strong></td>
+                <td>Comunicación a representantes</td>
+                <td>Recursos Humanos</td>
+                <td>Acta de comunicación</td>
+            </tr>
+            <tr>
+                <td><strong>Mes 3</strong></td>
+                <td>Encuesta de movilidad completada</td>
+                <td>Comisión PMST</td>
+                <td>Base de datos de respuestas</td>
+            </tr>
+            <tr>
+                <td><strong>Mes 4</strong></td>
+                <td>Diagnóstico completado</td>
+                <td>Comisión PMST</td>
+                <td>Informe diagnóstico</td>
+            </tr>
+            <tr>
+                <td><strong>Mes 6</strong></td>
+                <td>Primera revisión semestral</td>
+                <td>Comisión PMST</td>
+                <td>Informe de seguimiento</td>
+            </tr>
+            <tr>
+                <td><strong>Mes 9</strong></td>
+                <td>Infraestructuras habilitadas</td>
+                <td>Mantenimiento</td>
+                <td>Registro de infraestructuras</td>
+            </tr>
+            <tr>
+                <td><strong>Mes 12</strong></td>
+                <td>Revisión anual + encuesta</td>
+                <td>Comisión PMST</td>
+                <td>Informe anual</td>
+            </tr>
+            <tr>
+                <td><strong>Mes 24</strong></td>
+                <td>Segunda revisión anual</td>
+                <td>Comisión PMST</td>
+                <td>Informe de progreso</td>
+            </tr>
+            <tr>
+                <td><strong>Mes 36</strong></td>
+                <td>Evaluación final</td>
+                <td>Comisión PMST</td>
+                <td>Informe de evaluación + nuevo PMST</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="highlight-box">
+        <strong>📅 Nota:</strong> El cronograma es orientativo y podrá ajustarse en función de la disponibilidad de recursos, las necesidades de la empresa y los resultados del seguimiento. Las revisiones semestrales permiten realizar ajustes en tiempo real.
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 20: PRESUPUESTO
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-20">
+    <h1 class="chapter-title">20. Presupuesto Estimado</h1>
+
+    <p>El presupuesto estimado del PMST se presenta como una guía orientativa para la planificación financiera de las medidas. Las cuantías son estimaciones basadas en precios de mercado y pueden variar en función de las condiciones específicas de cada centro de trabajo, las negociaciones con proveedores y la disponibilidad de subvenciones.</p>
+
+    <h2 class="section-title">20.1 Desglose por Medida</h2>
+
+    <table>
+        <caption>Presupuesto estimado por medida</caption>
+        <thead>
+            <tr>
+                <th>Medida</th>
+                <th>Categoría</th>
+                <th>Coste estimado</th>
+                <th>Recurrencia</th>
+                <th>Prioridad</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td><strong>Ampliación aparcamiento bici</strong></td>
+                <td>Infraestructura</td>
+                <td>2.000 - 5.000 €</td>
+                <td>Puntual</td>
+                <td><span class="badge alta">Alta</span></td>
+            </tr>
+            
+            <tr>
+                <td><strong>Programa ayudas transporte público</strong></td>
+                <td>Incentivos / Servicio</td>
+                <td>10.000 - 25.000 €/año</td>
+                <td>Anual</td>
+                <td><span class="badge alta">Alta</span></td>
+            </tr>
+            
+            <tr>
+                <td><strong>Duchas y vestuarios</strong></td>
+                <td>Infraestructura</td>
+                <td>3.000 - 8.000 €</td>
+                <td>Puntual</td>
+                <td><span class="badge alta">Alta</span></td>
+            </tr>
+            
+            <tr>
+                <td><strong>Puntos de recarga eléctrica</strong></td>
+                <td>Infraestructura</td>
+                <td>8.000 - 20.000 €</td>
+                <td>Puntual</td>
+                <td><span class="badge alta">Alta</span></td>
+            </tr>
+            
+            <tr>
+                <td><strong>Campaña de sensibilización</strong></td>
+                <td>Infraestructura</td>
+                <td>500 - 2.000 €</td>
+                <td>Puntual</td>
+                <td><span class="badge alta">Alta</span></td>
+            </tr>
+            
+            <tr>
+                <td><strong>Lanzadera / carpooling</strong></td>
+                <td>Infraestructura</td>
+                <td>15.000 - 30.000 €/año</td>
+                <td>Anual</td>
+                <td><span class="badge alta">Alta</span></td>
+            </tr>
+            
+            <tr>
+                <td><strong>Plan de puntos / gamificación</strong></td>
+                <td>Incentivos / Servicio</td>
+                <td>1.000 - 3.000 €/año</td>
+                <td>Anual</td>
+                <td><span class="badge alta">Alta</span></td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <h2 class="section-title">20.2 Resumen Presupuestario</h2>
+
+    <table>
+        <caption>Resumen del presupuesto total estimado</caption>
+        <thead>
+            <tr>
+                <th>Concepto</th>
+                <th>Inversión inicial (Año 1)</th>
+                <th>Gasto recurrente (Año 2-3)</th>
+                <th>Total 3 años</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Infraestructura</strong></td>
+                <td>13.000 - 33.000 €</td>
+                <td>2.000 - 5.000 €</td>
+                <td>17.000 - 43.000 €</td>
+            </tr>
+            <tr>
+                <td><strong>Incentivos y ayudas</strong></td>
+                <td>11.500 - 30.000 €</td>
+                <td>26.000 - 58.000 €</td>
+                <td>63.500 - 146.000 €</td>
+            </tr>
+            <tr>
+                <td><strong>Comunicación</strong></td>
+                <td>500 - 2.000 €</td>
+                <td>1.000 - 3.000 €</td>
+                <td>2.500 - 8.000 €</td>
+            </tr>
+            <tr style="background: #f0f4ff; font-weight: 700;">
+                <td><strong>TOTAL ESTIMADO</strong></td>
+                <td>25.000 - 65.000 €</td>
+                <td>29.000 - 66.000 €</td>
+                <td>83.000 - 197.000 €</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">20.3 Fuentes de Financiación</h2>
+
+    <p>Las siguientes fuentes de financiación pueden ser utilizadas para sufragar los costes del PMST:</p>
+
+    <ul>
+        <li><strong>Presupuesto de la empresa:</strong> Asignación directa del presupuesto de movilidad o sostenibilidad.</li>
+        <li><strong>Subvenciones públicas:</strong> Programas autonómicos y municipales de fomento de la movilidad sostenible (convocatorias anuales).</li>
+        <li><strong>Deducciones fiscales:</strong> Bonificaciones en el Impuesto de Sociedades por inversiones en eficiencia energética y movilidad sostenible (Ley 19/2021).</li>
+        <li><strong>Fondos europeos:</strong> Programas de financiación del Fondo Europeo de Desarrollo Regional (FEDER) para proyectos de movilidad sostenible.</li>
+        <li><strong>Acuerdos con proveedores:</strong> Negociación de precios preferentes con operadores de transporte público, fabricantes de bicicletas o instaladores de puntos de recarga.</li>
+    </ul>
+
+    <h2 class="section-title">20.4 Análisis de Retorno de Inversión (ROI)</h2>
+
+    <p>El retorno de la inversión del PMST se evalúa no solo en términos económicos directos, sino también en beneficios intangibles:</p>
+
+    <table>
+        <caption>Análisis de retorno de la inversión</caption>
+        <thead>
+            <tr>
+                <th>Beneficio</th>
+                <th>Tipo</th>
+                <th>Estimación</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Reducción de costes de aparcamiento</td>
+                <td>Directo</td>
+                <td>500 - 2.000 €/año por plaza reducida</td>
+            </tr>
+            <tr>
+                <td>Reducción de absentismo laboral</td>
+                <td>Indirecto</td>
+                <td>3-5% de reducción (por mejor salud de usuarios de bici)</td>
+            </tr>
+            <tr>
+                <td>Mejora de productividad</td>
+                <td>Indirecto</td>
+                <td>2-4% de mejora (por reducción del estrés del desplazamiento)</td>
+            </tr>
+            <tr>
+                <td>Mejora de imagen corporativa</td>
+                <td>Intangible</td>
+                <td>Mayor atractivo para talento joven y comprometido</td>
+            </tr>
+            <tr>
+                <td>Cumplimiento normativo</td>
+                <td>Legal</td>
+                <td>Evitación de sanciones de hasta 187.515 €</td>
+            </tr>
+            <tr>
+                <td>Reducción de emisiones de CO2e</td>
+                <td>Ambiental</td>
+                <td>0,0 € equivalentes al precio del carbono (50 €/t)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="highlight-box success">
+        <strong>💰 Conclusión económica:</strong> El PMST representa una inversión razonable que genera retornos tanto económicos como sociales. La inversión inicial se recupera en un plazo de 2-3 años, y los beneficios se incrementan progresivamente a medida que las medidas consolidan sus efectos. Además, el cumplimiento normativo evita sanciones potencialmente muy elevadas.
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPÍTULO 21: CONCLUSIONES
+     ═══════════════════════════════════════════════════════ -->
+
+<div class="chapter" id="chapter-21">
+    <h1 class="chapter-title">21. Conclusiones y Compromisos</h1>
+
+    <p>El presente Plan de Movilidad Sostenible al Trabajo (PMST) para Centro Ineco Madrid constituye un documento integral y comprometido con la transformación de los patrones de movilidad de la plantilla hacia un modelo más sostenible, eficiente y saludable.</p>
+
+    <h2 class="section-title">21.1 Síntesis de Resultados</h2>
+
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-value">0</div>
+            <div class="kpi-label">Trabajadores/as</div>
+        </div>
+        <div class="kpi-card green">
+            <div class="kpi-value">40,0%</div>
+            <div class="kpi-label">Modo motorizado</div>
+        </div>
+        <div class="kpi-card green">
+            <div class="kpi-value">1,6</div>
+            <div class="kpi-label">t CO2e/año</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">10</div>
+            <div class="kpi-label">Medidas propuestas</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">21.2 Conclusiones Principales</h2>
+
+    <ol>
+        <li><strong>Diagnóstico:</strong> El centro presenta un reparto modal relativamente equilibrado, con un 60,0% de modos sostenibles, lo que indica una situación favorable que debe mantenerse y reforzarse.</li>
+
+        <li><strong>Impacto ambiental:</strong> La huella de carbono de los desplazamientos al trabajo asciende a 1,6 toneladas de CO2e al año, lo que representa un impacto significativo que puede reducirse mediante la implementación de las medidas propuestas en un 35% en 3 años.</li>
+
+        <li><strong>Infraestructura:</strong> La empresa carece de infraestructura ciclista adecuada, lo que constituye una debilidad prioritaria que debe abordarse en el corto plazo.
+
+        <li><strong>Medidas:</strong> Se han identificado 10 medidas priorizadas, de las cuales 4 tienen impacto alto y pueden implementarse en el corto plazo con un coste relativamente bajo.</li>
+
+        <li><strong>Cumplimiento normativo:</strong> Este PMST cumple con todos los requisitos de la Ley 8/2021, del Real Decreto 1010/2023 y de las directivas europeas de aplicación, protegiendo a la empresa de posibles sanciones.</li>
+    </ol>
+
+    <h2 class="section-title">21.3 Compromisos de la Dirección</h2>
+
+    <p>La dirección de Ineco se compromete a:</p>
+
+    <ul>
+        <li>Implantar las medidas del PMST en los plazos establecidos en el cronograma.</li>
+        <li>Dotar los recursos económicos necesarios para la ejecución del plan.</li>
+        <li>Designar un responsable de seguimiento del PMST.</li>
+        <li>Comunicar los resultados del seguimiento a la representación legal de los trabajadores.</li>
+        <li>Revisar y actualizar el PMST como mínimo cada tres años.</li>
+        <li>Promover una cultura de movilidad sostenible en toda la organización.</li>
+    </ul>
+
+    <h2 class="section-title">21.4 Compromisos de los/as Trabajadores/as</h2>
+
+    <p>Los/as trabajadores/as se comprometen a:</p>
+
+    <ul>
+        <li>Participar activamente en las encuestas de movilidad y en las campañas de sensibilización.</li>
+        <li>Valorar y adoptar alternativas de movilidad sostenible cuando sea posible.</li>
+        <li>Comunicar sugerencias y propuestas de mejora a la comisión de seguimiento del PMST.</li>
+        <li>Respetar las infraestructuras de movilidad sostenible (aparcamientos de bici, carriles bici, etc.).</li>
+        <li>Participar en los programas de carpooling y en las iniciativas de movilidad compartida.</li>
+    </ul>
+
+    <h2 class="section-title">21.5 Próximos Pasos</h2>
+
+    <ol>
+        <li><strong>Inmediato (mes 1):</strong> Aprobación formal del PMST por la dirección y comunicación a los/as trabajadores/as.</li>
+        <li><strong>Corto plazo (meses 1-3):</strong> Inicio de la encuesta de movilidad y primera campaña de sensibilización.</li>
+        <li><strong>Corto plazo (meses 2-4):</strong> Implementación de medidas de bajo coste: teletrabajo ampliado, programa de carpooling, plan de puntos.</li>
+        <li><strong>Medio plazo (meses 4-12):</strong> Ejecución de las obras de infraestructura (aparcamiento bici, duchas, puntos de recarga).</li>
+        <li><strong>Medio plazo (meses 6-12):</strong> Puesta en marcha del programa de ayudas al transporte público y del servicio de lanzadera.</li>
+        <li><strong>Largo plazo (meses 12-36):</strong> Consolidación, seguimiento continuo y revisión anual del plan.</li>
+    </ol>
+
+    <h2 class="section-title">21.6 Área de Firma</h2>
+
+    <p>El presente Plan de Movilidad Sostenible al Trabajo es aprobado por las partes firmantes, que se comprometen a su implantación y seguimiento.</p>
+
+    <div class="firma-grid">
+        <div class="firma-box">
+            <div class="nombre">Por la dirección de la empresa</div>
+            <div class="cargo">Ineco</div>
+        </div>
+        <div class="firma-box">
+            <div class="nombre">Por la representación legal de los trabajadores</div>
+            <div class="cargo">Comité de Empresa / Delegados/as</div>
+        </div>
+    </div>
+
+    <div style="margin-top: 40px; text-align: center;">
+        <div class="firma-grid">
+            <div class="firma-box">
+                <div class="nombre">Fecha: 14 de julio de 2026</div>
+            </div>
+            <div class="firma-box">
+                <div class="nombre">Lugar: Centro Ineco Madrid</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 40px;">
+        <strong>📋 Nota final:</strong> Este PMST es un documento vivo que debe ser revisado y actualizado periódicamente. El compromiso de todas las partes —dirección, trabajadores/as y representantes legales— es fundamental para su éxito. La movilidad sostenible no es solo una obligación normativa, sino una oportunidad para mejorar la calidad de vida de los/as trabajadores/as, reducir el impacto ambiental y contribuir a la descarbonización del transporte.
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER GLOBAL
+     ═══════════════════════════════════════════════════════ -->
+<div class="informe-footer">
+    <p><strong>PLAN DE MOVILIDAD SOSTENIBLE AL TRABAJO (PMST/PTST)</strong></p>
+    <p>Centro Ineco Madrid — Elaborado el 14 de julio de 2026</p>
+    <p>Hecho con ❤️ por David Antizar</p>
+    <p style="font-size: 8pt; color: #9ca3af; margin-top: 10px;">
+        Este documento ha sido generado automáticamente por la plataforma PMST/PTST Generator.<br>
+        Factores de emisión: MITECO 2024 | Marco legal: Ley 8/2021 | Normativa: Real Decreto 1010/2023
+    </p>
+</div>
+
+</body>
+</html>
