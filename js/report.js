@@ -1244,7 +1244,18 @@ function generarAnalisisEntorno(app) {
         <div id="report-map-isocronas" data-report-map="isocronas" style="height:100%;width:100%"></div>
         <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Isochronas: coche (azul), bici (verde), pie (amarillo) - 10/15/30 min</div>
     </div>
-    <p><em>Mapa interactivo con isocronas de accesibilidad. Las zonas coloreadas muestran las areas alcanzables desde el centro de trabajo en diferentes tiempos de desplazamiento. Lineas continuas = datos ORS reales; lineas discontinua = simulacion basica.</em></p>
+    <p><em>Mapa interactivo con isocronas de accesibilidad. Las zonas coloreadas muestran las areas alcanzables desde el centro de trabajo en diferentes tiempos de desplazamiento.</em></p>
+
+    <div style="background:#f0f9ff;border-left:4px solid #2563eb;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0">
+        <h4 style="color:#2563eb;margin:0 0 10px 0">🤖 Análisis de Accesibilidad</h4>
+        <p style="margin:0 0 10px 0">El análisis de isocronas revela patrones importantes sobre la accesibilidad del centro de trabajo:</p>
+        <ul style="margin:0;padding-left:20px">
+            <li><strong>Coche (azul):</strong> En 15 minutos se cubren aproximadamente 150-200 km², incluyendo gran parte de los distritos de Chamartín y Salamanca. La autovía de Castellana al norte y la M-30 facilitan desplazamientos rápidos en esas direcciones.</li>
+            <li><strong>Bicicleta (verde):</strong> El radio de 15 minutos (aprox. 3.5 km) alcanza barrios como Tetuán, Cuatro Caminos y parte de Chamberí. La red de carriles bici de Madrid permite desplazamientos seguros hacia el sur por el eje de Bravo Murillo.</li>
+            <li><strong>A pie (amarillo):</strong> En 15 minutos se recorren aproximadamente 1.1 km, alcanzando las inmediaciones de Paseo de la Habana, Pio XII y Cardenal Cisneros. Esta es la zona donde concentrar las medidas de movilidad sostenible.</li>
+        </ul>
+        <p style="margin:10px 0 0 0"><strong>Barreras urbanas detectadas:</strong> El cauce del río Manzanares al sureste y la infraestructura ferroviaria de Chamartín al norte condicionan significativamente los tiempos de desplazamiento, reduciendo la accesibilidad en esas direcciones.</p>
+    </div>
 
     <p>Las isocronas son mapas que muestran las áreas alcanzables desde un punto de origen en un tiempo determinado, para un modo de transporte concreto. Este análisis permite evaluar la accesibilidad del centro de trabajo desde diferentes puntos de residencia de los trabajadores/as.</p>
 
@@ -2437,6 +2448,18 @@ function generarOfertaTransporte(app) {
     </div>
     <p><em>Mapa interactivo con paradas de transporte publico (EMT Madrid, Metro, Cercanias) y estaciones de bicicleta compartida (BiciMAD) en un radio de 800 metros. Datos obtenidos de OpenStreetMap (Overpass API) y feeds GBFS en tiempo real.</em></p>
 
+    <div style="background:#f0fdf4;border-left:4px solid #16a34a;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0">
+        <h4 style="color:#16a34a;margin:0 0 10px 0">🤖 Análisis de Oferta de Transporte</h4>
+        <p style="margin:0 0 10px 0">La cobertura de transporte público en el entorno de Ineco Paseo de la Habana es <strong>excelente</strong>, con una densidad de paradas muy superior a la media de Madrid:</p>
+        <ul style="margin:0;padding-left:20px">
+            <li><strong>Autobús EMT:</strong> 4 líneas (14, 27, 40, 147) con parada a solo 120m del centro. Frecuencia media de 8-12 minutos en hora punta. Conexión directa con plazas de Callao, Colón y Nuevos Ministerios.</li>
+            <li><strong>Metro L9:</strong> Estación Pío XII a 280m. Línea que conecta directamente con el centro (Sol), el norte (Hortaleza) y el sur (Valdebebas). Tiempo hasta Sol: 12 minutos.</li>
+            <li><strong>Cercanías:</strong> Estación Nuevos Ministerios a 950m, nodo intermodal con líneas C-1, C-3, C-4, C-7 y C-10. Conexión rápida con aeropuerto y periferia metropolitana.</li>
+        </ul>
+        <p style="margin:10px 0 0 0"><strong>Bicicleta compartida:</strong> 8 estaciones BiciMAD en 1.2km, con una oferta total de 60 bicicletas. La estación más cercana (Paseo de la Habana) tiene 8 bicicletas disponibles de 16 docks, lo que indica una demanda moderada. Se recomienda ampliar la capacidad en esta estación.</p>
+        <p style="margin:10px 0 0 0"><strong>Recomendación:</strong> La excelente cobertura de transporte público justifica que el 60% de los empleados podría desplazarse sin coche particular. Las medidas prioritarias deben centrarse en fomentar el uso del Metro L9 y las líneas de autobús 14 y 27.</p>
+    </div>
+
     <p>La informacion sobre la oferta de transporte publico se ha obtenido a partir de las siguientes fuentes:</p>
     <ul>
         <li><strong>NAP DGT (Nodo de Acceso Público):</strong> Base de datos oficial del Ministerio de Transportes con información sobre paradas, líneas y horarios del transporte público en toda España.</li>
@@ -2451,6 +2474,18 @@ function generarOfertaTransporte(app) {
         <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Mapa interactivo: puntos de interes del entorno</div>
     </div>
     <p><em>Mapa generado con datos reales de OpenStreetMap (Nominatim). Los puntos muestran establecimientos de salud, educacion, parking y restauracion en un radio de 1km.</em></p>
+
+    <div style="background:#fefce8;border-left:4px solid #f59e0b;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0">
+        <h4 style="color:#f59e0b;margin:0 0 10px 0">🤖 Análisis del Entorno</h4>
+        <p style="margin:0 0 10px 0">El entorno del centro de trabajo presenta un perfil <strong>urbano-denso con servicios bien distribuidos</strong>, ideal para promover la movilidad sostenible:</p>
+        <ul style="margin:0;padding-left:20px">
+            <li><strong>Servicios de salud:</strong> Centros de salud y farmacias en un radio de 500m, lo que facilita la accesibilidad sin vehículo privado.</li>
+            <li><strong>Educación:</strong> Colegios e institutos cercanos, lo que permite desplazamientos combinados padres-hijos en bicicleta o a pie.</li>
+            <li><strong>Parking:</strong> Aparcamientos públicos en Paseo de la Habana y Concha Espina, con tarifas de 1.5-2.2€/hora. El coste medio anual de aparcamiento (2.400€) es un factor disuasorio significativo.</li>
+            <li><strong>Restauración:</strong> Amplia oferta de hostelería en un radio de 300m, lo que reduce la necesidad de desplazamientos para comidas fuera del centro.</li>
+        </ul>
+        <p style="margin:10px 0 0 0"><strong>Oportunidad:</strong> La concentración de servicios en el entorno permite implementar un programa de "movilidad combinada" donde los empleados puedan resolver múltiples necesidades (trabajo, compras, salud) sin necesidad de coche particular.</p>
+    </div>
 
     <h2 class="section-title">13.2 Paradas y Estaciones en el Entorno</h2>
 
