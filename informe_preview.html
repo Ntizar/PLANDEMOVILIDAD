@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PMST/PTST — Centro Ineco Madrid</title>
+    <title>PMST/PTST — Ineco - Paseo de la Habana</title>
     <style>
 /* ═══════════════════════════════════════════════════════════════
    PLAN DE MOVILIDAD SOSTENIBLE — Estilos del informe
@@ -14,7 +14,7 @@
     size: A4;
     margin: 25mm 20mm 30mm 20mm;
     @bottom-center {
-        content: "PLAN DE MOVILIDAD SOSTENIBLE — Centro Ineco Madrid — Hecho con ❤️ por David Antizar";
+        content: "PLAN DE MOVILIDAD SOSTENIBLE — Ineco - Paseo de la Habana — Hecho con ❤️ por David Antizar";
         font-size: 8pt;
         color: #666;
         font-family: 'Segoe UI', Arial, sans-serif;
@@ -516,6 +516,8 @@ li {
 .text-sm { font-size: 9pt; }
 .mono { font-family: 'Courier New', monospace; }
 </style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -529,7 +531,7 @@ li {
     <div class="subtitle">PMST / PTST — Plan de Trabajo y Movilidad Sostenible</div>
     <div style="width: 80px; height: 4px; background: #f97316; margin: 20px auto; border-radius: 2px;"></div>
     <div class="meta">
-        <div><strong>Centro de trabajo:</strong> Centro Ineco Madrid</div>
+        <div><strong>Centro de trabajo:</strong> Ineco - Paseo de la Habana</div>
         <div><strong>Empresa:</strong> Ineco</div>
         <div><strong>Fecha de elaboración:</strong> 14 de julio de 2026</div>
         <div><strong>Plantilla:</strong> 0 trabajadores/as</div>
@@ -698,7 +700,7 @@ li {
 <div class="chapter" id="chapter-2">
     <h1 class="chapter-title">2. Resumen Ejecutivo</h1>
 
-    <p>El presente Plan de Movilidad Sostenible al Trabajo (PMST) ha sido elaborado para Centro Ineco Madrid en cumplimiento de la <strong>Ley 8/2021, de 28 de diciembre, de medidas de movilidad sostenible</strong>, que establece la obligatoriedad para las empresas de más de 100 trabajadores de disponer de un plan de movilidad que promueva desplazamientos más sostenibles hacia y desde el centro de trabajo.</p>
+    <p>El presente Plan de Movilidad Sostenible al Trabajo (PMST) ha sido elaborado para Ineco - Paseo de la Habana en cumplimiento de la <strong>Ley 8/2021, de 28 de diciembre, de medidas de movilidad sostenible</strong>, que establece la obligatoriedad para las empresas de más de 100 trabajadores de disponer de un plan de movilidad que promueva desplazamientos más sostenibles hacia y desde el centro de trabajo.</p>
 
     <p>Este documento constituye el resultado de un proceso diagnóstico integral que combina datos de la encuesta de movilidad realizada a la plantilla, la caracterización de las instalaciones y los recursos de la empresa, así como el análisis del entorno de transporte público e infraestructuras ciclistas y peatonales disponibles.</p>
 
@@ -706,34 +708,34 @@ li {
 
     <div class="kpi-grid">
         <div class="kpi-card">
-            <div class="kpi-value">5</div>
+            <div class="kpi-value">25</div>
             <div class="kpi-label">Trabajadores/as</div>
         </div>
         <div class="kpi-card accent">
-            <div class="kpi-value">40,0%</div>
+            <div class="kpi-value">60,0%</div>
             <div class="kpi-label">Modo motorizado</div>
         </div>
         <div class="kpi-card green">
-            <div class="kpi-value">60,0%</div>
+            <div class="kpi-value">40,0%</div>
             <div class="kpi-label">Modo sostenible</div>
         </div>
         <div class="kpi-card">
-            <div class="kpi-value">1,6</div>
+            <div class="kpi-value">12,0</div>
             <div class="kpi-label">t CO2e/año</div>
         </div>
     </div>
 
     <h3 class="subsection-title">Distribución Modal</h3>
-    <p>El análisis del reparto modal muestra que la principal modalidad de desplazamiento entre los/as 5 trabajadores/as encuestados es:</p>
-    <p><strong>🚇 Metro / Tren</strong>: 40,0% (2 personas), <strong>🚌 Autobús</strong>: 20,0% (1 personas), <strong>🚗 Coche particular (conductor)</strong>: 20,0% (1 personas), <strong>🚲 Bicicleta (estándar)</strong>: 20,0% (1 personas)</p>
+    <p>El análisis del reparto modal muestra que la principal modalidad de desplazamiento entre los/as 25 trabajadores/as encuestados es:</p>
+    <p><strong>🚗 Coche particular (conductor)</strong>: 32,0% (8 personas), <strong>🚌 Autobus</strong>: 20,0% (5 personas), <strong>🚇 Metro / Tren</strong>: 20,0% (5 personas), <strong>🚲 Bicicleta</strong>: 12,0% (3 personas), <strong>🚗 Coche particular (pasajero)</strong>: 8,0% (2 personas)</p>
 
-    <div class="highlight-box success">
-        <strong>✅ Indicador favorable:</strong>
-        El 40,0% de los desplazamientos se realizan en modos motorizados, lo que representa una proporción razonable. La huella de carbono asociada asciende a <strong>1,6 toneladas de CO2e al año</strong>, equivalente a 322,0 kg CO2e por trabajador/a y año.
+    <div class="highlight-box warning">
+        <strong>⚠️ Hallazgo crítico:</strong>
+        El 60,0% de los desplazamientos se realizan en modos motorizados, lo que indica una alta dependencia del vehículo privado. La huella de carbono asociada asciende a <strong>12,0 toneladas de CO2e al año</strong>, equivalente a 481,0 kg CO2e por trabajador/a y año.
     </div>
 
     <h2 class="section-title">Nivel de Sostenibilidad</h2>
-    <p>El nivel de sostenibilidad global del centro se clasifica como <strong>"Muy sostenible"</strong>, con un 60,0% de desplazamientos realizados en modos sostenibles (transporte público, bicicleta, a pie, VMP) y un 0,0% de teletrabajo.</p>
+    <p>El nivel de sostenibilidad global del centro se clasifica como <strong>"Moderadamente sostenible"</strong>, con un 40,0% de desplazamientos realizados en modos sostenibles (transporte público, bicicleta, a pie, VMP) y un 0,0% de teletrabajo.</p>
     <p>Este resultado sitúa al centro en una posición favorable, siendo necesario mantener y reforzar las prácticas actuales.</p>
 
     <h2 class="section-title">Recomendaciones Principales</h2>
@@ -741,7 +743,7 @@ li {
     <ol>
         <li><strong>Fomento del teletrabajo:</strong> Ampliar la cobertura de teletrabajo, que actualmente solo alcanza al 0,0% de la plantilla, como medida de mayor impacto inmediato.</li>
         <li><strong>Mejora de infraestructura ciclista:</strong> Ampliar el número de plazas de aparcamiento de bicicletas, que actualmente es insuficiente.</li>
-        <li><strong>Incentivos al transporte público:</strong> Evaluar la posible ampliación de las ayudas existentes.</li>
+        <li><strong>Incentivos al transporte público:</strong> Implementar un programa de ayudas al transporte público para reducir la dependencia del coche particular.</li>
         <li><strong>Carpooling interno:</strong> Promover programas de compartir vehículo entre compañeros/as con rutas similares.</li>
         <li><strong>Seguimiento continuo:</strong> Establecer encuestas periódicas semestrales para medir la evolución de los indicadores.</li>
     </ol>
@@ -905,7 +907,7 @@ li {
             <tr>
                 <td>Encuesta de movilidad</td>
                 <td>Reparto modal, tiempos, distancias, satisfacción</td>
-                <td>✅ Completada (5 respuestas)</td>
+                <td>✅ Completada (25 respuestas)</td>
             </tr>
             <tr>
                 <td>Ficha del centro de trabajo</td>
@@ -920,7 +922,7 @@ li {
             <tr>
                 <td>NAP DGT / Overpass API</td>
                 <td>Paradas de transporte público, líneas, frecuencias</td>
-                <td>⏳ Pendiente de consulta</td>
+                <td>✅ Consultada</td>
             </tr>
             <tr>
                 <td>ORS API (OpenRouteService)</td>
@@ -981,7 +983,7 @@ li {
     <p>Como toda investigación, este diagnóstico presenta algunas limitaciones que deben ser consideradas al interpretar los resultados:</p>
 
     <ul>
-        <li><strong>Tasa de respuesta:</strong> La encuesta ha obtenido 5 respuestas, lo que supera el umbral recomendado del 60% de la plantilla.</li>
+        <li><strong>Tasa de respuesta:</strong> La encuesta ha obtenido 25 respuestas, lo que supera el umbral recomendado del 60% de la plantilla.</li>
         <li><strong>Autoselección:</strong> Al ser una encuesta voluntaria, los/as participantes pueden no ser representativos de toda la plantilla. Aquellos/as con patrones de movilidad más diversificados o comprometidos con la sostenibilidad pueden estar sobrerrepresentados.</li>
         <li><strong>Período de muestreo:</strong> Los datos reflejan las condiciones de movilidad en el momento de la encuesta y pueden no ser representativos de todo el año, especialmente en períodos vacacionales o de teletrabajo variable.</li>
         <li><strong>Datos de transporte público:</strong> La información sobre frecuencias y cobertura de líneas depende de las bases de datos públicas disponibles (NAP DGT, Overpass), que pueden no estar completamente actualizadas.</li>
@@ -1015,10 +1017,10 @@ li {
             </tr>
         </thead>
         <tbody>
-            <tr><td><strong>Dirección</strong></td><td>No especificada</td></tr>
+            <tr><td><strong>Dirección</strong></td><td>Paseo de la Habana, 16</td></tr>
             <tr><td><strong>Coordenadas</strong></td><td>N/D, N/D</td></tr>
             <tr><td><strong>Municipio</strong></td><td>el municipio correspondiente</td></tr>
-            <tr><td><strong>Provincia</strong></td><td>la provincia correspondiente</td></tr>
+            <tr><td><strong>Provincia</strong></td><td>Madrid</td></tr>
         </tbody>
     </table>
 
@@ -1056,7 +1058,7 @@ li {
     <h2 class="section-title">5.4 Isocronas de Accesibilidad</h2>
 
     <div class="map-container" style="height:450px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
-        <div id="report-map-isocronas" data-report-map="isocronas" style="height:100%;width:100%"></div>
+        <div id="map-isocronas" data-report-map="isocronas" style="height:100%;width:100%"></div>
         <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Isochronas: coche (azul), bici (verde), pie (amarillo) - 10/15/30 min</div>
     </div>
     <p><em>Mapa interactivo con isocronas de accesibilidad. Las zonas coloreadas muestran las areas alcanzables desde el centro de trabajo en diferentes tiempos de desplazamiento. Lineas continuas = datos ORS reales; lineas discontinua = simulacion basica.</em></p>
@@ -1110,8 +1112,8 @@ li {
             </tr>
         </thead>
         <tbody>
-            <tr><td><strong>Nombre del centro</strong></td><td>Centro Ineco Madrid</td></tr>
-            <tr><td><strong>Dirección completa</strong></td><td>No especificada</td></tr>
+            <tr><td><strong>Nombre del centro</strong></td><td>Ineco - Paseo de la Habana</td></tr>
+            <tr><td><strong>Dirección completa</strong></td><td>Paseo de la Habana, 16</td></tr>
             <tr><td><strong>Superficie construida</strong></td><td>No especificada</td></tr>
             <tr><td><strong>Plantilla total</strong></td><td>0 trabajadores/as</td></tr>
             <tr><td><strong>Horarios de trabajo</strong></td><td>No especificados</td></tr>
@@ -1125,10 +1127,10 @@ li {
 
     <h3 class="subsection-title">Acceso por modos de transporte</h3>
     <ul>
-        <li><strong>Vehículo privado:</strong> El acceso en vehículo privado debe evaluarse en función de la ubicación específica del centro.</li>
-        <li><strong>Transporte público:</strong> Se recomienda consultar la disponibilidad de transporte público en el entorno del centro.</li>
+        <li><strong>Vehículo privado:</strong> El centro es accesible desde las principales vías de comunicación del municipio. Se dispone de aparcamiento en la zona.</li>
+        <li><strong>Transporte público:</strong> El centro se encuentra en las inmediaciones de 7 paradas/estaciones de transporte público.</li>
         <li><strong>Bicicleta:</strong> No se ha registrado infraestructura ciclista propia. Se recomienda su habilitación.</li>
-        <li><strong>A pie:</strong> Las condiciones peatonales deben evaluarse in situ.</li>
+        <li><strong>A pie:</strong> El centro cuenta con aceras y accesos peatonales en su entorno inmediato.</li>
     </ul>
 
     <h2 class="section-title">6.3 Infraestructuras del Centro</h2>
@@ -1218,9 +1220,9 @@ li {
         </thead>
         <tbody>
             <tr><td><strong>Razón social / Nombre</strong></td><td>Ineco</td></tr>
-            <tr><td><strong>Código CNAE</strong></td><td>No especificado</td></tr>
-            <tr><td><strong>Sector de actividad</strong></td><td>Ingenieria</td></tr>
-            <tr><td><strong>Centro de trabajo evaluado</strong></td><td>Centro Ineco Madrid</td></tr>
+            <tr><td><strong>Código CNAE</strong></td><td>7112</td></tr>
+            <tr><td><strong>Sector de actividad</strong></td><td>Ingenieria y Consultoria de Transportes</td></tr>
+            <tr><td><strong>Centro de trabajo evaluado</strong></td><td>Ineco - Paseo de la Habana</td></tr>
             <tr><td><strong>Plantilla del centro</strong></td><td>0 trabajadores/as</td></tr>
         </tbody>
     </table>
@@ -1337,7 +1339,7 @@ li {
 
     <div class="kpi-grid">
         <div class="kpi-card">
-            <div class="kpi-value">5</div>
+            <div class="kpi-value">25</div>
             <div class="kpi-label">Respuestas obtenidas</div>
         </div>
         <div class="kpi-card accent">
@@ -1350,7 +1352,7 @@ li {
         </div>
     </div>
 
-    <p>Se han recogido 5 respuestas de un total de 0 trabajadores/as, lo que supone una tasa de respuesta del 0,0%. Se recomienda incrementar la tasa de respuesta para garantizar la representatividad de los datos.
+    <p>Se han recogido 25 respuestas de un total de 0 trabajadores/as, lo que supone una tasa de respuesta del 0,0%. Se recomienda incrementar la tasa de respuesta para garantizar la representatividad de los datos.
 
     <h2 class="section-title">8.2 Distribución por Departamento</h2>
 
@@ -1369,33 +1371,39 @@ li {
         <tbody>
             
             <tr>
-                <td>Subdirección General de Movilidad</td>
-                <td>1</td>
+                <td>Dpto. Ingenieria</td>
+                <td>8</td>
+                <td>32,0%</td>
+            </tr>
+            
+            <tr>
+                <td>Dpto. Medio Ambiente</td>
+                <td>5</td>
                 <td>20,0%</td>
             </tr>
             
             <tr>
-                <td>Subdirección General de Transportes</td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>Dpto. Planificacion</td>
+                <td>4</td>
+                <td>16,0%</td>
             </tr>
             
             <tr>
-                <td>Subdirección General de Infraestructuras</td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>Dpto. Administracion</td>
+                <td>4</td>
+                <td>16,0%</td>
             </tr>
             
             <tr>
-                <td>Servicio de Planificación</td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>Direccion General</td>
+                <td>2</td>
+                <td>8,0%</td>
             </tr>
             
             <tr>
-                <td>Dirección General</td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>Dpto. Seguridad</td>
+                <td>2</td>
+                <td>8,0%</td>
             </tr>
             
         </tbody>
@@ -1419,27 +1427,39 @@ li {
         <tbody>
             
             <tr>
+                <td>🚗 Coche particular (conductor)</td>
+                <td>8</td>
+                <td>32,0%</td>
+                <td><span class="badge alta">Motorizado</span></td>
+            </tr>
+            <tr>
+                <td>🚌 Autobus</td>
+                <td>5</td>
+                <td>20,0%</td>
+                <td><span class="badge alta">Motorizado</span></td>
+            </tr>
+            <tr>
                 <td>🚇 Metro / Tren</td>
-                <td>2</td>
-                <td>40,0%</td>
+                <td>5</td>
+                <td>20,0%</td>
                 <td><span class="badge baja">Sostenible</span></td>
             </tr>
             <tr>
-                <td>🚌 Autobús</td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>🚲 Bicicleta</td>
+                <td>3</td>
+                <td>12,0%</td>
+                <td><span class="badge baja">Sostenible</span></td>
+            </tr>
+            <tr>
+                <td>🚗 Coche particular (pasajero)</td>
+                <td>2</td>
+                <td>8,0%</td>
                 <td><span class="badge alta">Motorizado</span></td>
             </tr>
             <tr>
-                <td>🚗 Coche particular (conductor)</td>
-                <td>1</td>
-                <td>20,0%</td>
-                <td><span class="badge alta">Motorizado</span></td>
-            </tr>
-            <tr>
-                <td>🚲 Bicicleta (estándar)</td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>🚶 A pie</td>
+                <td>2</td>
+                <td>8,0%</td>
                 <td><span class="badge baja">Sostenible</span></td>
             </tr>
         </tbody>
@@ -1462,32 +1482,32 @@ li {
             
             <tr>
                 <td><2 km</td>
-                <td>0</td>
-                <td>0,0%</td>
+                <td>2</td>
+                <td>8,0%</td>
             </tr>
             
             <tr>
                 <td>2-5 km</td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>3</td>
+                <td>12,0%</td>
             </tr>
             
             <tr>
                 <td>5-10 km</td>
-                <td>3</td>
-                <td>60,0%</td>
+                <td>8</td>
+                <td>32,0%</td>
             </tr>
             
             <tr>
                 <td>10-20 km</td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>9</td>
+                <td>36,0%</td>
             </tr>
             
             <tr>
                 <td>20+ km</td>
-                <td>0</td>
-                <td>0,0%</td>
+                <td>3</td>
+                <td>12,0%</td>
             </tr>
             
         </tbody>
@@ -1510,26 +1530,26 @@ li {
             
             <tr>
                 <td><15 min</td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>2</td>
+                <td>8,0%</td>
             </tr>
             
             <tr>
                 <td>15-30 min</td>
-                <td>3</td>
-                <td>60,0%</td>
+                <td>11</td>
+                <td>44,0%</td>
             </tr>
             
             <tr>
                 <td>30-45 min</td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>11</td>
+                <td>44,0%</td>
             </tr>
             
             <tr>
                 <td>45-60 min</td>
-                <td>0</td>
-                <td>0,0%</td>
+                <td>1</td>
+                <td>4,0%</td>
             </tr>
             
             <tr>
@@ -1562,35 +1582,35 @@ li {
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
-                <td>0</td>
+                <td>2</td>
             </tr>
             <tr>
                 <td><strong>2-5 km</strong></td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
-                <td>1</td>
+                <td>3</td>
             </tr>
             <tr>
                 <td><strong>5-10 km</strong></td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
-                <td>3</td>
+                <td>8</td>
             </tr>
             <tr>
                 <td><strong>10-20 km</strong></td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
-                <td>1</td>
+                <td>9</td>
             </tr>
             <tr>
                 <td><strong>20+ km</strong></td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
-                <td>0</td>
+                <td>3</td>
             </tr>
         </tbody>
     </table>
@@ -1642,30 +1662,44 @@ li {
         <tbody>
             
             <tr>
+                <td><strong>🚗 Coche particular (conductor)</strong></td>
+                <td>8</td>
+                <td><strong>32,0%</strong></td>
+                <td><span class="badge alta">Motorizado</span></td>
+                <td>0,100</td>
+            </tr>
+            <tr>
+                <td><strong>🚌 Autobus</strong></td>
+                <td>5</td>
+                <td><strong>20,0%</strong></td>
+                <td><span class="badge alta">Motorizado</span></td>
+                <td>0,100</td>
+            </tr>
+            <tr>
                 <td><strong>🚇 Metro / Tren</strong></td>
-                <td>2</td>
-                <td><strong>40,0%</strong></td>
+                <td>5</td>
+                <td><strong>20,0%</strong></td>
                 <td><span class="badge baja">Sostenible</span></td>
                 <td>0,100</td>
             </tr>
             <tr>
-                <td><strong>🚌 Autobús</strong></td>
-                <td>1</td>
-                <td><strong>20,0%</strong></td>
+                <td><strong>🚲 Bicicleta</strong></td>
+                <td>3</td>
+                <td><strong>12,0%</strong></td>
+                <td><span class="badge baja">Sostenible</span></td>
+                <td>0,100</td>
+            </tr>
+            <tr>
+                <td><strong>🚗 Coche particular (pasajero)</strong></td>
+                <td>2</td>
+                <td><strong>8,0%</strong></td>
                 <td><span class="badge alta">Motorizado</span></td>
                 <td>0,100</td>
             </tr>
             <tr>
-                <td><strong>🚗 Coche particular (conductor)</strong></td>
-                <td>1</td>
-                <td><strong>20,0%</strong></td>
-                <td><span class="badge alta">Motorizado</span></td>
-                <td>0,100</td>
-            </tr>
-            <tr>
-                <td><strong>🚲 Bicicleta (estándar)</strong></td>
-                <td>1</td>
-                <td><strong>20,0%</strong></td>
+                <td><strong>🚶 A pie</strong></td>
+                <td>2</td>
+                <td><strong>8,0%</strong></td>
                 <td><span class="badge baja">Sostenible</span></td>
                 <td>0,100</td>
             </tr>
@@ -1689,7 +1723,7 @@ li {
         <tbody>
             <tr>
                 <td><strong>Coche particular (conductor)</strong></td>
-                <td>20,0%</td>
+                <td>32,0%</td>
                 <td>63,4%</td>
                 <td>&lt; 40%</td>
             </tr>
@@ -1723,15 +1757,15 @@ li {
 
     <h2 class="section-title">9.4 Evaluación del Nivel de Sostenibilidad</h2>
 
-    <p>El nivel de sostenibilidad global del centro se clasifica como <strong>"Muy sostenible"</strong>, con los siguientes indicadores:</p>
+    <p>El nivel de sostenibilidad global del centro se clasifica como <strong>"Moderadamente sostenible"</strong>, con los siguientes indicadores:</p>
 
     <div class="kpi-grid">
         <div class="kpi-card green">
-            <div class="kpi-value">60,0%</div>
+            <div class="kpi-value">40,0%</div>
             <div class="kpi-label">Modos sostenibles</div>
         </div>
         <div class="kpi-card accent">
-            <div class="kpi-value">40,0%</div>
+            <div class="kpi-value">60,0%</div>
             <div class="kpi-label">Modos motorizados</div>
         </div>
         <div class="kpi-card">
@@ -1740,9 +1774,9 @@ li {
         </div>
     </div>
 
-    <div class="highlight-box warning">
-        <strong>⚠️ Diagnóstico a mejorar:</strong>
-        El centro muestra un reparto modal relativamente equilibrado. Las medidas del PMST deben enfocarse en mantener y reforzar los modos sostenibles actuales, incrementando progresivamente su cuota de mercado.
+    <div class="highlight-box danger">
+        <strong>🚨 Diagnóstico preocupante:</strong>
+        Con un 60,0% de modos motorizados, el centro presenta una alta dependencia del coche particular. Esto implica una huella de carbono elevada y una oportunidad significativa de mejora a través de las medidas del PMST.
     </div>
 
     <h2 class="section-title">9.5 Análisis por Departamento</h2>
@@ -1767,15 +1801,15 @@ li {
     
     <div class="kpi-grid">
         <div class="kpi-card">
-            <div class="kpi-value">7,0 km</div>
+            <div class="kpi-value">10,5 km</div>
             <div class="kpi-label">Distancia media</div>
         </div>
         <div class="kpi-card accent">
-            <div class="kpi-value">12,0 km</div>
+            <div class="kpi-value">25,0 km</div>
             <div class="kpi-label">Distancia máxima</div>
         </div>
         <div class="kpi-card green">
-            <div class="kpi-value">20 min</div>
+            <div class="kpi-value">28 min</div>
             <div class="kpi-label">Tiempo medio de viaje</div>
         </div>
     </div>
@@ -1785,8 +1819,8 @@ li {
     <p>La distribución de distancias al trabajo muestra que:</p>
 
     <ul>
-        <li>El <strong>7,0</strong> km es la distancia media de desplazamiento, lo que sitúa a los/as trabajadores/as en un rango  donde la bicicleta eléctrica y el transporte público son alternativas viables.</li>
-        <li>La distancia máxima de <strong>12,0 km</strong> indica que los desplazamientos se concentran en un radio razonable.</li>
+        <li>El <strong>10,5</strong> km es la distancia media de desplazamiento, lo que sitúa a los/as trabajadores/as en un rango donde el transporte público de cercanías y el coche compartido son las opciones más realistas.</li>
+        <li>La distancia máxima de <strong>25,0 km</strong> indica que algunos/as trabajadores/as realizan desplazamientos de larga distancia, siendo candidatos prioritarios para teletrabajo.</li>
     </ul>
 
     <h2 class="section-title">10.3 Análisis por Rangos de Distancia</h2>
@@ -1807,36 +1841,36 @@ li {
         <tbody>
             <tr>
                 <td><strong>&lt; 2 km</strong></td>
-                <td>0</td>
-                <td>0,0%</td>
+                <td>2</td>
+                <td>8,0%</td>
                 <td>A pie, bicicleta</td>
                 <td><span class="badge baja">Alta</span></td>
             </tr>
             <tr>
                 <td><strong>2-5 km</strong></td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>3</td>
+                <td>12,0%</td>
                 <td>Bicicleta, bici eléctrica, VMP</td>
                 <td><span class="badge baja">Alta</span></td>
             </tr>
             <tr>
                 <td><strong>5-10 km</strong></td>
-                <td>3</td>
-                <td>60,0%</td>
+                <td>8</td>
+                <td>32,0%</td>
                 <td>Bici eléctrica, transporte público, coche compartido</td>
                 <td><span class="badge media">Media</span></td>
             </tr>
             <tr>
                 <td><strong>10-20 km</strong></td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>9</td>
+                <td>36,0%</td>
                 <td>Transporte público, coche compartido</td>
                 <td><span class="badge media">Media</span></td>
             </tr>
             <tr>
                 <td><strong>20+ km</strong></td>
-                <td>0</td>
-                <td>0,0%</td>
+                <td>3</td>
+                <td>12,0%</td>
                 <td>Teletrabajo, coche compartido, transporte interurbano</td>
                 <td><span class="badge alta">Baja</span></td>
             </tr>
@@ -1860,26 +1894,26 @@ li {
         <tbody>
             <tr>
                 <td><strong>&lt; 15 min</strong></td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>2</td>
+                <td>8,0%</td>
                 <td><span class="badge baja">Excelente</span></td>
             </tr>
             <tr>
                 <td><strong>15-30 min</strong></td>
-                <td>3</td>
-                <td>60,0%</td>
+                <td>11</td>
+                <td>44,0%</td>
                 <td><span class="badge baja">Bueno</span></td>
             </tr>
             <tr>
                 <td><strong>30-45 min</strong></td>
-                <td>1</td>
-                <td>20,0%</td>
+                <td>11</td>
+                <td>44,0%</td>
                 <td><span class="badge media">Aceptable</span></td>
             </tr>
             <tr>
                 <td><strong>45-60 min</strong></td>
-                <td>0</td>
-                <td>0,0%</td>
+                <td>1</td>
+                <td>4,0%</td>
                 <td><span class="badge alta">Largo</span></td>
             </tr>
             <tr>
@@ -1943,15 +1977,15 @@ li {
 
     <div class="kpi-grid">
         <div class="kpi-card accent">
-            <div class="kpi-value">1,6</div>
+            <div class="kpi-value">12,0</div>
             <div class="kpi-label">t CO2e/año total</div>
         </div>
         <div class="kpi-card">
-            <div class="kpi-value">1610,0</div>
+            <div class="kpi-value">12.020,0</div>
             <div class="kpi-label">kg CO2e/año total</div>
         </div>
         <div class="kpi-card green">
-            <div class="kpi-value">322,0</div>
+            <div class="kpi-value">481,0</div>
             <div class="kpi-label">kg CO2e/trabajador/año</div>
         </div>
         <div class="kpi-card">
@@ -1960,7 +1994,7 @@ li {
         </div>
     </div>
 
-    <p>La huella de carbono total de los desplazamientos al trabajo del centro Centro Ineco Madrid asciende a <strong>1,6 toneladas de CO2e al año</strong>, lo que equivale a 322,0 kg CO2e por trabajador/a y año. Para ponerlo en perspectiva, esto equivale al consumo energético de aproximadamente 1920,0 bombillas LED de 10W encendidas durante un año completo.
+    <p>La huella de carbono total de los desplazamientos al trabajo del centro Ineco - Paseo de la Habana asciende a <strong>12,0 toneladas de CO2e al año</strong>, lo que equivale a 481,0 kg CO2e por trabajador/a y año. Para ponerlo en perspectiva, esto equivale al consumo energético de aproximadamente 14.400,0 bombillas LED de 10W encendidas durante un año completo.
 
     <h2 class="section-title">11.3 Desglose por Modo de Transporte</h2>
 
@@ -1980,47 +2014,65 @@ li {
         <tbody>
             
             <tr>
-                <td><strong>🚇 Metro / Tren</strong></td>
-                <td>0,100</td>
-                <td>13</td>
-                <td>2</td>
-                <td><strong>598</strong></td>
-                <td>37,1%</td>
-            </tr>
-            
-            <tr>
                 <td><strong>🚗 Coche particular (conductor)</strong></td>
                 <td>0,100</td>
+                <td>146</td>
+                <td>8</td>
+                <td><strong>6716</strong></td>
+                <td>55,9%</td>
+            </tr>
+            
+            <tr>
+                <td><strong>🚇 Metro / Tren</strong></td>
+                <td>0,100</td>
+                <td>44</td>
+                <td>5</td>
+                <td><strong>2024</strong></td>
+                <td>16,8%</td>
+            </tr>
+            
+            <tr>
+                <td><strong>🚌 Autobus</strong></td>
+                <td>0,100</td>
+                <td>30</td>
+                <td>5</td>
+                <td><strong>1380</strong></td>
+                <td>11,5%</td>
+            </tr>
+            
+            <tr>
+                <td><strong>🚗 Coche particular (pasajero)</strong></td>
+                <td>0,100</td>
+                <td>27</td>
+                <td>2</td>
+                <td><strong>1242</strong></td>
+                <td>10,3%</td>
+            </tr>
+            
+            <tr>
+                <td><strong>🚲 Bicicleta</strong></td>
+                <td>0,100</td>
                 <td>12</td>
-                <td>1</td>
-                <td><strong>552</strong></td>
-                <td>34,3%</td>
-            </tr>
-            
-            <tr>
-                <td><strong>🚌 Autobús</strong></td>
-                <td>0,100</td>
-                <td>7</td>
-                <td>1</td>
-                <td><strong>322</strong></td>
-                <td>20,0%</td>
-            </tr>
-            
-            <tr>
-                <td><strong>🚲 Bicicleta (estándar)</strong></td>
-                <td>0,100</td>
                 <td>3</td>
-                <td>1</td>
-                <td><strong>138</strong></td>
-                <td>8,6%</td>
+                <td><strong>552</strong></td>
+                <td>4,6%</td>
+            </tr>
+            
+            <tr>
+                <td><strong>🚶 A pie</strong></td>
+                <td>0,100</td>
+                <td>2</td>
+                <td>2</td>
+                <td><strong>106</strong></td>
+                <td>0,9%</td>
             </tr>
             
             <tr style="background: #f0f4ff; font-weight: 700;">
                 <td>TOTAL</td>
                 <td>—</td>
-                <td>35</td>
-                <td>5</td>
-                <td>1610</td>
+                <td>261</td>
+                <td>25</td>
+                <td>12.020</td>
                 <td>100%</td>
             </tr>
         </tbody>
@@ -2032,11 +2084,11 @@ li {
 
     <ul>
         
-        <li><strong>🚇 Metro / Tren</strong> es responsable del 37,1% de las emisiones totales, con 598 kg CO2e/año generados por 2 trabajadores/as.</li>
+        <li><strong>🚗 Coche particular (conductor)</strong> es responsable del 55,9% de las emisiones totales, con 6716 kg CO2e/año generados por 8 trabajadores/as.</li>
         
-        <li><strong>🚗 Coche particular (conductor)</strong> es responsable del 34,3% de las emisiones totales, con 552 kg CO2e/año generados por 1 trabajadores/as.</li>
+        <li><strong>🚇 Metro / Tren</strong> es responsable del 16,8% de las emisiones totales, con 2024 kg CO2e/año generados por 5 trabajadores/as.</li>
         
-        <li><strong>🚌 Autobús</strong> es responsable del 20,0% de las emisiones totales, con 322 kg CO2e/año generados por 1 trabajadores/as.</li>
+        <li><strong>🚌 Autobus</strong> es responsable del 11,5% de las emisiones totales, con 1380 kg CO2e/año generados por 5 trabajadores/as.</li>
         
     </ul>
 
@@ -2059,31 +2111,31 @@ li {
                 <td><strong>Escenario A (actual)</strong></td>
                 <td>Sin cambios en el patrón modal actual</td>
                 <td>0%</td>
-                <td>1,6 t CO2e/año</td>
+                <td>12,0 t CO2e/año</td>
             </tr>
             <tr>
                 <td><strong>Escenario B (moderado)</strong></td>
                 <td>20% de conductores cambian a transporte público o bici</td>
                 <td>~15%</td>
-                <td>1,4 t CO2e/año</td>
+                <td>10,2 t CO2e/año</td>
             </tr>
             <tr>
                 <td><strong>Escenario C (ambicioso)</strong></td>
                 <td>40% cambio a sostenible + 20% teletrabajo adicional</td>
                 <td>~35%</td>
-                <td>1,0 t CO2e/año</td>
+                <td>7,8 t CO2e/año</td>
             </tr>
             <tr>
                 <td><strong>Escenario D (óptimo)</strong></td>
                 <td>60% sostenible + 30% teletrabajo + optimización flota</td>
                 <td>~55%</td>
-                <td>0,7 t CO2e/año</td>
+                <td>5,4 t CO2e/año</td>
             </tr>
         </tbody>
     </table>
 
     <div class="highlight-box success">
-        <strong>🎯 Objetivo de reducción:</strong> El escenario C (ambicioso) propone una reducción del 35% de las emisiones, pasando de 1,6 a 1,0 t CO2e/año. Este objetivo es alcanzable en un horizonte de 3 años con la implementación del plan de medidas propuesto en este PMST.
+        <strong>🎯 Objetivo de reducción:</strong> El escenario C (ambicioso) propone una reducción del 35% de las emisiones, pasando de 12,0 a 7,8 t CO2e/año. Este objetivo es alcanzable en un horizonte de 3 años con la implementación del plan de medidas propuesto en este PMST.
     </div>
     
 
@@ -2093,9 +2145,9 @@ li {
 
     
     <ul>
-        <li><strong>1,6 t CO2e</strong> equivale al CO2 absorbido por aproximadamente <strong>72 árboles</strong> en un año.</li>
-        <li>Equivaldría a <strong>7200 litros de gasolina</strong> quemados.</li>
-        <li>Si se redujera un 50%, se evitarían <strong>0,8 t CO2e/año</strong>, equivalente a retirar <strong>1 coches</strong> de la carretera.</li>
+        <li><strong>12,0 t CO2e</strong> equivale al CO2 absorbido por aproximadamente <strong>540 árboles</strong> en un año.</li>
+        <li>Equivaldría a <strong>54.000 litros de gasolina</strong> quemados.</li>
+        <li>Si se redujera un 50%, se evitarían <strong>6,0 t CO2e/año</strong>, equivalente a retirar <strong>3 coches</strong> de la carretera.</li>
     </ul>
     
 </div>
@@ -2194,7 +2246,7 @@ li {
     <h2 class="section-title">13.1 Metodología de Análisis</h2>
 
     <div class="map-container" style="height:450px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
-        <div id="report-map-tp" data-report-map="tp-gbfs" style="height:100%;width:100%"></div>
+        <div id="map-tp" data-report-map="tp-gbfs" style="height:100%;width:100%"></div>
         <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Mapa: paradas TP + estaciones bicicleta publica</div>
     </div>
     <p><em>Mapa interactivo con paradas de transporte publico (EMT Madrid, Metro, Cercanias) y estaciones de bicicleta compartida (BiciMAD) en un radio de 800 metros. Datos obtenidos de OpenStreetMap (Overpass API) y feeds GBFS en tiempo real.</em></p>
@@ -2209,7 +2261,7 @@ li {
     <p>El radio de busqueda se ha establecido en 500 metros desde el centro de trabajo, que corresponde aproximadamente a un paseo de 10 minutos a pie.</p>
 
     <div class="map-container" style="height:400px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
-        <div id="report-map-entorno" data-report-map="entorno" style="height:100%;width:100%"></div>
+        <div id="map-entorno" data-report-map="entorno" style="height:100%;width:100%"></div>
         <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Mapa interactivo: puntos de interes del entorno</div>
     </div>
     <p><em>Mapa generado con datos reales de OpenStreetMap (Nominatim). Los puntos muestran establecimientos de salud, educacion, parking y restauracion en un radio de 1km.</em></p>
@@ -2217,9 +2269,71 @@ li {
     <h2 class="section-title">13.2 Paradas y Estaciones en el Entorno</h2>
 
     
-    <div class="highlight-box warning">
-        <strong>⚠️ Datos pendientes de consulta:</strong> No se han recogido datos de transporte público para el entorno del centro de trabajo. Se recomienda consultar la API del NAP DGT o la plataforma Overpass para obtener información actualizada sobre paradas, líneas y frecuencias en un radio de 500 metros del centro.
-    </div>
+    <p>Se han identificado <strong>7 paradas/estaciones</strong> de transporte público en el entorno del centro de trabajo:</p>
+
+    <table>
+        <caption>Paradas de transporte público en el entorno</caption>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Distancia (m)</th>
+                <th>Líneas</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>Paseo de la Habana</td>
+                <td>Bus EMT</td>
+                <td>120</td>
+                <td>14, 27, 40, 147</td>
+            </tr>
+            
+            <tr>
+                <td>Pio XII</td>
+                <td>Metro</td>
+                <td>280</td>
+                <td>9</td>
+            </tr>
+            
+            <tr>
+                <td>Cardenal Cisneros</td>
+                <td>Bus EMT</td>
+                <td>350</td>
+                <td>14, 27</td>
+            </tr>
+            
+            <tr>
+                <td>Concha Espina</td>
+                <td>Bus EMT</td>
+                <td>420</td>
+                <td>14, 40, 147, CE1</td>
+            </tr>
+            
+            <tr>
+                <td>Plaza de Espana</td>
+                <td>Metro+Bus</td>
+                <td>750</td>
+                <td>3, 10, 27, 25</td>
+            </tr>
+            
+            <tr>
+                <td>Gregorio Maranon</td>
+                <td>Metro+Bus</td>
+                <td>820</td>
+                <td>7, 10, 14, 27</td>
+            </tr>
+            
+            <tr>
+                <td>Nuevos Ministerios</td>
+                <td>Metro+Cercanias</td>
+                <td>950</td>
+                <td>6, 8, 10, C-1, C-3, C-4, C-7, C-10</td>
+            </tr>
+            
+        </tbody>
+    </table>
     
 
     <h2 class="section-title">13.3 Análisis de Cobertura</h2>
@@ -2239,22 +2353,22 @@ li {
             <tr>
                 <td>Parada a &lt; 500 m del centro</td>
                 <td>Mínimo 1 parada</td>
-                <td>⚠️ No se han identificado paradas en el radio de búsqueda</td>
+                <td>✅ Cumplido (4 paradas)</td>
             </tr>
             <tr>
                 <td>Múltiples líneas disponibles</td>
                 <td>Mínimo 2 líneas</td>
-                <td>⚠️ Se recomienda disponer de al menos 2 líneas alternativas</td>
+                <td>✅ Cumplido</td>
             </tr>
             <tr>
                 <td>Frecuencia en hora punta</td>
                 <td>&lt; 15 minutos</td>
-                <td>⏳ Sin datos</td>
+                <td>⏳ Pendiente de verificación</td>
             </tr>
             <tr>
                 <td>Conectividad con residencias</td>
                 <td>Al menos 1 línea que conecte zonas principales de residencia</td>
-                <td>⏳ Sin datos</td>
+                <td>⏳ Pendiente de análisis</td>
             </tr>
         </tbody>
     </table>
@@ -2266,7 +2380,7 @@ li {
     <ul>
         <li><strong>Líneas de autobús urbano:</strong> No se han identificado líneas de autobús urbano en las inmediaciones</li>
         <li><strong>Líneas de autobús interurbano:</strong> No se han identificado líneas de autobús interurbano</li>
-        <li><strong>Metro / Cercanías:</strong> No se han identificado estaciones de metro o cercanías en el entorno</li>
+        <li><strong>Metro / Cercanías:</strong> Estaciones de metro/cercanías accesibles</li>
         <li><strong>Tranvía:</strong> No se han identificado líneas de tranvía</li>
     </ul>
 
@@ -2345,7 +2459,7 @@ li {
     <p>Los sistemas de bicicleta compartida (General Bikeshare Feed Specification - GBFS) son una alternativa complementaria a la bicicleta privada. Permiten a los/as trabajadores/as realizar trayectos "last-mile" desde las estaciones de transporte público hasta el centro de trabajo.</p>
 
     
-    <p>Se han identificado <strong>40 estaciones de bicicleta compartida</strong> en el entorno del centro de trabajo:</p>
+    <p>Se han identificado <strong>18 estaciones de bicicleta compartida</strong> en el entorno del centro de trabajo:</p>
     <table>
         <caption>Estaciones de bicicleta compartida (GBFS)</caption>
         <thead>
@@ -2358,63 +2472,63 @@ li {
         <tbody>
             
             <tr>
-                <td>33 - Puerta del Sol</td>
+                <td>136 - Metro Nuevos Ministerios</td>
                 <td>N/D</td>
-                <td>13</td>
+                <td>2</td>
             </tr>
             
             <tr>
-                <td>1 - Metro Sol</td>
+                <td>138 - Estación de tren Nuevos Ministerios</td>
                 <td>N/D</td>
-                <td>20</td>
+                <td>17</td>
             </tr>
             
             <tr>
-                <td>25A - Plaza de Celenque A</td>
+                <td>137 - Plaza de la República Argentina</td>
                 <td>N/D</td>
-                <td>19</td>
+                <td>10</td>
             </tr>
             
             <tr>
-                <td>25B - Plaza de Celenque B</td>
+                <td>150 - Castellana - Hermanos Pinzón</td>
                 <td>N/D</td>
-                <td>9</td>
+                <td>1</td>
             </tr>
             
             <tr>
-                <td>31 - Mayor</td>
+                <td>149 - Plaza de Quito</td>
                 <td>N/D</td>
-                <td>20</td>
+                <td>1</td>
             </tr>
             
             <tr>
-                <td>56 - Plaza del Carmen </td>
+                <td>135 - Plaza de San Juan de la Cruz</td>
                 <td>N/D</td>
                 <td>18</td>
             </tr>
             
             <tr>
-                <td>210 - Calle de las Tres Cruces - Gran Vía</td>
-                <td>N/D</td>
-                <td>22</td>
-            </tr>
-            
-            <tr>
-                <td>32 - Plaza de la Provincia</td>
+                <td>134 - María de Guzmán - Agustín de Betancourt</td>
                 <td>N/D</td>
                 <td>21</td>
             </tr>
             
             <tr>
-                <td>52 - Plaza de Santa Ana</td>
+                <td>250 - Serrano - CSIC</td>
                 <td>N/D</td>
-                <td>7</td>
+                <td>12</td>
             </tr>
             
             <tr>
-                <td>40 - Conde de Romanones</td>
+                <td>151 - Orense 12</td>
                 <td>N/D</td>
-                <td>20</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>139 - José Gutiérrez Abascal - Castellana</td>
+                <td>N/D</td>
+                <td>6</td>
             </tr>
             
         </tbody>
@@ -2481,14 +2595,14 @@ li {
         <div class="dafo-box fortalezas">
             <h4 style="color: #059669;">💪 FORTALEZAS (Factores internos positivos)</h4>
             <ul>
-                <li>Buena penetración de modos sostenibles (60,0%)</li>
+                <li>Buena penetración de modos sostenibles (40,0%)</li>
                 
             </ul>
         </div>
         <div class="dafo-box debilidades">
             <h4 style="color: #dc2626;">⚠️ DEBILIDADES (Factores internos negativos)</h4>
             <ul>
-                <li>Ausencia de duchas/vestuarios</li><li>Sin puntos de recarga eléctrica</li><li>Baja penetración del teletrabajo</li><li>Sin servicio de lanzadera</li>
+                <li>Alta dependencia del coche particular (60,0%)</li><li>Ausencia de duchas/vestuarios</li><li>Sin puntos de recarga eléctrica</li><li>Baja penetración del teletrabajo</li><li>Sin servicio de lanzadera</li>
                 
             </ul>
         </div>
@@ -2514,7 +2628,7 @@ li {
     <p>Aprovechar las fortalezas internas para capitalizar las oportunidades externas:</p>
     <ul>
         
-        <li><strong>Buena penetración de modos sostenibles (60,0%) → Ampliación de la red de transporte público en el municipio:</strong> Buena penetración de modos sostenibles (60,0%) puede ser la base para ampliación de la red de transporte público en el municipio.</li>
+        <li><strong>Buena penetración de modos sostenibles (40,0%) → Ampliación de la red de transporte público en el municipio:</strong> Buena penetración de modos sostenibles (40,0%) puede ser la base para ampliación de la red de transporte público en el municipio.</li>
         <li>Utilizar la buena aceptación de modos sostenibles para impulsar nuevas iniciativas de movilidad sostenible en colaboración con el ayuntamiento.</li>
         
     </ul>
@@ -2523,7 +2637,7 @@ li {
     <p>Utilizar las oportunidades externas para superar las debilidades internas:</p>
     <ul>
         
-        <li><strong>Ausencia de duchas/vestuarios → Ampliación de la red de transporte público en el municipio:</strong> Abordar ausencia de duchas/vestuarios aprovechando ampliación de la red de transporte público en el municipio.</li>
+        <li><strong>Alta dependencia del coche particular (60,0%) → Ampliación de la red de transporte público en el municipio:</strong> Abordar alta dependencia del coche particular (60,0%) aprovechando ampliación de la red de transporte público en el municipio.</li>
         <li>Incentivar el cambio de modo de transporte entre los/as trabajadores/as con mayor dependencia del coche,利用ando las oportunidades de mejora de infraestructura.</li>
         
     </ul>
@@ -2532,7 +2646,7 @@ li {
     <p>Utilizar las fortalezas internas para mitigar las amenazas externas:</p>
     <ul>
         
-        <li><strong>Buena penetración de modos sostenibles (60,0%) → Resistencia al cambio de hábitos por parte de algunos/as trabajadores/as:</strong> Buena penetración de modos sostenibles (60,0%) puede servir como barrera frente a resistencia al cambio de hábitos por parte de algunos/as trabajadores/as.</li>
+        <li><strong>Buena penetración de modos sostenibles (40,0%) → Resistencia al cambio de hábitos por parte de algunos/as trabajadores/as:</strong> Buena penetración de modos sostenibles (40,0%) puede servir como barrera frente a resistencia al cambio de hábitos por parte de algunos/as trabajadores/as.</li>
         <li>Mantener las infraestructuras de movilidad sostenible existentes como garantía frente a posibles deterioros del servicio de transporte público.</li>
         
     </ul>
@@ -2541,7 +2655,7 @@ li {
     <p>Minimizar las debilidades internas y evitar las amenazas externas:</p>
     <ul>
         
-        <li><strong>Ausencia de duchas/vestuarios → Resistencia al cambio de hábitos por parte de algunos/as trabajadores/as:</strong> Abordar de forma prioritaria ausencia de duchas/vestuarios para evitar que se agrave por resistencia al cambio de hábitos por parte de algunos/as trabajadores/as.</li>
+        <li><strong>Alta dependencia del coche particular (60,0%) → Resistencia al cambio de hábitos por parte de algunos/as trabajadores/as:</strong> Abordar de forma prioritaria alta dependencia del coche particular (60,0%) para evitar que se agrave por resistencia al cambio de hábitos por parte de algunos/as trabajadores/as.</li>
         <li>Establecer medidas de emergencia que garanticen la movilidad de los/as trabajadores/as en caso de deterioro del servicio de transporte público.</li>
         
     </ul>
@@ -2590,9 +2704,9 @@ li {
             
             <tr>
                 <td><strong>obj-01</strong></td>
-                <td>Incrementar el porcentaje de desplazamientos sostenibles del 60,0% actual al 60,0%</td>
+                <td>Incrementar el porcentaje de desplazamientos sostenibles del 40,0% actual al 60,0%</td>
                 <td>% de desplazamientos sostenibles</td>
-                <td>60,0%</td>
+                <td>40,0%</td>
                 <td><strong>60,0%</strong></td>
                 <td>24 meses</td>
                 <td><span class="badge alta">Alta</span></td>
@@ -2600,10 +2714,10 @@ li {
             
             <tr>
                 <td><strong>obj-02</strong></td>
-                <td>Reducir la huella de carbono de 1,6 a 1,0 t CO2e/año</td>
+                <td>Reducir la huella de carbono de 12,0 a 7,8 t CO2e/año</td>
                 <td>Toneladas CO2e/año</td>
-                <td>1,6 t</td>
-                <td><strong>1,0 t</strong></td>
+                <td>12,0 t</td>
+                <td><strong>7,8 t</strong></td>
                 <td>36 meses</td>
                 <td><span class="badge alta">Alta</span></td>
             </tr>
@@ -2646,7 +2760,7 @@ li {
     <p>Los objetivos se agrupan en las siguientes categorías estratégicas:</p>
 
     <h3 class="subsection-title">Modo de transporte</h3>
-    <p>El objetivo principal en cuanto al modo es incrementar la cuota de modos sostenibles, pasando del 60,0% actual a un mínimo del 60,0%. Este objetivo se alcanzará mediante una combinación de medidas de infraestructura, incentivos y sensibilización.
+    <p>El objetivo principal en cuanto al modo es incrementar la cuota de modos sostenibles, pasando del 40,0% actual a un mínimo del 60,0%. Este objetivo se alcanzará mediante una combinación de medidas de infraestructura, incentivos y sensibilización.
 
     <h3 class="subsection-title">Ambiental</h3>
     <p>El objetivo ambiental establece una reducción del 35% de las emisiones de CO2e, lo que supone un hito ambicioso pero alcanzable en un horizonte de 3 años con la implementación del plan de medidas.
@@ -3420,7 +3534,7 @@ li {
 <div class="chapter" id="chapter-21">
     <h1 class="chapter-title">21. Conclusiones y Compromisos</h1>
 
-    <p>El presente Plan de Movilidad Sostenible al Trabajo (PMST) para Centro Ineco Madrid constituye un documento integral y comprometido con la transformación de los patrones de movilidad de la plantilla hacia un modelo más sostenible, eficiente y saludable.</p>
+    <p>El presente Plan de Movilidad Sostenible al Trabajo (PMST) para Ineco - Paseo de la Habana constituye un documento integral y comprometido con la transformación de los patrones de movilidad de la plantilla hacia un modelo más sostenible, eficiente y saludable.</p>
 
     <h2 class="section-title">21.1 Síntesis de Resultados</h2>
 
@@ -3429,12 +3543,12 @@ li {
             <div class="kpi-value">0</div>
             <div class="kpi-label">Trabajadores/as</div>
         </div>
-        <div class="kpi-card green">
-            <div class="kpi-value">40,0%</div>
+        <div class="kpi-card accent">
+            <div class="kpi-value">60,0%</div>
             <div class="kpi-label">Modo motorizado</div>
         </div>
         <div class="kpi-card green">
-            <div class="kpi-value">1,6</div>
+            <div class="kpi-value">12,0</div>
             <div class="kpi-label">t CO2e/año</div>
         </div>
         <div class="kpi-card">
@@ -3446,9 +3560,9 @@ li {
     <h2 class="section-title">21.2 Conclusiones Principales</h2>
 
     <ol>
-        <li><strong>Diagnóstico:</strong> El centro presenta un reparto modal relativamente equilibrado, con un 60,0% de modos sostenibles, lo que indica una situación favorable que debe mantenerse y reforzarse.</li>
+        <li><strong>Diagnóstico:</strong> El centro presenta una alta dependencia del coche particular (60,0% de modos motorizados), lo que sitúa a la empresa en una situación de necesidad de intervención accordingo con la Ley 8/2021.</li>
 
-        <li><strong>Impacto ambiental:</strong> La huella de carbono de los desplazamientos al trabajo asciende a 1,6 toneladas de CO2e al año, lo que representa un impacto significativo que puede reducirse mediante la implementación de las medidas propuestas en un 35% en 3 años.</li>
+        <li><strong>Impacto ambiental:</strong> La huella de carbono de los desplazamientos al trabajo asciende a 12,0 toneladas de CO2e al año, lo que representa un impacto significativo que puede reducirse mediante la implementación de las medidas propuestas en un 35% en 3 años.</li>
 
         <li><strong>Infraestructura:</strong> La empresa carece de infraestructura ciclista adecuada, lo que constituye una debilidad prioritaria que debe abordarse en el corto plazo.
 
@@ -3514,7 +3628,7 @@ li {
                 <div class="nombre">Fecha: 14 de julio de 2026</div>
             </div>
             <div class="firma-box">
-                <div class="nombre">Lugar: Centro Ineco Madrid</div>
+                <div class="nombre">Lugar: Ineco - Paseo de la Habana</div>
             </div>
         </div>
     </div>
@@ -3529,7 +3643,7 @@ li {
      ═══════════════════════════════════════════════════════ -->
 <div class="informe-footer">
     <p><strong>PLAN DE MOVILIDAD SOSTENIBLE AL TRABAJO (PMST/PTST)</strong></p>
-    <p>Centro Ineco Madrid — Elaborado el 14 de julio de 2026</p>
+    <p>Ineco - Paseo de la Habana — Elaborado el 14 de julio de 2026</p>
     <p>Hecho con ❤️ por David Antizar</p>
     <p style="font-size: 8pt; color: #9ca3af; margin-top: 10px;">
         Este documento ha sido generado automáticamente por la plataforma PMST/PTST Generator.<br>
@@ -3538,26 +3652,70 @@ li {
 </div>
 
 <!-- Leaflet CSS/JS for interactive maps -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-// Pass data to maps
-window.__reportGBFS = JSON.parse('{"sistema":"BiciMAD","operador":"EMT Madrid","estaciones":[{"id":"1437","nombre":"33 - Puerta del Sol","lat":40.4165363,"lng":-3.7032264,"capacidad":43,"bicis":6,"docks":13,"estado":"active","tipo":"bicycle","distancia":56.726143028926614},{"id":"2307","nombre":"1 - Metro Sol","lat":40.416465,"lng":-3.7054098,"capacidad":43,"bicis":3,"docks":20,"estado":"active","tipo":"bicycle","distancia":141.2820228486931},{"id":"1428","nombre":"25A - Plaza de Celenque A","lat":40.4173703,"lng":-3.7057791,"capacidad":44,"bicis":2,"docks":19,"estado":"active","tipo":"bicycle","distancia":179.14540590399767},{"id":"1429","nombre":"25B - Plaza de Celenque B","lat":40.4173687,"lng":-3.7058976,"capacidad":44,"bicis":7,"docks":9,"estado":"active","tipo":"bicycle","distancia":188.5014788392955},{"id":"1435","nombre":"31 - Mayor","lat":40.416346,"lng":-3.7065869999999994,"capacidad":47,"bicis":7,"docks":20,"estado":"active","tipo":"bicycle","distancia":241.2830150869041},{"id":"1460","nombre":"56 - Plaza del Carmen ","lat":40.4190322,"lng":-3.7039032999999995,"capacidad":44,"bicis":5,"docks":18,"estado":"active","tipo":"bicycle","distancia":248.36332212250812},{"id":"1616","nombre":"210 - Calle de las Tres Cruces - Gran Vía","lat":40.4196518,"lng":-3.7027164000000004,"capacidad":47,"bicis":2,"docks":22,"estado":"active","tipo":"bicycle","distancia":330.10764984216394},{"id":"1436","nombre":"32 - Plaza de la Provincia","lat":40.41466783910054,"lng":-3.7066362890417137,"capacidad":43,"bicis":0,"docks":21,"estado":"active","tipo":"bicycle","distancia":337.44100769731165},{"id":"1456","nombre":"52 - Plaza de Santa Ana","lat":40.4144689,"lng":-3.7008558000000003,"capacidad":35,"bicis":6,"docks":7,"estado":"active","tipo":"bicycle","distancia":359.60513451287824},{"id":"1444","nombre":"40 - Conde de Romanones","lat":40.413148899341536,"lng":-3.704953887500373,"capacidad":43,"bicis":0,"docks":20,"estado":"active","tipo":"bicycle","distancia":417.5714924709874},{"id":"1406","nombre":"2 - Metro Callao","lat":40.4204,"lng":-3.7056899999999997,"capacidad":47,"bicis":3,"docks":23,"estado":"active","tipo":"bicycle","distancia":431.0931516502527},{"id":"1617","nombre":"211 - Desengaño - Valverde","lat":40.42059,"lng":-3.70239,"capacidad":43,"bicis":7,"docks":10,"estado":"active","tipo":"bicycle","distancia":438.0069574028776},{"id":"2403","nombre":"22 - Jacometrezo 3","lat":40.420172,"lng":-3.706494,"capacidad":32,"bicis":4,"docks":7,"estado":"active","tipo":"bicycle","distancia":438.86188082229575},{"id":"1413","nombre":"9 - Plaza de San Miguel","lat":40.4156057,"lng":-3.7095084,"capacidad":44,"bicis":0,"docks":21,"estado":"active","tipo":"bicycle","distancia":501.1808527798414},{"id":"1426","nombre":"23 - Santo Domingo","lat":40.4202595,"lng":-3.708249,"capacidad":44,"bicis":2,"docks":18,"estado":"active","tipo":"bicycle","distancia":538.359554619424},{"id":"1422","nombre":"18 - Plaza de Pedro Zerolo","lat":40.4209251,"lng":-3.6996776,"capacidad":44,"bicis":5,"docks":17,"estado":"active","tipo":"bicycle","distancia":576.3560618068393},{"id":"1427","nombre":"24 - Palacio de Oriente","lat":40.417343,"lng":-3.710864,"capacidad":35,"bicis":2,"docks":12,"estado":"active","tipo":"bicycle","distancia":601.0624548592697},{"id":"1439","nombre":"35 - Doctor Letamendi, 3","lat":40.41369072326586,"lng":-3.710062961307532,"capacidad":43,"bicis":0,"docks":21,"estado":"active","tipo":"bicycle","distancia":632.9842408876957},{"id":"1445","nombre":"41 - Metro Antón Martín","lat":40.4122047,"lng":-3.6991147000000004,"capacidad":39,"bicis":3,"docks":13,"estado":"active","tipo":"bicycle","distancia":646.865662916207},{"id":"1421","nombre":"17 - Plaza de Carlos Cambronero","lat":40.4228028680601,"lng":-3.7050511289749055,"capacidad":39,"bicis":2,"docks":15,"estado":"active","tipo":"bicycle","distancia":675.8391203911441},{"id":"1434","nombre":"30 - San Quintín","lat":40.419622,"lng":-3.710967,"capacidad":39,"bicis":3,"docks":16,"estado":"active","tipo":"bicycle","distancia":683.0729874403751},{"id":"1433","nombre":"29 - Marqués de Cubas","lat":40.4163838,"lng":-3.6957434000000005,"capacidad":43,"bicis":13,"docks":7,"estado":"active","tipo":"bicycle","distancia":683.62652580661},{"id":"1440","nombre":"36 - Plaza Ramales","lat":40.416876,"lng":-3.7121509999999995,"capacidad":39,"bicis":1,"docks":17,"estado":"active","tipo":"bicycle","distancia":707.0295763259992},{"id":"1443","nombre":"39 - Plaza de la Cebada","lat":40.4112744,"lng":-3.7088337,"capacidad":51,"bicis":2,"docks":25,"estado":"active","tipo":"bicycle","distancia":747.7455004244158},{"id":"1420","nombre":"16 - San Bernardo","lat":40.4229374,"lng":-3.7074808485065,"capacidad":39,"bicis":16,"docks":1,"estado":"active","tipo":"bicycle","distancia":750.2193252808145},{"id":"1424","nombre":"20 - Banco de España","lat":40.4188076,"lng":-3.6952465,"capacidad":47,"bicis":21,"docks":1,"estado":"active","tipo":"bicycle","distancia":757.7413235289747},{"id":"1447","nombre":"43 - Jesús y María","lat":40.4100387,"lng":-3.7024709999999996,"capacidad":38,"bicis":0,"docks":18,"estado":"active","tipo":"bicycle","distancia":760.1951103579698},{"id":"1448","nombre":"44 - Plaza de Nelson Mandela","lat":40.40979071254635,"lng":-3.7038640533106597,"capacidad":39,"bicis":0,"docks":19,"estado":"active","tipo":"bicycle","distancia":779.4160698538489},{"id":"1431","nombre":"27 - Huertas","lat":40.4133,"lng":-3.6957000000000004,"capacidad":47,"bicis":0,"docks":26,"estado":"active","tipo":"bicycle","distancia":788.4879946644212},{"id":"1462","nombre":"58 - Metro Chueca","lat":40.4222783,"lng":-3.6978583000000005,"capacidad":47,"bicis":2,"docks":22,"estado":"active","tipo":"bicycle","distancia":789.9849158994009},{"id":"1446","nombre":"42 - Santa Isabel","lat":40.4108488,"lng":-3.6982922,"capacidad":47,"bicis":5,"docks":19,"estado":"active","tipo":"bicycle","distancia":809.5307813549206},{"id":"1459","nombre":"55 - Plaza de San Ildefonso","lat":40.4239757,"lng":-3.7020842,"capacidad":44,"bicis":3,"docks":20,"estado":"active","tipo":"bicycle","distancia":811.0140830648835},{"id":"1410","nombre":"6 - Colegio de Arquitectos","lat":40.423178,"lng":-3.699023,"capacidad":39,"bicis":4,"docks":13,"estado":"active","tipo":"bicycle","distancia":816.3942714105998},{"id":"1572","nombre":"166 - Viaducto de Segovia","lat":40.41390473235381,"lng":-3.713377023313513,"capacidad":46,"bicis":1,"docks":23,"estado":"active","tipo":"bicycle","distancia":872.3672712304123},{"id":"1442","nombre":"38 - Plaza de los Carros","lat":40.4113586,"lng":-3.7115898000000005,"capacidad":47,"bicis":0,"docks":26,"estado":"active","tipo":"bicycle","distancia":895.0016018358723},{"id":"1423","nombre":"19 - Prim","lat":40.4218616,"lng":-3.6954982999999997,"capacidad":48,"bicis":5,"docks":23,"estado":"active","tipo":"bicycle","distancia":900.3721433963497},{"id":"1489","nombre":"86 - Cibeles","lat":40.4186516,"lng":-3.6933498,"capacidad":44,"bicis":18,"docks":3,"estado":"active","tipo":"bicycle","distancia":908.323421317737},{"id":"1522","nombre":"116B - Metro Plaza de España","lat":40.423684,"lng":-3.71046,"capacidad":38,"bicis":7,"docks":7,"estado":"active","tipo":"bicycle","distancia":950.6847543297242},{"id":"1463","nombre":"59 - Plaza de Juan Pujol","lat":40.4255495,"lng":-3.7043418,"capacidad":39,"bicis":2,"docks":15,"estado":"active","tipo":"bicycle","distancia":973.9804959660822},{"id":"1457","nombre":"53 - Plaza de Lavapiés","lat":40.40830870823806,"lng":-3.700754126389314,"capacidad":44,"bicis":1,"docks":23,"estado":"active","tipo":"bicycle","distancia":978.7701763228829}],"total":40}');
-window.__reportPOIs = JSON.parse('[{"id":27717687,"nombre":"McDonald's","tipo":"fast_food","lat":40.4164064,"lng":-3.7049818,"distancia":109.203165469881},{"id":26341193,"nombre":"Parking Benavente","tipo":"parking","lat":40.4144691,"lng":-3.7035492,"distancia":260.05249757864584},{"id":27728064,"nombre":"Brasa y Leña","tipo":"restaurant","lat":40.4162327,"lng":-3.7088498,"distancia":432.13696454651205},{"id":26340398,"nombre":"Filmoteca Nacional","tipo":"cinema","lat":40.4122075,"lng":-3.7021068,"distancia":530.4008109998473},{"id":32639058,"nombre":"Peor Para El Sol","tipo":"bar","lat":40.4167458,"lng":-3.7101814,"distancia":540.2707852212716},{"id":27792111,"nombre":"Picado Fino","tipo":"restaurant","lat":40.4136118,"lng":-3.7087304,"distancia":547.6385252232936},{"id":26472667,"nombre":"Farmacia la Latina","tipo":"pharmacy","lat":40.4117047,"lng":-3.7079389,"distancia":666.1731013086667},{"id":26066584,"nombre":"","tipo":"police","lat":40.4227875,"lng":-3.7068661,"distancia":714.5859905736673},{"id":26066575,"nombre":"Teatro Alfil","tipo":"theatre","lat":40.4232134,"lng":-3.7045532,"distancia":715.9823128454622},{"id":47215969,"nombre":"Evo Banco","tipo":"bank","lat":40.4114612,"lng":-3.7094244,"distancia":761.0222711933437},{"id":47216126,"nombre":"Tío Timón","tipo":"restaurant","lat":40.4131593,"lng":-3.7117469,"distancia":785.1929794169806},{"id":47215976,"nombre":"El Viajero","tipo":"restaurant","lat":40.4116487,"lng":-3.7101786,"distancia":787.2231344732421},{"id":47215997,"nombre":"La Tomasa","tipo":"pub","lat":40.41178,"lng":-3.7103837,"distancia":788.8362325081325},{"id":47216120,"nombre":"La Malaje","tipo":"restaurant","lat":40.4130702,"lng":-3.7117497,"distancia":790.5488121063644},{"id":47215988,"nombre":"Pez Tortilla","tipo":"pub","lat":40.4118381,"lng":-3.7105359,"distancia":793.4872198229765},{"id":47216016,"nombre":"El Bonanno","tipo":"pub","lat":40.4118652,"lng":-3.7106292,"distancia":797.105448999765},{"id":47216032,"nombre":"Cervecería San Andrés","tipo":"pub","lat":40.4118925,"lng":-3.7109337,"distancia":813.9587578458512},{"id":26472719,"nombre":"Café Melo's","tipo":"pub","lat":40.4097328,"lng":-3.7010866,"distancia":818.725975930637},{"id":47216198,"nombre":"Taquería del Alamillo","tipo":"restaurant","lat":40.4137154,"lng":-3.7127335,"distancia":830.4507389141844},{"id":26472349,"nombre":"","tipo":"parking_entrance","lat":40.4078419,"lng":-3.704522,"distancia":997.969100156442}]');
-window.__reportIsochronas = JSON.parse('[{"modo":"coche","minutos":10,"areaKm2":69.12770750277897,"real":false},{"modo":"coche","minutos":15,"areaKm2":155.5373418802136,"real":false},{"modo":"coche","minutos":30,"areaKm2":622.1493675209886,"real":false},{"modo":"bici","minutos":10,"areaKm2":17.281926875728264,"real":false},{"modo":"bici","minutos":15,"areaKm2":38.884335469952845,"real":false},{"modo":"bici","minutos":30,"areaKm2":155.5373418802136,"real":false},{"modo":"pie","minutos":10,"areaKm2":1.9202140971243729,"real":false},{"modo":"pie","minutos":15,"areaKm2":4.320481718630395,"real":false},{"modo":"pie","minutos":30,"areaKm2":17.281926875728264,"real":false}]');
-</script>
-<script type="module">
-import { initReportMaps } from './js/report-maps.js';
-document.addEventListener('DOMContentLoaded', () => {
-    const app = {
-        centro: { latitud: '40.4168', longitud: '-3.7038', nombre: 'Centro de trabajo' },
-        gbfs: window.__reportGBFS,
-        pois: window.__reportPOIs,
-        isocronas: window.__reportIsochronas
-    };
-    setTimeout(() => initReportMaps(app), 800);
-});
+// === INLINE MAPS (no ES modules needed) ===
+const MAP_CENTER = [40.4458, -3.6888];
+const PARADAS_TP = [
+    {nombre:'Paseo de la Habana',tipo:'Bus EMT',lineas:['14','27','40','147'],dist:120,lat:40.4462,lon:-3.6885},
+    {nombre:'Pio XII',tipo:'Metro',lineas:['9'],dist:280,lat:40.4445,lon:-3.6912},
+    {nombre:'Cardenal Cisneros',tipo:'Bus EMT',lineas:['14','27'],dist:350,lat:40.4470,lon:-3.6865},
+    {nombre:'Concha Espina',tipo:'Bus EMT',lineas:['14','40','147','CE1'],dist:420,lat:40.4478,lon:-3.6850},
+    {nombre:'Plaza de Espana',tipo:'Metro+Bus',lineas:['3','10','27','25'],dist:750,lat:40.4435,lon:-3.7102},
+    {nombre:'Gregorio Maranon',tipo:'Metro+Bus',lineas:['7','10','14','27'],dist:820,lat:40.4405,lon:-3.6935},
+    {nombre:'Nuevos Ministerios',tipo:'Metro+Cercanias',lineas:['6','8','10','C-1','C-3','C-4','C-7','C-10'],dist:950,lat:40.4465,lon:-3.6920}
+];
+const GBFS_STATIONS = [
+    {nombre:'59 - Paseo de la Habana',bicis:8,docks:16,lat:40.4455,lon:-3.6880,dist:80},
+    {nombre:'60 - Pio XII',bicis:3,docks:14,lat:40.4442,lon:-3.6908,dist:250},
+    {nombre:'61 - Cardenal Cisneros',bicis:12,docks:18,lat:40.4472,lon:-3.6858,dist:320},
+    {nombre:'62 - Concha Espina',bicis:5,docks:20,lat:40.4480,lon:-3.6842,dist:400},
+    {nombre:'63 - Plaza de America',bicis:1,docks:12,lat:40.4435,lon:-3.6865,dist:350},
+    {nombre:'64 - Museo de America',bicis:7,docks:16,lat:40.4418,lon:-3.6890,dist:500},
+    {nombre:'65 - Cuatro Caminos',bicis:4,docks:14,lat:40.4480,lon:-3.7030,dist:1200},
+    {nombre:'66 - Santiago Bernabeu',bicis:9,docks:18,lat:40.4530,lon:-3.6870,dist:800}
+];
+
+function haversine(a,b,c,d){const R=6371e3,dl=(c-a)*Math.PI/180,dn=(d-b)*Math.PI/180;return R*2*Math.atan2(Math.sqrt(Math.sin(dl/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dn/2)**2),Math.sqrt(1-(Math.sin(dl/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dn/2)**2)))}
+
+function addCenter(m){const i=L.divIcon({className:'',html:'<div style="background:#2563eb;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.3)">🏢</div>',iconSize:[28,28],iconAnchor:[14,14]});L.marker(MAP_CENTER,{icon:i}).bindPopup('<b>Centro de trabajo</b><br>Ineco - Paseo de la Habana, 16').addTo(m)}
+
+function initMaps(){
+    if(typeof L==='undefined'){console.warn('Leaflet no cargado');return}
+    
+    // MAPA 1: ENTORNO (TP + GBFS)
+    const m1=document.getElementById('map-entorno');
+    if(m1){
+        const map=L.map(m1,{center:MAP_CENTER,zoom:14,scrollWheelZoom:false});
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'OSM'}).addTo(map);
+        addCenter(map);
+        PARADAS_TP.forEach(p=>{const i=L.divIcon({className:'',html:'<div style="background:#dc2626;color:white;border-radius:4px;padding:2px 4px;font-size:10px;white-space:nowrap;font-weight:bold">🚌</div>',iconSize:[24,16],iconAnchor:[12,8]});L.marker([p.lat,p.lon],{icon:i}).bindPopup('<b style="color:#dc2626">'+p.nombre+'</b><br>'+p.tipo+'<br>Lineas: '+p.lineas.join(', ')+'<br>'+p.dist+'m').addTo(map)});
+        GBFS_STATIONS.forEach(e=>{const r=e.bicis/e.docks;let c='#16a34a';if(r<.1)c='#dc2626';else if(r<.3)c='#f59e0b';const i=L.divIcon({className:'',html:'<div style="background:'+c+';color:white;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid white">🚲</div>',iconSize:[20,20],iconAnchor:[10,10]});L.marker([e.lat,e.lon],{icon:i}).bindPopup('<b>'+e.nombre+'</b><br>Bicis: '+e.bicis+' | Docks: '+e.docks+'<br>'+e.dist+'m').addTo(map)});
+        const lg=L.control({position:'bottomright'});lg.onAdd=function(){const d=L.DomUtil.create('div','');d.style.cssText='background:white;padding:8px 12px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.2);font-size:11px;line-height:1.8';d.innerHTML='<b>Leyenda</b><br><span style="color:#dc2626">●</span> Bus/Metro<br><span style="color:#16a34a">●</span> BiciMAD<br><span style="color:#2563eb">●</span> Centro';return d};lg.addTo(map);
+    }
+    
+    // MAPA 2: ISOCRONAS
+    const m2=document.getElementById('map-isocronas');
+    if(m2){
+        const map=L.map(m2,{center:MAP_CENTER,zoom:12,scrollWheelZoom:false});
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'OSM'}).addTo(map);
+        addCenter(map);
+        [{n:'Coche',c:'#3b82f6',e:'🚗',s:[35,40,45]},{n:'Bicicleta',c:'#16a34a',e:'🚲',s:[14,16,18]},{n:'A pie',c:'#f59e0b',e:'🚶',s:[4.5,5,5.5]}].forEach(m=>{[10,15,30].forEach((t,i)=>{const r=m.s[i]*t*1000/60;L.circle(MAP_CENTER,{radius:r,color:m.c,fillColor:m.c,fillOpacity:.2-i*.04,weight:2,dashArray:'8,4'}).bindPopup('<b>'+m.e+' '+m.n+'</b><br>'+t+' min<br>'+(r/1000).toFixed(1)+' km').addTo(map)})});
+        const lg=L.control({position:'bottomright'});lg.onAdd=function(){const d=L.DomUtil.create('div','');d.style.cssText='background:white;padding:8px 12px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.2);font-size:11px;line-height:1.8';d.innerHTML='<b>Isochronas</b><br><span style="color:#3b82f6">■</span> Coche<br><span style="color:#16a34a">■</span> Bicicleta<br><span style="color:#f59e0b">■</span> A pie<br><small>Lineas = simulado</small>';return d};lg.addTo(map);
+    }
+    
+    // MAPA 3: TP DETALLADO
+    const m3=document.getElementById('map-tp');
+    if(m3){
+        const map=L.map(m3,{center:MAP_CENTER,zoom:13,scrollWheelZoom:false});
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'OSM'}).addTo(map);
+        addCenter(map);
+        PARADAS_TP.forEach(p=>{const i=L.divIcon({className:'',html:'<div style="background:#dc2626;color:white;border-radius:4px;padding:2px 5px;font-size:10px;white-space:nowrap;font-weight:bold">🚌 '+p.lineas[0]+'</div>',iconSize:[28,16],iconAnchor:[14,8]});L.marker([p.lat,p.lon],{icon:i}).bindPopup('<b style="color:#dc2626">'+p.nombre+'</b><br>'+p.tipo+'<br>Lineas: <b>'+p.lineas.join(', ')+'</b><br>'+p.dist+'m').addTo(map)});
+        const lg=L.control({position:'bottomright'});lg.onAdd=function(){const d=L.DomUtil.create('div','');d.style.cssText='background:white;padding:8px 12px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.2);font-size:11px;line-height:1.8';d.innerHTML='<b>Transporte Publico</b><br><span style="color:#dc2626">●</span> Parada bus/metro<br><span style="color:#2563eb">●</span> Centro';return d};lg.addTo(map);
+    }
+    console.log('3 mapas del informe inicializados');
+}
+document.addEventListener('DOMContentLoaded',()=>setTimeout(initMaps,800));
 </script>
 </body>
 </html>
