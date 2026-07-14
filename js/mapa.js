@@ -25,6 +25,8 @@ let layers = {
     paradas: null,
     poi: null,
     empleados: null,
+    gbfs: null,
+    isocronasReales: null,
     rutas: null,
     markerCentro: null,
     markerMiUbicacion: null,
@@ -226,15 +228,21 @@ export async function loadParadas(lat, lon, radio = 500) {
                     <small>Distancia: ${Math.round(dist)}m</small>
                 `);
                 
-                paradas.push({ tipo, nombre: stop.display_name, distancia: dist });
+                paradas.push({ tipo, nombre: stop.display_name, distancia: dist, lat: stopLat, lon: stopLon });
             }
         });
         
-        layers.paradas = L.layerGroup(paradas.map(p => 
-            L.circleMarker([/* lat, lon */], { /* style */ })
-        )).addTo(map);
+        layers.paradas = L.layerGroup();
+        paradas.forEach(p => {
+            const marker = L.circleMarker([p.lat || lat, p.lon || lon], {
+                radius: 5, color: getParadaColor(p.tipo), fillColor: getParadaColor(p.tipo), fillOpacity: 0.8, weight: 1
+            });
+            marker.bindPopup(`<strong>${p.tipo}</strong><br>${p.nombre}<br><small>${Math.round(p.distancia)}m</small>`);
+            layers.paradas.addLayer(marker);
+        });
+        layers.paradas.addTo(map);
         
-        console.log(`✅ ${paradas.length} paradas cargadas`);
+        console.log(`Bus: ${paradas.length} paradas TP cargadas`);
         return paradas;
     } catch (e) {
         console.warn('Error cargando paradas:', e.message);
@@ -418,6 +426,9 @@ window.pmstApp.centerMap = function() {
     }
 };
 
+window.pmstApp.loadGBFS = loadGBFS;
+window.pmstApp.loadIsochronasReales = loadIsochronasReales;
+
 window.pmstApp.toggleLayer = function(layerName) {
     if (layers[layerName]) {
         if (map.hasLayer(layers[layerName])) {
@@ -427,5 +438,121 @@ window.pmstApp.toggleLayer = function(layerName) {
         }
     }
 };
+
+// ═══════════════════════════════════════════
+// GBFS — BICICLETAS COMPARTIDAS
+// ═══════════════════════════════════════════
+
+export async function loadGBFS(lat, lon, radioM = 1000) {
+    try {
+        const gbfs = window.pmstApp?.gbfs;
+        if (!gbfs) { console.warn('GBFS module not loaded'); return []; }
+        
+        const result = await gbfs.estacionesCercanas(lat, lon, radioM);
+        
+        if (layers.gbfs) map.removeLayer(layers.gbfs);
+        layers.gbfs = L.layerGroup();
+        
+        result.estaciones.forEach(est => {
+            const ratio = est.bicis / (est.capacidad || 1);
+            let color = '#16a34a'; // verde
+            if (ratio < 0.1) color = '#dc2626'; // rojo
+            else if (ratio < 0.3) color = '#f59e0b'; // amarillo
+            
+            const marker = L.circleMarker([est.lat, est.lng], {
+                radius: 8,
+                color: '#2563eb',
+                fillColor: color,
+                fillOpacity: 0.9,
+                weight: 2
+            });
+            
+            marker.bindPopup(`
+                <div style="min-width:180px">
+                    <strong style="color:#2563eb">🚲 ${est.nombre}</strong><br>
+                    <span style="color:#666">${result.sistema}</span><hr style="margin:4px 0">
+                    <div style="display:flex;justify-content:space-between">
+                        <span>🚲 Bicis:</span><strong>${est.bicis}</strong>
+                    </div>
+                    <div style="display:flex;justify-content:space-between">
+                        <span>🅿️ Docking:</span><strong>${est.docks}</strong>
+                    </div>
+                    <div style="display:flex;justify-content:space-between">
+                        <span>📏 Dist:</span><strong>${Math.round(est.distancia)}m</strong>
+                    </div>
+                    <div style="background:${color};color:white;text-align:center;padding:2px;border-radius:4px;margin-top:4px;font-size:11px">
+                        ${ratio > 0.3 ? '✅ Disponible' : ratio > 0 ? '⚠️ Pocas' : '❌ Vacía'}
+                    </div>
+                </div>
+            `);
+            
+            layers.gbfs.addLayer(marker);
+        });
+        
+        layers.gbfs.addTo(map);
+        console.log(`🚲 ${result.estaciones.length} estaciones GBFS cargadas (${result.sistema})`);
+        return result.estaciones;
+    } catch (e) {
+        console.warn('Error GBFS:', e.message);
+        return [];
+    }
+}
+
+// ═══════════════════════════════════════════
+// ISÓCRONAS REALES/SIMULADAS
+// ═══════════════════════════════════════════
+
+export async function loadIsochronasReales(lat, lon, modos = ['coche', 'bici', 'pie'], tiempos = [10, 15, 30]) {
+    try {
+        const ors = window.pmstApp?.ors;
+        if (!ors) { console.warn('ORS module not loaded'); return []; }
+        
+        if (layers.isocronas) map.removeLayer(layers.isocronas);
+        layers.isocronas = L.layerGroup();
+        
+        const colores = {
+            coche: ['#3b82f6', '#2563eb', '#1d4ed8'],
+            bici: ['#16a34a', '#15803d', '#166534'],
+            pie: ['#f59e0b', '#d97706', '#b45309']
+        };
+        
+        for (const modo of modos) {
+            for (let i = 0; i < tiempos.length; i++) {
+                const min = tiempos[i];
+                const result = await ors.calcularIsocrona(lon, lat, modo, min);
+                
+                if (result.geojson?.features?.[0]) {
+                    const feature = result.geojson.features[0];
+                    const color = colores[modo]?.[i] || '#888';
+                    
+                    L.geoJSON(feature, {
+                        style: {
+                            color: color,
+                            weight: 2,
+                            fillColor: color,
+                            fillOpacity: 0.15 - (i * 0.03),
+                            dashArray: result.real ? null : '5, 5'
+                        }
+                    }).bindPopup(`
+                        <strong>${modo === 'coche' ? '🚗' : modo === 'bici' ? '🚲' : '🚶'} ${modo}</strong><br>
+                        ⏱️ ${min} minutos<br>
+                        📐 ${result.areaKm2.toFixed(1)} km²<br>
+                        ${result.real ? '✅ Datos ORS reales' : '⚠️ Simulado'}
+                    `).addTo(layers.isocronas);
+                }
+                
+                // Stagger for ORS
+                if (result.real) await new Promise(r => setTimeout(r, 400));
+            }
+        }
+        
+        layers.isocronas.addTo(map);
+        console.log(`🗺️ Isócronas cargadas (${modos.length} modos × ${tiempos.length} tiempos)`);
+        return [];
+    } catch (e) {
+        console.warn('Error isócronas:', e.message);
+        return [];
+    }
+}
 
 export { map, layers };

@@ -774,6 +774,7 @@
         import './js/api-gbfs.js?v=1';
         import './js/api-ors.js?v=1';
         import './js/api-nominatim.js?v=1';
+        import { enrichAppWithAPIs } from './js/report-enrich.js?v=1';
 
         // ── Estado global ───────────────────────────────────
         window.pmstApp = {
@@ -812,6 +813,7 @@
         // ═══════════════════════════════════════════
         // NAVEGACIÓN — showTab()
         // ═══════════════════════════════════════════
+        let mapInitialized = false;
         window.showTab = function(tabName) {
             // Ocultar todas las secciones
             document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
@@ -825,6 +827,23 @@
             // Activar botón del sidebar
             const btn = document.querySelector(`.nav-btn[data-tab="${tabName}"]`);
             if (btn) btn.classList.add('active');
+
+            // Lazy init del mapa
+            if (tabName === 'mapa' && !mapInitialized) {
+                mapInitialized = true;
+                const centro = window.pmstApp.appState.centro;
+                const lat = parseFloat(centro?.latitud) || 40.4168;
+                const lon = parseFloat(centro?.longitud) || -3.7038;
+                setTimeout(async () => {
+                    try {
+                        const mapa = await import('./js/mapa.js?v=3');
+                        mapa.initMap('mapa-principal', lat, lon);
+                        console.log('Map initialized at', lat, lon);
+                        await mapa.loadGBFS(lat, lon, 1500);
+                        await mapa.loadParadas(lat, lon, 800);
+                    } catch(e) { console.warn('Map init error:', e.message); }
+                }, 300);
+            }
         };
 
         // ═══════════════════════════════════════════
@@ -1335,7 +1354,14 @@
             alert(`✅ ${state.objetivos.length} objetivos SMART generados`);
         };
 
-        window.pmstApp.exportPDF = exportPDF;
+        window.pmstApp.exportPDF = async () => {
+            try {
+                console.log('Cargando datos reales de APIs...');
+                await enrichAppWithAPIs(window.pmstApp.appState);
+                console.log('APIs enriquecidas, generando informe...');
+            } catch(e) { console.warn('API enrich error:', e.message); }
+            return exportPDF();
+        };
         window.pmstApp.exportDOCX = exportDOCX;
         window.pmstApp.exportZIP = exportZIP;
 
