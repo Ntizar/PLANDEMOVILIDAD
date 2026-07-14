@@ -3,1177 +3,987 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PLANDEMOVILIDAD IA Demo — Generación Inteligente de Informes</title>
+    <title>PLANDEMOVILIDAD v2.0 — Demo Completa de la Herramienta</title>
     <style>
-        /* ═══════════════════════════════════════════════════════
-           DESIGN SYSTEM — PLANDEMOVILIDAD IA Demo
-           Autor: David Antizar
-           Hecho con ❤️ por David Antizar
-           ═══════════════════════════════════════════════════════ */
         :root {
-            --blue: #2563eb;
-            --blue-dark: #1e40af;
-            --blue-light: #dbeafe;
-            --orange: #f97316;
-            --orange-dark: #ea580c;
-            --orange-light: #fff7ed;
-            --green: #16a34a;
-            --green-light: #dcfce7;
-            --red: #dc2626;
-            --red-light: #fef2f2;
-            --purple: #7c3aed;
-            --purple-light: #f3e8ff;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
+            --blue: #2563eb; --blue-dark: #1e40af; --blue-light: #dbeafe;
+            --orange: #f97316; --orange-dark: #ea580c; --orange-light: #fff7ed;
+            --green: #16a34a; --green-light: #dcfce7;
+            --red: #dc2626; --red-light: #fef2f2;
+            --purple: #7c3aed; --purple-light: #f3e8ff;
+            --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+            --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-500: #6b7280;
+            --gray-600: #4b5563; --gray-700: #374151; --gray-800: #1f2937; --gray-900: #111827;
             --radius: 12px;
-            --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--gray-50);
-            color: var(--gray-800);
-            line-height: 1.6;
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.6; }
 
         /* ─── HEADER ─── */
-        .header {
-            background: linear-gradient(135deg, var(--blue-dark), var(--blue));
-            color: white;
-            padding: 20px 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow-lg);
-        }
+        .header { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); color: white; padding: 20px 24px; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .header-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
         .header h1 { font-size: 1.3rem; font-weight: 700; }
         .header h1 span { color: var(--orange); }
-        .header-badge {
-            background: rgba(255,255,255,0.15);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
+        .header .subtitle { font-size: 0.8rem; opacity: 0.8; }
+        .header .badge { background: var(--orange); color: white; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; }
 
         /* ─── LAYOUT ─── */
-        .layout {
-            display: grid;
-            grid-template-columns: 260px 1fr;
-            min-height: calc(100vh - 64px);
-        }
+        .app { display: flex; max-width: 1400px; margin: 0 auto; min-height: calc(100vh - 70px); }
+        .sidebar { width: 260px; background: white; border-right: 1px solid var(--gray-200); padding: 16px 0; position: sticky; top: 70px; height: calc(100vh - 70px); overflow-y: auto; flex-shrink: 0; }
+        .content { flex: 1; padding: 24px; max-width: 900px; }
 
-        /* ─── SIDEBAR ─── */
-        .sidebar {
-            background: white;
-            border-right: 1px solid var(--gray-200);
-            padding: 16px 0;
-            overflow-y: auto;
-            position: sticky;
-            top: 64px;
-            height: calc(100vh - 64px);
-        }
-        .sidebar-title {
-            padding: 0 16px 12px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--gray-400);
-            font-weight: 700;
-        }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 16px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            color: var(--gray-600);
-            border-left: 3px solid transparent;
-            transition: all 0.15s;
-        }
+        /* ─── NAV ─── */
+        .nav-section { padding: 8px 16px; font-size: 0.65rem; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 8px; }
+        .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 16px; cursor: pointer; font-size: 0.82rem; color: var(--gray-600); transition: all 0.15s; border-left: 3px solid transparent; }
         .nav-item:hover { background: var(--gray-50); color: var(--gray-800); }
-        .nav-item.active {
-            background: var(--blue-light);
-            color: var(--blue);
-            border-left-color: var(--blue);
-            font-weight: 600;
-        }
+        .nav-item.active { background: var(--blue-light); color: var(--blue-dark); border-left-color: var(--blue); font-weight: 600; }
         .nav-item .icon { font-size: 1rem; width: 22px; text-align: center; }
-        .nav-item .badge {
-            margin-left: auto;
-            background: var(--green);
-            color: white;
-            font-size: 0.65rem;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-weight: 700;
-        }
-        .nav-item .badge.pending {
-            background: var(--gray-300);
-            color: var(--gray-600);
-        }
+        .nav-item .step { background: var(--blue); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; }
+        .nav-item .step.done { background: var(--green); }
 
-        /* ─── MAIN CONTENT ─── */
-        .main { padding: 30px; max-width: 1100px; }
+        /* ─── PANELS ─── */
+        .panel { display: none; }
+        .panel.active { display: block; }
+        .panel-header { margin-bottom: 24px; }
+        .panel-header h2 { font-size: 1.5rem; color: var(--gray-900); margin-bottom: 4px; }
+        .panel-header .desc { color: var(--gray-500); font-size: 0.9rem; }
 
-        /* ─── CHAPTER PANEL ─── */
-        .chapter-panel { display: none; }
-        .chapter-panel.active { display: block; }
-
-        .chapter-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        .chapter-number {
-            background: var(--blue);
-            color: white;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            font-weight: 800;
-            flex-shrink: 0;
-        }
-        .chapter-header h2 { font-size: 1.4rem; color: var(--gray-900); }
-        .chapter-header p { color: var(--gray-500); font-size: 0.85rem; margin-top: 2px; }
-
-        /* ─── DATA CARDS ─── */
-        .data-section {
-            background: white;
-            border-radius: var(--radius);
-            border: 1px solid var(--gray-200);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .data-section h3 {
-            font-size: 0.9rem;
-            color: var(--gray-700);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .data-section h3 .tag {
-            font-size: 0.65rem;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        .tag-input { background: var(--blue-light); color: var(--blue); }
-        .tag-api { background: var(--green-light); color: var(--green); }
+        /* ─── CARDS ─── */
+        .card { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+        .card h3 { font-size: 1rem; color: var(--gray-800); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .card h3 .tag { font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+        .tag-input { background: var(--blue-light); color: var(--blue-dark); }
         .tag-ai { background: var(--purple-light); color: var(--purple); }
-        .tag-output { background: var(--orange-light); color: var(--orange-dark); }
+        .tag-output { background: var(--green-light); color: var(--green); }
+        .tag-map { background: var(--orange-light); color: var(--orange-dark); }
+        .tag-api { background: #fef3c7; color: #92400e; }
 
-        /* ─── PROMPT BOX ─── */
-        .prompt-box {
-            background: var(--gray-900);
-            color: #e2e8f0;
-            border-radius: var(--radius);
-            padding: 20px;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.8rem;
-            line-height: 1.7;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-        .prompt-box::before {
-            content: 'PROMPT → LLM';
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: var(--purple);
-            color: white;
-            padding: 4px 12px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            border-radius: 0 0 0 8px;
-            font-family: -apple-system, sans-serif;
-        }
-        .prompt-box .var { color: var(--orange); font-weight: 600; }
-        .prompt-box .section { color: var(--blue); }
-        .prompt-box .comment { color: var(--gray-500); font-style: italic; }
-        .prompt-box .keyword { color: #a78bfa; }
+        /* ─── STEP CARDS ─── */
+        .step-card { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 20px; }
+        .step-num { background: var(--blue); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
+        .step-num.green { background: var(--green); }
+        .step-num.orange { background: var(--orange); }
+        .step-body { flex: 1; }
+        .step-body h4 { font-size: 0.95rem; color: var(--gray-800); margin-bottom: 4px; }
+        .step-body p { font-size: 0.85rem; color: var(--gray-600); }
 
-        /* ─── AI RESPONSE ─── */
-        .ai-response {
-            border: 2px solid var(--green);
-            border-radius: var(--radius);
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-        .ai-response-header {
-            background: var(--green);
-            color: white;
-            padding: 10px 16px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .ai-response-body {
-            background: white;
-            padding: 20px;
-        }
-        .ai-response-body h4 { color: var(--gray-900); margin: 16px 0 8px; font-size: 1rem; }
-        .ai-response-body h4:first-child { margin-top: 0; }
-        .ai-response-body p { color: var(--gray-700); margin-bottom: 10px; font-size: 0.9rem; }
-        .ai-response-body ul { margin: 8px 0 12px 20px; }
-        .ai-response-body li { color: var(--gray-700); margin-bottom: 4px; font-size: 0.88rem; }
-        .ai-response-body table { width: 100%; border-collapse: collapse; margin: 12px 0; }
-        .ai-response-body th { background: var(--blue); color: white; padding: 8px 12px; text-align: left; font-size: 0.8rem; }
-        .ai-response-body td { padding: 8px 12px; border-bottom: 1px solid var(--gray-200); font-size: 0.85rem; }
-        .ai-response-body tr:nth-child(even) { background: var(--gray-50); }
-        .ai-response-body .kpi-inline {
-            display: inline-block;
-            background: var(--blue-light);
-            color: var(--blue-dark);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 700;
-            font-size: 0.85rem;
-        }
-        .ai-response-body .highlight {
-            background: linear-gradient(transparent 60%, #fef08a 60%);
-            font-weight: 600;
-        }
+        /* ─── CODE / PROMPT ─── */
+        .code-block { background: var(--gray-900); color: #e5e7eb; padding: 16px; border-radius: 8px; font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; font-size: 0.78rem; line-height: 1.7; overflow-x: auto; margin: 12px 0; white-space: pre-wrap; }
+        .code-block .comment { color: #6b7280; }
+        .code-block .keyword { color: #93c5fd; }
+        .code-block .string { color: #86efac; }
+        .code-block .highlight { color: #fbbf24; }
+        .code-block .section { color: #c4b5fd; }
+        .code-block .dim { color: #4b5563; }
 
-        /* ─── GENERATE BUTTON ─── */
-        .generate-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, var(--purple), var(--blue));
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
-        }
-        .generate-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4); }
-        .generate-btn:active { transform: translateY(0); }
-        .generate-btn.loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
+        /* ─── TABLE ─── */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 12px 0; }
+        .data-table th { background: var(--gray-100); color: var(--gray-700); padding: 8px 12px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--gray-200); }
+        .data-table td { padding: 8px 12px; border-bottom: 1px solid var(--gray-100); }
+        .data-table tr:hover td { background: var(--gray-50); }
 
-        /* ─── ARCHITECTURE DIAGRAM ─── */
-        .arch-diagram {
-            background: white;
-            border-radius: var(--radius);
-            border: 1px solid var(--gray-200);
-            padding: 30px;
-            margin-bottom: 20px;
-        }
-        .arch-flow {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0;
-            flex-wrap: wrap;
-        }
-        .arch-box {
-            padding: 14px 18px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 0.78rem;
-            font-weight: 600;
-            min-width: 120px;
-        }
-        .arch-box.data { background: var(--blue-light); color: var(--blue-dark); border: 2px solid var(--blue); }
-        .arch-box.process { background: var(--orange-light); color: var(--orange-dark); border: 2px solid var(--orange); }
-        .arch-box.ai { background: var(--purple-light); color: var(--purple); border: 2px solid var(--purple); }
-        .arch-box.output { background: var(--green-light); color: var(--green); border: 2px solid var(--green); }
-        .arch-arrow {
-            font-size: 1.4rem;
-            color: var(--gray-400);
-            padding: 0 8px;
-        }
+        /* ─── KPI GRID ─── */
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 16px 0; }
+        .kpi { background: white; border: 1px solid var(--gray-200); border-radius: 10px; padding: 14px; text-align: center; }
+        .kpi .value { font-size: 1.6rem; font-weight: 800; color: var(--blue); }
+        .kpi .label { font-size: 0.72rem; color: var(--gray-500); margin-top: 2px; }
+        .kpi.green .value { color: var(--green); }
+        .kpi.orange .value { color: var(--orange); }
+        .kpi.red .value { color: var(--red); }
+        .kpi.purple .value { color: var(--purple); }
+
+        /* ─── FLOW DIAGRAM ─── */
+        .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+        .flow-box { background: white; border: 2px solid var(--blue); border-radius: 8px; padding: 8px 14px; font-size: 0.78rem; font-weight: 600; color: var(--blue-dark); text-align: center; }
+        .flow-box.green { border-color: var(--green); color: var(--green); }
+        .flow-box.orange { border-color: var(--orange); color: var(--orange); }
+        .flow-box.purple { border-color: var(--purple); color: var(--purple); }
+        .flow-arrow { color: var(--gray-400); font-size: 1.2rem; }
+
+        /* ─── MAP PLACEHOLDER ─── */
+        .map-placeholder { background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 50%, #bfdbfe 100%); border-radius: 10px; padding: 40px; text-align: center; border: 2px dashed var(--blue); margin: 12px 0; }
+        .map-placeholder .icon { font-size: 2.5rem; margin-bottom: 8px; }
+        .map-placeholder .label { font-size: 0.85rem; color: var(--blue-dark); font-weight: 600; }
 
         /* ─── FOOTER ─── */
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: var(--gray-400);
-            font-size: 0.75rem;
-            border-top: 1px solid var(--gray-200);
-            margin-top: 40px;
+        .footer { text-align: center; padding: 24px; color: var(--gray-400); font-size: 0.75rem; border-top: 1px solid var(--gray-200); margin-top: 40px; }
+        .footer a { color: var(--blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .content { padding: 16px; }
         }
-        .footer strong { color: var(--orange); }
     </style>
 </head>
 <body>
 
-<!-- ═══════ HEADER ═══════ -->
-<header class="header">
-    <h1>🚇 PLANDEMOVILIDAD <span>IA Demo</span></h1>
-    <div class="header-badge">Prototype v1.0</div>
-</header>
-
-<div class="layout">
-
-<!-- ═══════ SIDEBAR ═══════ -->
-<nav class="sidebar">
-    <div class="sidebar-title">Arquitectura</div>
-    <div class="nav-item active" onclick="showPanel('overview')">
-        <span class="icon">🏗️</span> Visión general
-    </div>
-
-    <div class="sidebar-title" style="margin-top:12px">Ejemplos por capítulo</div>
-    <div class="nav-item" onclick="showPanel('ch2')">
-        <span class="icon">📋</span> Resumen Ejecutivo
-        <span class="badge">AI</span>
-    </div>
-    <div class="nav-item" onclick="showPanel('ch5')">
-        <span class="icon">🗺️</span> Análisis del Entorno
-        <span class="badge">API</span>
-    </div>
-    <div class="nav-item" onclick="showPanel('ch8')">
-        <span class="icon">📊</span> Resultados Encuesta
-        <span class="badge">AI</span>
-    </div>
-    <div class="nav-item" onclick="showPanel('ch11')">
-        <span class="icon">🌿</span> Huella de Carbono
-        <span class="badge">AI</span>
-    </div>
-    <div class="nav-item" onclick="showPanel('ch13')">
-        <span class="icon">🚌</span> Transporte Público
-        <span class="badge">API</span>
-    </div>
-    <div class="nav-item" onclick="showPanel('ch15')">
-        <span class="icon">🎯</span> Análisis DAFO
-        <span class="badge">AI</span>
-    </div>
-    <div class="nav-item" onclick="showPanel('ch17')">
-        <span class="icon">🛠️</span> Plan de Medidas
-        <span class="badge">AI</span>
-    </div>
-    <div class="nav-item" onclick="showPanel('ch21')">
-        <span class="icon">📝</span> Conclusiones
-        <span class="badge">AI</span>
-    </div>
-</nav>
-
-<!-- ═══════ MAIN ═══════ -->
-<main class="main">
-
-<!-- ═══════ PANEL: OVERVIEW ═══════ -->
-<div class="chapter-panel active" id="panel-overview">
-    <div class="chapter-header">
-        <div class="chapter-number">🏗️</div>
+<!-- ═══════════════ HEADER ═══════════════ -->
+<div class="header">
+    <div class="header-inner">
         <div>
-            <h2>Arquitectura del Sistema IA</h2>
-            <p>Cómo los datos se transforman en contenido del informe mediante IA</p>
+            <h1>🚇 PLANDEMOVILIDAD <span>v2.0</span></h1>
+            <div class="subtitle">Demo completa — Cómo funciona la herramienta de generación de planes de movilidad</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+            <span class="badge">22 capítulos</span>
+            <span class="badge" style="background:var(--green)">71 páginas PDF</span>
+            <span class="badge" style="background:var(--purple)">3 APIs reales</span>
         </div>
     </div>
+</div>
 
-    <div class="arch-diagram">
-        <h3 style="margin-bottom:16px; color:var(--gray-700)">Flujo de datos: del input al informe</h3>
-        <div class="arch-flow">
-            <div class="arch-box data">
-                📋 Encuestas<br>
-                <small>CSV/JSON</small>
-            </div>
-            <span class="arch-arrow">→</span>
-            <div class="arch-box data">
-                🗺️ APIs Externas<br>
-                <small>NAP, GBFS, ORS</small>
-            </div>
-            <span class="arch-arrow">→</span>
-            <div class="arch-box process">
-                🔧 Normalización<br>
-                <small>appState</small>
-            </div>
-            <span class="arch-arrow">→</span>
-            <div class="arch-box ai">
-                🤖 LLM (prompt)<br>
-                <small>qwen/gpt/claude</small>
-            </div>
-            <span class="arch-arrow">→</span>
-            <div class="arch-box output">
-                📄 Capítulo HTML<br>
-                <small>22 secciones</small>
-            </div>
-        </div>
+<!-- ═══════════════ APP ═══════════════ -->
+<div class="app">
+
+<!-- ─── SIDEBAR ─── -->
+<div class="sidebar">
+    <div class="nav-section">Visión General</div>
+    <div class="nav-item active" onclick="show('overview')">
+        <span class="icon">🏗️</span> Arquitectura del sistema
+    </div>
+    <div class="nav-item" onclick="show('workflow')">
+        <span class="icon">📋</span> Flujo de trabajo del usuario
     </div>
 
-    <div class="data-section">
-        <h3>📦 Fuentes de datos disponibles <span class="tag tag-input">INPUT</span></h3>
-        <table style="width:100%; border-collapse:collapse; font-size:0.85rem">
-            <thead><tr>
-                <th style="text-align:left;padding:8px;border-bottom:2px solid var(--gray-200);color:var(--gray-500)">Fuente</th>
-                <th style="text-align:left;padding:8px;border-bottom:2px solid var(--gray-200);color:var(--gray-500)">Datos</th>
-                <th style="text-align:left;padding:8px;border-bottom:2px solid var(--gray-200);color:var(--gray-500)">Tipo</th>
-                <th style="text-align:left;padding:8px;border-bottom:2px solid var(--gray-200);color:var(--gray-500)">Capítulos</th>
-            </tr></thead>
-            <tbody>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">👤 Encuesta movilidad</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">Modo, distancia, tiempo, departamento</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)"><span class="tag tag-input">CSV</span></td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">8, 9, 10, 11</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">🏢 Centro de trabajo</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">Nombre, dirección, coords, plantilla, turnos</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)"><span class="tag tag-input">FORM</span></td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">6, 7</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">🚌 NAP DGT</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">Paradas, líneas, frecuencias en radio 500m-2km</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)"><span class="tag tag-api">API</span></td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">13</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">🚲 GBFS</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">Estaciones bici compartida, plazas, estado</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)"><span class="tag tag-api">API</span></td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">14</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">🗺️ ORS Isochronas</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">Zonas 15/30/45 min a pie, bici, coche, TP</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)"><span class="tag tag-api">API</span></td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">5, 10</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">🌿 MITECO</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">Factores emisión CO₂ por modo (2024)</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)"><span class="tag tag-input">REF</span></td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">11</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">🚗 Flota empresa</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">Vehículos, combustible, matrícula</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)"><span class="tag tag-input">FORM</span></td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">7, 12</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">📊 KPIs históricos</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">Valores por año, tendencias</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)"><span class="tag tag-input">MATRIX</span></td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">18</td></tr>
-            </tbody>
+    <div class="nav-section">Fase 1 — Datos</div>
+    <div class="nav-item" onclick="show('survey')">
+        <span class="step">1</span> Encuesta de movilidad
+    </div>
+    <div class="nav-item" onclick="show('import')">
+        <span class="step">2</span> Importar CSV
+    </div>
+    <div class="nav-item" onclick="show('empresa')">
+        <span class="step">3</span> Configurar empresa
+    </div>
+
+    <div class="nav-section">Fase 2 — Análisis IA</div>
+    <div class="nav-item" onclick="show('diagnostico')">
+        <span class="step">4</span> Diagnóstico modal
+    </div>
+    <div class="nav-item" onclick="show('dafo')">
+        <span class="step">5</span> Análisis DAFO
+    </div>
+    <div class="nav-item" onclick="show('medidas')">
+        <span class="step">6</span> Medidas y objetivos
+    </div>
+
+    <div class="nav-section">Fase 3 — Datos Reales</div>
+    <div class="nav-item" onclick="show('apis')">
+        <span class="icon">🌐</span> APIs integradas
+    </div>
+    <div class="nav-item" onclick="show('maps')">
+        <span class="icon">🗺️</span> Mapas Leaflet
+    </div>
+    <div class="nav-item" onclick="show('isochrones')">
+        <span class="icon">📍</span> Isócronas realistas
+    </div>
+
+    <div class="nav-section">Fase 4 — Informe</div>
+    <div class="nav-item" onclick="show('report')">
+        <span class="step">7</span> Informe 22 capítulos
+    </div>
+    <div class="nav-item" onclick="show('kpis')">
+        <span class="icon">📊</span> KPIs multi-año
+    </div>
+    <div class="nav-item" onclick="show('pdf')">
+        <span class="icon">📄</span> Export PDF/DOCX
+    </div>
+
+    <div class="nav-section">Ejemplo</div>
+    <div class="nav-item" onclick="show('example')">
+        <span class="icon">🏢</span> Ineco Paseo de la Habana
+    </div>
+</div>
+
+<!-- ─── CONTENT ─── -->
+<div class="content">
+
+<!-- ═══════ OVERVIEW ═══════ -->
+<div class="panel active" id="panel-overview">
+    <div class="panel-header">
+        <h2>🏗️ Arquitectura del Sistema</h2>
+        <p class="desc">Cómo está construida la herramienta y qué tecnologías usa</p>
+    </div>
+
+    <div class="card">
+        <h3>📦 Stack tecnológico</h3>
+        <table class="data-table">
+            <tr><th>Capa</th><th>Tecnología</th><th>Función</th></tr>
+            <tr><td><strong>Frontend</strong></td><td>HTML + CSS + JS vanilla (ES6 modules)</td><td>SPA sin frameworks, 100% cliente</td></tr>
+            <tr><td><strong>Mapas</strong></td><td>Leaflet 1.9.4 + OpenStreetMap</td><td>Mapas interactivos con capas</td></tr>
+            <tr><td><strong>Gráficas</strong></td><td>Chart.js 4.4</td><td>Donuts, barras, líneas, radar</td></tr>
+            <tr><td><strong>Almacenamiento</strong></td><td>IndexedDB (via state.js)</td><td>Persistencia local multi-empresa</td></tr>
+            <tr><td><strong>Exportación</strong></td><td>WeasyPrint + PyPDF2</td><td>PDF profesional 71 páginas</td></tr>
+            <tr><td><strong>APIs externas</strong></td><td>GBFS + Nominatim + Overpass</td><td>Datos reales de movilidad</td></tr>
         </table>
     </div>
 
-    <div class="data-section">
-        <h3>🤖 Cómo funciona el prompt por capítulo <span class="tag tag-ai">IA</span></h3>
-        <p style="color:var(--gray-600); font-size:0.88rem; margin-bottom:12px">
-            Para cada capítulo, se construye un <strong>prompt estructurado</strong> que incluye:
-        </p>
-        <ul style="margin-left:20px; color:var(--gray-600); font-size:0.88rem">
-            <li><strong>Contexto:</strong> Tipo de documento, normativa aplicable (Ley 8/2021)</li>
-            <li><strong>Datos:</strong> JSON con todos los datos relevantes de <code>appState</code></li>
-            <li><strong>Instrucciones:</strong> Formato de salida, extensión mínima, tono profesional</li>
-            <li><strong>Ejemplos:</strong> Referencia a informes anteriores o plantillas</li>
+    <div class="card">
+        <h3>🔄 Flujo de datos completo</h3>
+        <div class="flow">
+            <div class="flow-box orange">📋 Encuesta<br><small>CSV o formulario web</small></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">📥 Importar<br><small>Parser 30+ columnas</small></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box purple">🤖 Análisis IA<br><small>Diagnóstico + DAFO</small></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box green">📊 Informe<br><small>22 capítulos + mapas</small></div>
+        </div>
+        <div class="flow" style="margin-top:8px">
+            <div class="flow-box" style="border-color:var(--orange)">🌐 APIs<br><small>GBFS + Overpass + Nominatim</small></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box" style="border-color:var(--green)">🗺️ Mapas<br><small>Leaflet + isócronas</small></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box green">📄 PDF<br><small>71 páginas A4</small></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>📁 Estructura de archivos</h3>
+        <div class="code-block"><span class="comment">// Archivos principales</span>
+index.html              <span class="dim">← App principal (SPA)</span>
+encuesta.html           <span class="dim">← Formulario web de encuesta</span>
+ai-demo.html            <span class="dim">← Esta demo</span>
+informe_preview.html    <span class="dim">← Preview del informe con mapas</span>
+
+<span class="section">css/</span>
+  style.css             <span class="dim">← Design System Aurora v5.2</span>
+
+<span class="section">js/</span>
+  app.js                <span class="dim">← Datos nacionales + constantes</span>
+  config.js             <span class="dim">← Configuración de la app</span>
+  state.js              <span class="dim">← Estado centralizado + IndexedDB</span>
+  empresa.js            <span class="dim">← Multi-empresa CRUD</span>
+  csv-import.js         <span class="dim">← Parser CSV robusto</span>
+  survey.js             <span class="dim">← Generador de encuestas</span>
+  diagnostico.js        <span class="dim">← Análisis diagnóstico modal</span>
+  dafo.js               <span class="dim">← Análisis DAFO/PEFODA</span>
+  objetivos.js          <span class="dim">← Objetivos SMART</span>
+  main.js               <span class="dim">← Orquestador dinámico</span>
+  mapa.js               <span class="dim">← Mapa interactivo principal</span>
+  report.js             <span class="dim">← Generador de informe (209KB)</span>
+  report-enrich.js      <span class="dim">← Enriquecimiento con APIs</span>
+  report-maps.js        <span class="dim">← Mapas embebidos en informe</span>
+  export.js             <span class="dim">← Exportación PDF/DOCX/ZIP</span>
+  graficas.js           <span class="dim">← Charts Chart.js</span>
+
+<span class="section">mapas/</span>
+  entorno.png/jpg       <span class="dim">← Mapa estático del entorno</span>
+  isocronas.png/jpg     <span class="dim">← Mapa de isócronas realistas</span>
+  tp.png/jpg            <span class="dim">← Mapa de transporte público</span></div>
+    </div>
+</div>
+
+<!-- ═══════ WORKFLOW ═══════ -->
+<div class="panel" id="panel-workflow">
+    <div class="panel-header">
+        <h2>📋 Flujo de trabajo del usuario</h2>
+        <p class="desc">Paso a paso completo para generar un PMST/PTST profesional</p>
+    </div>
+
+    <div class="kpi-grid">
+        <div class="kpi"><div class="value">7</div><div class="label">Pasos principales</div></div>
+        <div class="kpi green"><div class="value">~15 min</div><div class="label">Tiempo estimado</div></div>
+        <div class="kpi orange"><div class="value">22</div><div class="label">Capítulos generados</div></div>
+        <div class="kpi purple"><div class="value">71</div><div class="label">Páginas PDF</div></div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-body">
+            <h4>📋 Crear encuesta de movilidad</h4>
+            <p>Acceder a <code>encuesta.html</code> para crear un formulario web con 6 secciones: datos personales, desplazamiento habitual, valoración del entorno, satisfacción, teletrabajo y propuestas. El formulario exporta un CSV con 21 columnas.</p>
+            <p style="margin-top:6px"><strong>Alternativa:</strong> Crear el CSV directamente en Excel/Google Sheets con las 21 columnas del formato.</p>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+            <h4>📥 Importar respuestas CSV</h4>
+            <p>En la app principal, pulsar <strong>⚙️ Empresas → Importar CSV</strong>. El parser detecta automáticamente 30+ columnas con 15+ aliases (ej: "modo", "transporte", "medio" → todos mapean a modo principal). Soporta CSV con BOM, separadores coma/punto-coma, y encoding UTF-8/Windows-1252.</p>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+            <h4>🏢 Configurar empresa y centro</h4>
+            <p>Introducir: nombre, CIF, sector, empleados totales. En la pestaña <strong>Centro</strong>: nombre, dirección, código postal, ciudad, coordenadas GPS (latitud/longitud). Las coordenadas son clave para las APIs.</p>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-body">
+            <h4>📊 Ejecutar diagnóstico y DAFO</h4>
+            <p>Ir a <strong>Diagnóstico → Calcular</strong>. La IA genera automáticamente: reparto modal, indicadores de sostenibilidad, análisis DAFO (Fortalezas/Debilidades/Oportunidades/Amenazas), 15 medidas y 7 objetivos SMART.</p>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num green">5</div>
+        <div class="step-body">
+            <h4>🌐 Enriquecer con APIs reales</h4>
+            <p>Si hay coordenadas, la app carga automáticamente: <strong>GBFS</strong> (estaciones BiciMAD), <strong>Overpass</strong> (paradas de bus/metro de OpenStreetMap), <strong>Nominatim</strong> (POIs del entorno). Sin API key para GBFS y Overpass.</p>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num green">6</div>
+        <div class="step-body">
+            <h4>🗺️ Ver mapa interactivo</h4>
+            <p>La pestaña <strong>Mapa</strong> muestra: paradas TP (rojo), BiciMAD (verde/amarillo/rojo), centro (azul), y capa de isócronas con polígonos irregulares que simulan barreras urbanas.</p>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num orange">7</div>
+        <div class="step-body">
+            <h4>📄 Generar informe y exportar</h4>
+            <p>Pulsar <strong>📥 Export → PDF</strong>. La herramienta genera un HTML de 170-180KB con 22 capítulos, tablas, gráficas, mapas y comentarios de la IA. WeasyPrint lo convierte a PDF de 71 páginas A4.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SURVEY ═══════ -->
+<div class="panel" id="panel-survey">
+    <div class="panel-header">
+        <h2>📋 Paso 1 — Encuesta de movilidad</h2>
+        <p class="desc">Formulario web profesional con 6 secciones y export CSV</p>
+    </div>
+
+    <div class="card">
+        <h3>📄 Archivo: <code>encuesta.html</code> <span class="tag tag-input">INPUT</span></h3>
+        <p>Formulario autocontenido (sin servidor) que el empleado completa en su navegador. Guarda los datos en memoria y permite exportar a CSV.</p>
+    </div>
+
+    <div class="card">
+        <h3>📝 Secciones del formulario</h3>
+        <table class="data-table">
+            <tr><th>#</th><th>Sección</th><th>Campos</th><th>Preguntas ejemplo</th></tr>
+            <tr><td>1</td><td><strong>Datos personales</strong></td><td>Nombre, email, departamento, puesto</td><td>"¿En qué departamento trabajas?"</td></tr>
+            <tr><td>2</td><td><strong>Desplazamiento habitual</strong></td><td>Modo, distancia, tiempo, frecuencia</td><td>"¿Cómo acudes al trabajo habitualmente?"</td></tr>
+            <tr><td>3</td><td><strong>Valoración entorno</strong></td><td>Calificación 1-5 de alternativas</td><td>"¿Qué valoras de la oferta de bus?"</td></tr>
+            <tr><td>4</td><td><strong>Satisfacción</strong></td><td>Encuesta NPS, barato/difícil/seguro</td><td>"¿Qué facilidad o dificultad tienes para desplazarte?"</td></tr>
+            <tr><td>5</td><td><strong>Teletrabajo</strong></td><td>Frecuencia, días, equipamiento</td><td>"¿Cuántos días a la semana teletrabajas?"</td></tr>
+            <tr><td>6</td><td><strong>Propuestas</strong></td><td>Texto libre, preferencias</td><td>"¿Qué mejoras propones para la movilidad?"</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>📊 CSV de salida — 21 columnas</h3>
+        <div class="code-block"><span class="comment">// Columnas del CSV exportado</span>
+<span class="keyword">nombre</span>, <span class="keyword">email</span>, <span class="keyword">departamento</span>, <span class="keyword">puesto</span>,
+<span class="keyword">modo_principal</span>, <span class="keyword">distancia_km</span>, <span class="keyword">tiempo_viaje_min</span>,
+<span class="keyword">frecuencia</span>, <span class="keyword">dias_teletrabajo</span>,
+<span class="keyword">valoracion_bus</span>, <span class="keyword">valoracion_metro</span>, <span class="keyword">valoracion_bici</span>,
+<span class="keyword">satisfaccion</span>, <span class="keyword">facilidades</span>, <span class="keyword">dificultades</span>,
+<span class="keyword">co2_estimado</span>, <span class="keyword">proposiciones</span>, <span class="keyword">fecha</span>,
+<span class="keyword">lat_origen</span>, <span class="keyword">lon_origen</span>, <span class="keyword">observaciones</span></div>
+    </div>
+
+    <div class="card">
+        <h3>⚡ Ejemplo de respuesta</h3>
+        <table class="data-table">
+            <tr><th>Campo</th><th>Valor</th></tr>
+            <tr><td>nombre</td><td>María García López</td></tr>
+            <tr><td>departamento</td><td>Ingeniería</td></tr>
+            <tr><td>modo_principal</td><td>transporte_publico</td></tr>
+            <tr><td>distancia_km</td><td>8</td></tr>
+            <tr><td>tiempo_viaje_min</td><td>30</td></tr>
+            <tr><td>dias_teletrabajo</td><td>2</td></tr>
+            <tr><td>valoracion_bus</td><td>4</td></tr>
+            <tr><td>co2_estimado</td><td>0.8 kg/día</td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- ═══════ IMPORT ═══════ -->
+<div class="panel" id="panel-import">
+    <div class="panel-header">
+        <h2>📥 Paso 2 — Importar CSV</h2>
+        <p class="desc">Parser robusto con auto-detección y 30+ columnas mapeadas</p>
+    </div>
+
+    <div class="card">
+        <h3>🔧 Parser CSV (csv-import.js — 15KB) <span class="tag tag-ai">IA</span></h3>
+        <p>El parser detecta automáticamente:</p>
+        <ul style="margin:8px 0 0 20px;font-size:0.85rem">
+            <li><strong>Separador:</strong> coma (`,`) o punto-y-coma (<code>;</code>)</li>
+            <li><strong>Encoding:</strong> UTF-8 o Windows-1252 (con BOM o sin él)</li>
+            <li><strong>Encabezados:</strong> 15+ aliases por columna (ej: "modo", "transporte", "medio", "tipo_desplazamiento" → todos = modo principal)</li>
+            <li><strong>Validación:</strong> 0 errores en 1000+ filas de prueba</li>
         </ul>
-        <p style="color:var(--gray-600); font-size:0.88rem; margin-top:12px">
-            La IA genera texto <strong>adaptado a los datos reales</strong> del centro. Si cambian los datos, el informe se regenera automáticamente.
-        </p>
     </div>
 
-    <p style="text-align:center; color:var(--gray-400); font-size:0.8rem; margin-top:20px">
-        ← Selecciona un capítulo en el menú para ver el ejemplo completo de prompt + respuesta
-    </p>
+    <div class="card">
+        <h3>🎯 Flujo de importación</h3>
+        <div class="flow">
+            <div class="flow-box orange">Arrastrar CSV<br><small>o seleccionar archivo</small></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">Auto-detectar<br><small>separador + encoding</small></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box purple">Mapear columnas<br><small>30+ aliases</small></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box green">Calcular modal<br><small>reparto automático</small></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>📊 Ejemplo de mapeo</h3>
+        <table class="data-table">
+            <tr><th>Alias del CSV</th><th>Columna interna</th><th>Ejemplo valor</th></tr>
+            <tr><td>"modo", "transporte", "medio", "tipo_desplazamiento"</td><td><code>modo_principal</code></td><td>"🚌 Autobus"</td></tr>
+            <tr><td>"distancia", "km", "kms"</td><td><code>distancia_km</code></td><td>8.5</td></tr>
+            <tr><td>"tiempo", "minutos", "duracion"</td><td><code>tiempo_viaje_min</code></td><td>30</td></tr>
+            <tr><td>"teletrabajo", "remote", "trabajo_casa"</td><td><code>teletrabajo</code></td><td>"ocasional"</td></tr>
+            <tr><td>"depto", "dpto", "area"</td><td><code>departamento</code></td><td>"Ingenieria"</td></tr>
+        </table>
+    </div>
 </div>
 
-<!-- ═══════ PANEL: CH2 — RESUMEN EJECUTIVO ═══════ -->
-<div class="chapter-panel" id="panel-ch2">
-    <div class="chapter-header">
-        <div class="chapter-number">2</div>
-        <div>
-            <h2>Resumen Ejecutivo</h2>
-            <p>Síntesis del diagnóstico con KPIs clave y recomendaciones prioritarias</p>
-        </div>
+<!-- ═══════ EMPRESA ═══════ -->
+<div class="panel" id="panel-empresa">
+    <div class="panel-header">
+        <h2>🏢 Paso 3 — Configurar empresa</h2>
+        <p class="desc">Multi-empresa con persistencia en IndexedDB</p>
     </div>
 
-    <div class="data-section">
-        <h3>📦 Datos que alimentan este capítulo <span class="tag tag-input">INPUT</span></h3>
-        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-top:8px">
-            <div style="background:var(--blue-light); padding:12px; border-radius:8px; text-align:center">
-                <div style="font-size:1.8rem; font-weight:800; color:var(--blue)">120</div>
-                <div style="font-size:0.75rem; color:var(--gray-600)">Trabajadores</div>
-            </div>
-            <div style="background:var(--orange-light); padding:12px; border-radius:8px; text-align:center">
-                <div style="font-size:1.8rem; font-weight:800; color:var(--orange)">20%</div>
-                <div style="font-size:0.75rem; color:var(--gray-600)">Modos sostenibles</div>
-            </div>
-            <div style="background:var(--red-light); padding:12px; border-radius:8px; text-align:center">
-                <div style="font-size:1.8rem; font-weight:800; color:var(--red)">7.9t</div>
-                <div style="font-size:0.75rem; color:var(--gray-600)">CO₂e / año</div>
-            </div>
-            <div style="background:var(--green-light); padding:12px; border-radius:8px; text-align:center">
-                <div style="font-size:1.8rem; font-weight:800; color:var(--green)">15</div>
-                <div style="font-size:0.75rem; color:var(--gray-600)">Medidas propuestas</div>
-            </div>
-        </div>
+    <div class="card">
+        <h3>🗄️ Almacenamiento (state.js — 21KB) <span class="tag tag-input">INPUT</span></h3>
+        <p>Estado centralizado con persistencia en IndexedDB. Soporta múltiples empresas con sus centros de trabajo, empleados y encuestas separados.</p>
+        <div class="code-block"><span class="comment">// Estructura del estado</span>
+{
+  <span class="highlight">empresa</span>: { nombre, cif, sector, empleados_total, ... },
+  <span class="highlight">centro</span>: { nombre, direccion, cp, ciudad, latitud, longitud, ... },
+  <span class="highlight">empleados</span>: [ { id, nombre, departamento, modo_principal, distancia_km, ... } ],
+  <span class="highlight">encuesta</span>: { respuestas: [...], agregados: { ... } },
+  <span class="highlight">diagnostico</span>: { repartoModal, indicadores, ... },
+  <span class="highlight">dafo</span>: { fortalezas, debilidades, oportunidades, amenazas },
+  <span class="highlight">medidas</span>: [ ... ],
+  <span class="highlight">objetivos</span>: [ ... ]
+}</div>
     </div>
 
-    <div class="prompt-box">
-<span class="comment">// System prompt para el Resumen Ejecutivo</span>
-
-<span class="keyword">Eres</span> un consultor de movilidad sostenible redactando el Resumen Ejecutivo
-de un PMST conforme a la <span class="section">Ley 8/2021 de Movilidad Sostenible</span>.
-
-<span class="keyword">Datos del centro:</span>
-- Nombre: <span class="var">{centro.nombre}</span>
-- Plantilla: <span class="var">{centro.plantilla}</span> trabajadores
-- Dirección: <span class="var">{centro.direccion}</span>
-- Coordenadas: <span class="var">{centro.lat}</span>, <span class="var">{centro.lon}</span>
-
-<span class="keyword">Resultados del diagnóstico:</span>
-- Reparto modal: <span class="var">{diagnostico.resumen.porcentajeSostenible}%</span> sostenible,
-  <span class="var">{diagnostico.resumen.porcentajeMotorizado}%</span> motorizado
-- Huella CO₂e: <span class="var">{diagnostico.co2e.totalCo2eTon}</span> toneladas/año
-- Nivel sostenibilidad: <span class="var">{diagnostico.resumen.nivelSostenibilidad}</span>
-- Ocupación media vehículo: <span class="var">{diagnostico.resumen.ocupacionMediaVehiculos}</span>
-
-<span class="keyword">Comparativa nacional:</span>
-- Coche particular: <span class="var">{comparativas.diferencia.coche_particular}%</span> vs media
-- Transporte público: <span class="var">{comparativas.diferencia.transporte_publico}%</span> vs media
-
-<span class="keyword">Instrucciones:</span>
-1. Redacta un resumen de 400-600 palabras
-2. Incluye 4-5 KPIs destacados en formato visual
-3. Identifica las 3 prioridades más urgentes
-4. Menciona la obligación legal (Ley 8/2021)
-5. Tono: profesional pero accesible para dirección general
-6. <span class="keyword">NO</span> uses jerga técnica sin explicar
-
-<span class="keyword">Formato de salida:</span> HTML con tarjetas KPI, párrafos y lista priorizada
-    </div>
-
-    <div class="ai-response">
-        <div class="ai-response-header">
-            🤖 Respuesta generada por IA — Resumen Ejecutivo
-        </div>
-        <div class="ai-response-body">
-            <h4>Resumen Ejecutivo — Plan de Movilidad Sostenible</h4>
-            <p>
-                El presente diagnóstico de movilidad del <span class="highlight">Centro Ineco Madrid</span>,
-                ubicado en Calle Gran Vía 28, ha sido elaborado en cumplimiento de la
-                <span class="highlight">Ley 8/2021, de 1 de julio, por la que se modifica la Ley 6/2018
-                de Presupuestos Generales del Estado</span>, que obliga a las empresas de más de
-                100 trabajadores en municipios de más de 50.000 habitantes a elaborar un Plan de
-                Movilidad Sostenible al Trabajo (PMST).
-            </p>
-
-            <h4>Indicadores clave del diagnóstico</h4>
-            <table>
-                <tr><th>Indicador</th><th>Valor</th><th>Valoración</th></tr>
-                <tr><td>Plantilla total</td><td><span class="kpi-inline">120 trabajadores</span></td><td>✅ Obligación legal activa</td></tr>
-                <tr><td>Modos sostenibles</td><td><span class="kpi-inline">20.0%</span></td><td>⚠️ Muy por debajo de la media nacional (32%)</td></tr>
-                <tr><td>Emisiones CO₂e</td><td><span class="kpi-inline">7.9 toneladas/año</span></td><td>🔴 Elevado para la plantilla</td></tr>
-                <tr><td>Ocupación media vehículo</td><td><span class="kpi-inline">1.3 personas</span></td><td>⚠️ Subutilización del coche</td></tr>
-            </table>
-
-            <h4>Prioridades identificadas</h4>
-            <ul>
-                <li><strong>Urgente:</strong> Ampliar el teletrabajo del 20% actual al 35%, reduciendo desplazamientos presenciales en un 15% anual.</li>
-                <li><strong>Corto plazo:</strong> Instalar aparcamiento seguro para 15 bicicletas con duchas, aprovechando las 3 plazas bici existentes.</li>
-                <li><strong>Medio plazo:</strong> Establecer acuerdos con EMT/Cercanías para bonificaciones de abonos trimestrales.</li>
-            </ul>
-
-            <p>
-                Con la implementación de las 15 medidas propuestas en este informe, se estima una
-                reducción del <span class="highlight">30% en emisiones de CO₂e</span> y un incremento del
-                <span class="highlight">15 puntos porcentuales en modos sostenibles</span> en un horizonte
-                de 4 años (2024-2028).
-            </p>
+    <div class="card">
+        <h3>👥 Multi-empresa (empresa.js — 20KB)</h3>
+        <p>Permite tener varias empresas en la misma app. Cada empresa tiene su propio centro, empleados e informes. El selector en el header permite cambiar entre ellas.</p>
+        <div class="kpi-grid" style="margin-top:12px">
+            <div class="kpi"><div class="value">∞</div><div class="label">Empresas</div></div>
+            <div class="kpi green"><div class="value">∞</div><div class="label">Centros por empresa</div></div>
+            <div class="kpi orange"><div class="value">∞</div><div class="label">Empleados por centro</div></div>
+            <div class="kpi purple"><div class="value">Local</div><div class="label">IndexedDB persistente</div></div>
         </div>
     </div>
 </div>
 
-<!-- ═══════ PANEL: CH5 — ANÁLISIS DEL ENTORNO ═══════ -->
-<div class="chapter-panel" id="panel-ch5">
-    <div class="chapter-header">
-        <div class="chapter-number">5</div>
-        <div>
-            <h2>Análisis del Entorno</h2>
-            <p>Contexto urbano, isocronas de accesibilidad y datos geográficos via API</p>
-        </div>
+<!-- ═══════ DIAGNOSTICO ═══════ -->
+<div class="panel" id="panel-diagnostico">
+    <div class="panel-header">
+        <h2>📊 Paso 4 — Diagnóstico modal</h2>
+        <p class="desc">Análisis automático del reparto modal y sostenibilidad</p>
     </div>
 
-    <div class="data-section">
-        <h3>📡 Datos de APIs externas <span class="tag tag-api">API</span></h3>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:8px">
-            <div style="background:var(--green-light); padding:12px; border-radius:8px">
-                <strong style="color:var(--green); font-size:0.85rem">🗺️ ORS Isochronas</strong>
-                <p style="font-size:0.78rem; color:var(--gray-600); margin-top:4px">
-                    GET <code>/v2/isochrones/openrouteservice</code><br>
-                    Coords: <code>40.42, -3.70</code><br>
-                    Range: 15, 30, 45 minutos<br>
-                    Mode: pie, bicicleta, coche, transporte público
-                </p>
-            </div>
-            <div style="background:var(--green-light); padding:12px; border-radius:8px">
-                <strong style="color:var(--green); font-size:0.85rem">🏢 NAP DGT — Paradas cercanas</strong>
-                <p style="font-size:0.78rem; color:var(--gray-600); margin-top:4px">
-                    GET <code>nap.dgt.es/api/v1/estaciones</code><br>
-                    Radio: 500m, 1km, 2km<br>
-                    Filtros: autobús, metro, cercanías<br>
-                    Datos: líneas, frecuencias, accesibilidad
-                </p>
-            </div>
-        </div>
+    <div class="card">
+        <h3>🧠 Módulo IA (diagnostico.js — 22KB) <span class="tag tag-ai">IA</span></h3>
+        <p>El diagnóstico calcula automáticamente a partir de los datos importados:</p>
+        <ul style="margin:8px 0 0 20px;font-size:0.85rem">
+            <li><strong>Reparto modal:</strong> % coche, bus, metro, bici, pie, pasajero</li>
+            <li><strong>CO₂e estimado:</strong> Tasa media europea 210g CO₂/km × distancia × frecuencia</li>
+            <li><strong>Indicadores de sostenibilidad:</strong> comparativa con media nacional</li>
+            <li><strong>Recomendaciones:</strong> basadas en el perfil de movilidad detectado</li>
+        </ul>
     </div>
 
-    <div class="prompt-box">
-<span class="comment">// Prompt para Análisis del Entorno — usa datos geográficos reales</span>
-
-<span class="keyword">Genera</span> el capítulo "Análisis del Entorno" del PMST.
-
-<span class="keyword">Ubicación del centro:</span>
-- Dirección: <span class="var">{centro.direccion}</span>
-- Coordenadas: <span class="var">{centro.lat}</span>, <span class="var">{centro.lon}</span>
-- Municipio: <span class="var">{centro.municipio || 'Madrid'}</span>
-
-<span class="keyword">Isochronas calculadas (ORS API):</span>
-<span class="var">{isocronas.pie.map(i => `${i.minutos} min a pie: ${i.distanciaKm} km`)}</span>
-<span class="var">{isocronas.bici.map(i => `${i.minutos} min en bici: ${i.distanciaKm} km`)}</span>
-<span class="var">{isocronas.coche.map(i => `${i.minutos} min en coche: ${i.distanciaKm} km`)}</span>
-
-<span class="keyword">Estaciones de transporte cercanas (NAP DGT):</span>
-<span class="var">{transportePublico.map(tp => `${tp.nombre} (${tp.tipo}) — ${tp.distancia_m}m`).join('\n  ')}</span>
-
-<span class="keyword">Puntos de interés cercanos (OSM/Google):</span>
-<span class="var">{puntosInteres.map(pi => `${pi.nombre} — ${pi.categoria} — ${pi.distancia_m}m`)}</span>
-
-<span class="keyword">Instrucciones:</span>
-1. Describe el entorno urbano del centro (zona residencial, comercial, etc.)
-2. Analiza la accesibilidad según isocronas: qué radio queda cubierto a pie/bici/TP
-3. Evalúa la cobertura de transporte público (paradas en radio 500m)
-4. Identifica barreras geográficas (ríos, vías, pendientes)
-5. Incluye un mapa conceptual de la zona (describe los elementos)
-6. Menciona la climatología y su impacto en movilidad sostenible
-
-<span class="keyword">Formato:</span> HTML con tabla de isocronas, lista de estaciones, análisis textual
-    </div>
-
-    <div class="ai-response">
-        <div class="ai-response-header">
-            🤖 Respuesta generada por IA — Análisis del Entorno
-        </div>
-        <div class="ai-response-body">
-            <h4>5.1 Contexto Urbano</h4>
-            <p>
-                El Centro Ineco Madrid se sitúa en la <span class="highlight">Calle Gran Vía 28</span>,
-                en pleno corazón del distrito de Centro de Madrid. Esta ubicación lo sitúa en una
-                <span class="highlight">zona de alta densidad urbana</span>, con acceso directo a
-                una de las arterias principales de la ciudad. El entorno es predominantemente
-                terciario (oficinas, comercios, hostelería), con una importante afluencia peatonal
-                y una oferta de transporte público excepcional.
-            </p>
-
-            <h4>5.2 Análisis de Accesibilidad — Isochronas</h4>
-            <table>
-                <tr><th>Modo</th><th>15 min</th><th>30 min</th><th>45 min</th></tr>
-                <tr><td>🚶 A pie</td><td>1.2 km</td><td>2.5 km</td><td>3.8 km</td></tr>
-                <tr><td>🚲 Bicicleta</td><td>4.5 km</td><td>9.0 km</td><td>13.5 km</td></tr>
-                <tr><td>🚗 Coche</td><td>8.0 km</td><td>18.0 km</td><td>30.0 km</td></tr>
-                <tr><td>🚌 Transporte público</td><td>3.0 km</td><td>8.5 km</td><td>18.0 km</td></tr>
-            </table>
-            <p>
-                La zona peatonal de 15 minutos cubre aproximadamente <span class="highlight">1.2 km a la redonda</span>,
-                que incluye la mayor parte del distrito de Centro. A los 30 minutos a pie se alcanzan
-                barrios como Chamberí, Salamanca y Arganzuela. La bicicleta amplía significativamente
-                el radio de acción, llegando a Arturo Soria o Carabanchel en 30 minutos.
-            </p>
-
-            <h4>5.3 Estaciones de Transporte Público en el Entorno</h4>
-            <table>
-                <tr><th>Estación</th><th>Tipo</th><th>Distancia</th><th>Líneas</th></tr>
-                <tr><td>Gran Vía</td><td>Metro</td><td>120m</td><td>L1, L5</td></tr>
-                <tr><td>Santo Domingo</td><td>Metro</td><td>280m</td><td>L2</td></tr>
-                <tr><td>Ópera</td><td>Metro + Cercanías</td><td>450m</td><td>L2, L5, L Ramal, C-3, C-4, C-10</td></tr>
-                <tr><td>Plaza de España</td><td>Metro + Cercanías</td><td>600m</td><td>L3, L10, C-3, C-4</td></tr>
-                <tr><td>Callao</td><td>Metro</td><td>350m</td><td>L3, L5</td></tr>
-            </table>
-            <p>
-                La cobertura de transporte público es <span class="highlight">excelente</span>, con
-                <span class="highlight">5 estaciones de metro en radio 600m</span> y acceso a
-                Cercanías desde Ópera y Plaza de España. Esto convierte al centro en uno de los
-                mejor comunicados de la Comunidad de Madrid, lo que representa una oportunidad
-                clave para incentivar el uso del transporte público.
-            </p>
-
-            <h4>5.4 Barreras y Factores Geográficos</h4>
-            <ul>
-                <li><strong>Topografía:</strong> Terreno prácticamente llano, favorable para bicicleta</li>
-                <li><strong>Clima:</strong> continental mediterráneo — veranos secos e inviernos fríos. 280 días despejados/año</li>
-                <li><strong>Barreras urbanas:</strong> La Gran Vía supone una barrera peatonal parcial, pero con numerosos pasos elevados y semáforos</li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<!-- ═══════ PANEL: CH8 — RESULTADOS ENCUESTA ═══════ -->
-<div class="chapter-panel" id="panel-ch8">
-    <div class="chapter-header">
-        <div class="chapter-number">8</div>
-        <div>
-            <h2>Resultados de la Encuesta de Movilidad</h2>
-            <p>Análisis detallado de patrones de viaje por departamento, modo y distancia</p>
-        </div>
-    </div>
-
-    <div class="data-section">
-        <h3>📦 Datos de encuesta <span class="tag tag-input">CSV</span></h3>
-        <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:8px">Ejemplo de registros procesados:</p>
-        <div style="background:var(--gray-900); color:#a5f3fc; padding:12px; border-radius:8px; font-family:monospace; font-size:0.75rem; overflow-x:auto">
-depto,modo_principal,distancia_km,tiempo_viaje_min<br>
-"IT",coche_particular,12.5,25<br>
-"CONSULTORIA",transporte_publico,5.0,18<br>
-"ADMINISTRACION",bicicleta,3.2,15<br>
-"IT",a_pie,0.8,12<br>
-"DIRECCION",coche_particular,22.0,35<br>
-"IT",teletrabajo,0.0,0<br>
-"CONSULTORIA",coche_compartido,8.5,22<br>
-...
-        </div>
-    </div>
-
-    <div class="prompt-box">
-<span class="comment">// Prompt para análisis de encuesta — procesa datos crudos</span>
-
-<span class="keyword">Analiza</span> los resultados de la encuesta de movilidad y genera el capítulo 8.
-
-<span class="keyword">Datos procesados:</span>
-- Total encuestados: <span class="var">{encuesta.totalEncuestados}</span> / <span class="var">{centro.plantilla}</span>
-- Tasa respuesta: <span class="var">{encuesta.tasaRespuesta}%</span>
-
-<span class="keyword">Distribución por departamento:</span>
-<span class="var">{JSON.stringify(encuesta.porDepto, null, 2)}</span>
-
-<span class="keyword">Reparto modal:</span>
-<span class="var">{diagnostico.repartoModal.map(m => `${m.modo}: ${m.count} (${m.percent}%)`).join('\n  ')}</span>
-
-<span class="keyword">Distribución distancias:</span>
-<span class="var">{encuesta.distribucionDistancias.map(d => `${d.rango}: ${d.count} empleados`).join('\n  ')}</span>
-
-<span class="keyword">Distribución tiempos:</span>
-<span class="var">{encuesta.distribucionTiempos.map(t => `${t.rango}: ${t.count} empleados`).join('\n  ')}</span>
-
-<span class="keyword">Cross-analysis modo × distancia:</span>
-<span class="var">{encuesta.crossAnalysis}</span>
-
-<span class="keyword">Instrucciones:</span>
-1. Resume la tasa de respuesta y su representatividad
-2. Analiza el reparto modal global y por departamento
-3. Identifica patrones de distancia (¿qué % vive a <5km? >15km?)
-4. Analiza tiempos de viaje: ¿cuántos sufren >45 min?
-5. Cross-analysis: ¿qué modos dominan por tramo de distancia?
-6. Detecta anomalías o departamentos destacados
-7. Incluye interpretación de por qué estos patrones son relevantes para el PMST
-
-<span class="keyword">Formato:</span> HTML con tablas, gráficas descriptivas (CSS), análisis textual por sección
-    </div>
-
-    <div class="ai-response">
-        <div class="ai-response-header">
-            🤖 Respuesta generada por IA — Resultados Encuesta
-        </div>
-        <div class="ai-response-body">
-            <h4>8.1 Representatividad de la Muestra</h4>
-            <p>
-                Se han recogido <span class="kpi-inline">5 respuestas completas</span> sobre una
-                plantilla de 120 trabajadores, obteniendo una tasa de respuesta del
-                <span class="highlight">4.2%</span>. Aunque esta tasa es inferior al recomendado
-                (mínimo 30% para representatividad estadística), los datos proporcionan una
-                <strong>aproximación útil</strong> a los patrones de movilidad del centro, que
-                deberá complementarse con datos de flota, aparcamiento y observación directa.
-            </p>
-
-            <h4>8.2 Distribución por Departamento</h4>
-            <table>
-                <tr><th>Departamento</th><th>Encuestados</th><th>Modo dominante</th><th>Distancia media</th></tr>
-                <tr><td>IT</td><td>3</td><td>Coche particular (67%)</td><td>5.1 km</td></tr>
-                <tr><td>Consultoría</td><td>1</td><td>Transporte público (100%)</td><td>5.0 km</td></tr>
-                <tr><td>Administración</td><td>1</td><td>Bicicleta (100%)</td><td>3.2 km</td></tr>
-            </table>
-            <p>
-                El departamento de <span class="highlight">IT concentra el 60% de las respuestas</span>
-                y muestra una alta dependencia del coche particular, lo que sugiere la necesidad
-                de medidas específicas para este colectivo. El departamento de Administración,
-                con menor distancia media, es candidato ideal para infraestructura ciclista.
-            </p>
-
-            <h4>8.3 Análisis de Distancias</h4>
-            <p>
-                La distancia media de desplazamiento es de <span class="kpi-inline">7.9 km</span>,
-                situándose en un rango donde la bicicleta eléctrica y el transporte público son
-                alternativas viables. El <span class="highlight">40% de los encuestados</span>
-                vive a menos de 5 km, lo que representa un <strong>potencial significativo de
-                captura modal</strong> para bicicleta y movilidad peatonal.
-            </p>
-
-            <h4>8.4 Análisis Cruzado: Modo × Distancia</h4>
-            <table>
-                <tr><th>Tramo distancia</th><th>Coche</th><th>TP</th><th>Bici</th><th>A pie</th><th>Otros</th></tr>
-                <tr><td>< 3 km</td><td>0%</td><td>0%</td><td>100%</td><td>0%</td><td>0%</td></tr>
-                <tr><td>3-7 km</td><td>0%</td><td>50%</td><td>50%</td><td>0%</td><td>0%</td></tr>
-                <tr><td>7-15 km</td><td>100%</td><td>0%</td><td>0%</td><td>0%</td><td>0%</td></tr>
-                <tr><td>> 15 km</td><td>100%</td><td>0%</td><td>0%</td><td>0%</td><td>0%</td></tr>
-            </table>
-            <p>
-                <strong>Hallazgo clave:</strong> Todos los desplazamientos >7 km se realizan en
-                coche particular, indicando que el transporte público de cercanías no está
-                captando viajeros de larga distancia. Esto sugiere la necesidad de acuerdos
-                con Cercanías Renfe o la implementación de un servicio de autobús lanzadera.
-            </p>
-        </div>
-    </div>
-</div>
-
-<!-- ═══════ PANEL: CH11 — HUELLA DE CARBONO ═══════ -->
-<div class="chapter-panel" id="panel-ch11">
-    <div class="chapter-header">
-        <div class="chapter-number">11</div>
-        <div>
-            <h2>Huella de Carbono</h2>
-            <p>Análisis de emisiones CO₂e por modo con factores MITECO 2024</p>
-        </div>
-    </div>
-
-    <div class="data-section">
-        <h3>🌿 Factores de emisión MITECO 2024 <span class="tag tag-input">REF</span></h3>
-        <table style="width:100%; border-collapse:collapse; font-size:0.85rem">
-            <thead><tr>
-                <th style="text-align:left;padding:8px;border-bottom:2px solid var(--gray-200)">Modo de transporte</th>
-                <th style="text-align:right;padding:8px;border-bottom:2px solid var(--gray-200)">Factor (kg CO₂e/km)</th>
-                <th style="text-align:left;padding:8px;border-bottom:2px solid var(--gray-200)">Fuente</th>
-            </tr></thead>
-            <tbody>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">🚗 Coche particular</td><td style="text-align:right;padding:8px;border-bottom:1px solid var(--gray-100);font-weight:700">0.193</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">MITECO 2024</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">🚗 Coche compartido (3p)</td><td style="text-align:right;padding:8px;border-bottom:1px solid var(--gray-100);font-weight:700">0.064</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">MITECO 2024 / 3</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">🚌 Autobús urbano</td><td style="text-align:right;padding:8px;border-bottom:1px solid var(--gray-100);font-weight:700">0.089</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">MITECO 2024</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">🚇 Metro</td><td style="text-align:right;padding:8px;border-bottom:1px solid var(--gray-100);font-weight:700">0.035</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">MITECO 2024</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">🚲 Bicicleta</td><td style="text-align:right;padding:8px;border-bottom:1px solid var(--gray-100);font-weight:700">0.000</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">Emisiones directas = 0</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">🚶 A pie</td><td style="text-align:right;padding:8px;border-bottom:1px solid var(--gray-100);font-weight:700">0.000</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">Emisiones directas = 0</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--gray-100)">💻 Teletrabajo</td><td style="text-align:right;padding:8px;border-bottom:1px solid var(--gray-100);font-weight:700">0.005</td><td style="padding:8px;border-bottom:1px solid var(--gray-100)">Estimación doméstico</td></tr>
-            </tbody>
+    <div class="card">
+        <h3>📊 Ejemplo de salida</h3>
+        <table class="data-table">
+            <tr><th>Indicador</th><th>Valor empresa</th><th>Media nacional</th><th>Valoración</th></tr>
+            <tr><td>Modal motorizado</td><td style="color:var(--red)">60%</td><td>55%</td><td>⚠️ Por encima</td></tr>
+            <tr><td>Modal sostenible</td><td style="color:var(--green)">40%</td><td>45%</td><td>⚠️ Por debajo</td></tr>
+            <tr><td>CO₂e / empleado / año</td><td>0.48 t</td><td>0.42 t</td><td>⚠️ Alto</td></tr>
+            <tr><td>Distancia media</td><td>10.2 km</td><td>11.5 km</td><td>✅ Bajo</td></tr>
+            <tr><td>Teletrabajo medio</td><td>1.2 días/sem</td><td>1.5 días/sem</td><td>⚠️ Bajo</td></tr>
         </table>
     </div>
 
-    <div class="prompt-box">
-<span class="comment">// Prompt para Huella de Carbono — calcula emisiones reales</span>
-
-<span class="keyword">Calcula y describe</span> la huella de carbono del centro de trabajo.
-
-<span class="keyword">Datos de cálculo:</span>
-<span class="keyword">Factores MITECO 2024:</span>
-- Coche particular: <span class="var">0.193 kg CO₂e/km</span>
-- Autobús: <span class="var">0.089 kg CO₂e/km</span>
-- Metro: <span class="var">0.035 kg CO₂e/km</span>
-- Bicicleta/a pie: <span class="var">0.0 kg CO₂e/km</span>
-
-<span class="keyword">Desglose por modo:</span>
-<span class="var">{Object.entries(diagnostico.huellaCO2e.desglose).map(([modo, d]) =>
-  `${modo}: ${d.empleados} empleados × ${d.distanciaKm} km × ${d.factorKgCO2e} = ${d.co2eKgAnual} kg CO₂e`
-).join('\n')}</span>
-
-<span class="keyword">Total: <span class="var">{diagnostico.huellaCO2e.totalCo2eTon} toneladas CO₂e/año</span></span>
-<span class="keyword">Por empleado: <span class="var">{diagnostico.huellaCO2e.porEmpleadoKg} kg CO₂e/año</span></span>
-
-<span class="keyword">Instrucciones:</span>
-1. Presenta el desglose total con tabla por modo
-2. Calcula equivalencias comprensibles (¿cuántos árboles? ¿cuántos vuelos Madrid-Barcelona?)
-3. Compara con la media del sector (si hay datos)
-4. Proporciona escenarios de reducción: -10%, -20%, -30%
-5. Identifica qué medidas tienen mayor impacto en reducción
-6. Incluye el cálculo del coste económico de las emisiones (€/tonelada ETS)
-    </div>
-
-    <div class="ai-response">
-        <div class="ai-response-header">
-            🤖 Respuesta generada por IA — Huella de Carbono
-        </div>
-        <div class="ai-response-body">
-            <h4>11.1 Resultados Globales</h4>
-            <table>
-                <tr><th>Indicador</th><th>Valor</th></tr>
-                <tr><td>Huella total anual</td><td><span class="kpi-inline">7,859 kg CO₂e (7.9 t)</span></td></tr>
-                <tr><td>Por trabajador/año</td><td><span class="kpi-inline">65.5 kg CO₂e</span></td></tr>
-                <tr><td>Por trabajador/día laborable</td><td><span class="kpi-inline">0.25 kg CO₂e</span></td></tr>
-            </table>
-
-            <h4>11.2 Equivalencias Comprensibles</h4>
-            <ul>
-                <li>🌳 Equivale a <span class="highlight">360 árboles absorbentes</span> durante un año</li>
-                <li>✈️ Equivale a <span class="highlight">5 vuelos ida/vuelta Madrid-Barcelona</span> por trabajador</li>
-                <li>🚗 Son <span class="highlight">40,700 km en coche</span> — la vuelta a España 4 veces</li>
-                <li>⚡ Consumo eléctrico equivalente a <span class="highlight">2,100 hogares</span> durante un mes</li>
-            </ul>
-
-            <h4>11.3 Escenarios de Reducción</h4>
-            <table>
-                <tr><th>Escenario</th><th>Total (t CO₂e)</th><th>Reducción</th><th>Medidas clave</th></tr>
-                <tr><td>🟢 Baseline actual</td><td>7.9</td><td>—</td><td>Situación actual</td></tr>
-                <tr><td>🟡 -10% (2025)</td><td>7.1</td><td>-0.8t</td><td>+5% teletrabajo, eco-driving</td></tr>
-                <tr><td>🟠 -20% (2026)</td><td>6.3</td><td>-1.6t</td><td>+TP, bici compartida, carpooling</td></tr>
-                <tr><td>🔴 -30% (2028)</td><td>5.5</td><td>-2.4t</td><td>Plan completo implementado</td></tr>
-            </table>
-
-            <h4>11.4 Coste Económico</h4>
-            <p>
-                Aplicando el precio de referencia del mercado europeo de emisiones (ETS):
-                <span class="highlight">7.9 t × 85 €/t = 671.5 €/año</span> en coste de emisiones.
-                Con el escenario de -30%, el ahorro sería de <span class="highlight">204 €/año</span>,
-                además de los beneficios reputacionales y de cumplimiento legal.
-            </p>
+    <div class="card">
+        <h3>📈 Gráficas generadas</h3>
+        <div class="kpi-grid">
+            <div class="kpi"><div class="value">🍩</div><div class="label">Donut reparto modal</div></div>
+            <div class="kpi green"><div class="value">📊</div><div class="label">Barras comparativas</div></div>
+            <div class="kpi orange"><div class="value">🌱</div><div class="label">CO₂e por modo</div></div>
+            <div class="kpi purple"><div class="value">📡</div><div class="label">Radar sostenibilidad</div></div>
         </div>
     </div>
 </div>
 
-<!-- ═══════ PANEL: CH13 — TRANSPORTE PÚBLICO ═══════ -->
-<div class="chapter-panel" id="panel-ch13">
-    <div class="chapter-header">
-        <div class="chapter-number">13</div>
-        <div>
-            <h2>Oferta de Transporte Público</h2>
-            <p>Datos de paradas, líneas y frecuencias via API del NAP DGT</p>
-        </div>
+<!-- ═══════ DAFO ═══════ -->
+<div class="panel" id="panel-dafo">
+    <div class="panel-header">
+        <h2>📈 Paso 5 — Análisis DAFO</h2>
+        <p class="desc">Fortalezas, Debilidades, Oportunidades, Amenazas + PEFODA</p>
     </div>
 
-    <div class="data-section">
-        <h3>📡 Datos NAP DGT en tiempo real <span class="tag tag-api">API</span></h3>
-        <div style="background:var(--gray-900); color:#a5f3fc; padding:12px; border-radius:8px; font-family:monospace; font-size:0.75rem">
-<span style="color:#6b7280">// Request a la API del NAP</span>
-GET <span style="color:#fbbf24">https://nap.dgt.es/api/estaciones?lat=40.42&lon=-3.70&radio=2000</span>
+    <div class="card">
+        <h3>🧠 Módulo DAFO (dafo.js — 9KB) <span class="tag tag-ai">IA</span></h3>
+        <p>Genera automáticamente el análisis DAFO basándose en los indicadores del diagnóstico. Incluye también análisis PEFODA (Presiones, Estrategias, Fortalezas, Oportunidades, Debilidades, Amenazas).</p>
+    </div>
 
-<span style="color:#6b7280">// Response (ejemplo)</span>
+    <div class="card">
+        <h3>📊 Ejemplo de salida</h3>
+        <table class="data-table">
+            <tr><th>Factor</th><th>Ejemplo</th><th>Fuente</th></tr>
+            <tr><td style="color:var(--green)"><strong>✅ Fortaleza</strong></td><td>Buena cobertura de metro (L9 a 280m)</td><td>API Overpass</td></tr>
+            <tr><td style="color:var(--green)"><strong>✅ Fortaleza</strong></td><td>8 estaciones BiciMAD en 1.2km</td><td>API GBFS</td></tr>
+            <tr><td style="color:var(--red)"><strong>⚠️ Debilidad</strong></td><td>60% uso coche particular (above avg)</td><td>CSV importado</td></tr>
+            <tr><td style="color:var(--red)"><strong>⚠️ Debilidad</strong></td><td>CO₂e 0.48t/año/empleado (alto)</td><td>Diagnóstico IA</td></tr>
+            <tr><td style="color:var(--blue)"><strong>💡 Oportunidad</strong></td><td>Programa de movilidad combinada</td><td>Análisis entorno</td></tr>
+            <tr><td style="color:var(--orange)"><strong>⚡ Amenaza</strong></td><td>Ampliación parking Paseo de la Habana</td><td>PMEU Madrid</td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- ═══════ MEDIDAS ═══════ -->
+<div class="panel" id="panel-medidas">
+    <div class="panel-header">
+        <h2>⚙️ Paso 6 — Medidas y objetivos SMART</h2>
+        <p class="desc">15 medidas personalizadas y 7 objetivos con plazos</p>
+    </div>
+
+    <div class="card">
+        <h3>🎯 Generador automático (objetivos.js — 10KB) <span class="tag tag-ai">IA</span></h3>
+        <p>Genera medidas y objetivos basándose en el DAFO. Cada objetivo sigue la metodología SMART:</p>
+        <ul style="margin:8px 0 0 20px;font-size:0.85rem">
+            <li><strong>S</strong>pecífico — Qué se quiere conseguir</li>
+            <li><strong>M</strong>edible — Indicador cuantificable</li>
+            <li><strong>A</strong>lcanzable — Realista con los recursos</li>
+            <li><strong>R</strong>elevante — Alineado con el PMST</li>
+            <li><strong>T</strong>emporal — Plazo definido</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>📊 Ejemplo de medida + objetivo</h3>
+        <table class="data-table">
+            <tr><th>#</th><th>Medida</th><th>Objetivo SMART</th><th>Plazo</th></tr>
+            <tr><td>1</td><td>Subvención billete transporte público</td><td>Reducir coche particular 15% en 12 meses</td><td>Q1 2027</td></tr>
+            <tr><td>2</td><td>Ampliar parking bicis + duchas</td><td>Aumentar bici 20% (del 12% al 15%)</td><td>Q2 2027</td></tr>
+            <tr><td>3</td><td>Horario flexible + teletrabajo 2 días</td><td>Reducir horas punta 25%</td><td>Q1 2027</td></tr>
+            <tr><td>4</td><td>Carpooling empresa (app interna)</td><td>30% empleados en programa en 6 meses</td><td>Q3 2027</td></tr>
+            <tr><td>5</td><td>Parking rotativo (solo conductor)</td><td>Reducir空 occupancy 30%</td><td>Q2 2027</td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- ═══════ APIs ═══════ -->
+<div class="panel" id="panel-apis">
+    <div class="panel-header">
+        <h2>🌐 APIs integradas</h2>
+        <p class="desc">3 fuentes de datos reales para enriquecer el informe</p>
+    </div>
+
+    <div class="kpi-grid">
+        <div class="kpi green"><div class="value">GBFS</div><div class="label">Bicicletas compartidas</div></div>
+        <div class="kpi orange"><div class="value">Overpass</div><div class="label">Paradas TP (OSM)</div></div>
+        <div class="kpi purple"><div class="value">Nominatim</div><div class="label">POIs del entorno</div></div>
+    </div>
+
+    <div class="card">
+        <h3>🚲 GBFS — Bicicletas compartidas <span class="tag tag-api">API</span></h3>
+        <p><strong>Sin API key.</strong> Feed público de sistemas de bicicletas compartidas en España (BiciMAD, Valenbisi, Bicing, etc.).</p>
+        <div class="code-block"><span class="comment">// Endpoint automático por ciudad</span>
+GET https://gbfs.link/es/bicimad/stations.json
+
+<span class="comment">// Datos por estación</span>
 {
-  "estaciones": [
-    { "nombre": "Gran Vía", "tipo": "metro", "lineas": ["L1","L5"],
-      "distancia_m": 120, "accesibilidad": "parcial" },
-    { "nombre": "Santo Domingo", "tipo": "metro", "lineas": ["L2"],
-      "distancia_m": 280, "accesibilidad": "total" },
-    { "nombre": "Ópera", "tipo": "metro_cercanias", "lineas": ["L2","L5","LR","C3","C4"],
-      "distancia_m": 450, "accesibilidad": "total" },
-    ...
-  ]
+  <span class="string">"name"</span>: "59 - Paseo de la Habana",
+  <span class="string">"bikesAvailable"</span>: 8,
+  <span class="string">"slotsAvailable"</span>: 8,
+  <span class="string">"latitude"</span>: 40.4455,
+  <span class="string">"longitude"</span>: -3.6880
 }
-        </div>
+
+<span class="comment">// Detección automática por nombre de ciudad</span>
+Madrid → BiciMAD | Barcelona → Bicing | Valencia → Valenbisi</div>
     </div>
 
-    <div class="ai-response">
-        <div class="ai-response-header">
-            🤖 Respuesta generada por IA — Oferta de Transporte Público
+    <div class="card">
+        <h3>🚌 Overpass API — Paradas de transporte público <span class="tag tag-api">API</span></h3>
+        <p><strong>Sin API key.</strong> Consulta a OpenStreetMap para obtener paradas de bus, metro y tren en un radio de 800m.</p>
+        <div class="code-block"><span class="comment">// Consulta Overpass QL</span>
+[out:json][timeout:15];
+(
+  node["highway"="bus_stop"](40.44,-3.69,40.45,-3.68);
+  node["public_transport"="stop_position"](40.44,-3.69,40.45,-3.68);
+);
+out body 50;
+
+<span class="comment">// Datos obtenidos por parada</span>
+{
+  <span class="string">"tags"</span>: { "name": "Paseo de la Habana", "ref": "14,27,40,147" },
+  <span class="string">"lat"</span>: 40.4462, <span class="string">"lon"</span>: -3.6885
+}</div>
+    </div>
+
+    <div class="card">
+        <h3>🏙️ Nominatim — POIs del entorno <span class="tag tag-api">API</span></h3>
+        <p><strong>Sin API key.</strong> Geocodificación inversa y búsqueda de puntos de interés: salud, educación, parking, hostelería.</p>
+        <div class="code-block"><span class="comment">// Búsqueda de POIs en radio 1km</span>
+GET https://nominatim.openstreetmap.org/reverse?lat=40.4458&lon=-3.6888
+
+<span class="comment">// Categorías detectadas</span>
+🏥 Salud: hospital, clinic, pharmacy, doctors
+🎓 Educación: school, university, kindergarten
+🅿️ Parking: parking, bicycle_parking
+🍽️ Hostelería: restaurant, cafe, bar</div>
+    </div>
+
+    <div class="card">
+        <h3>🗺️ Isócronas simuladas (sin ORS) <span class="tag tag-map">MAPA</span></h3>
+        <p>Cuando no hay API key de ORS, se generan isócronas simuladas pero <strong>realistas</strong>:</p>
+        <ul style="margin:8px 0 0 20px;font-size:0.85rem">
+            <li><strong>8 ejes viales:</strong> Castellana (N), Bravo Murillo (NE), Paseo de la Habana (S)...</li>
+            <li><strong>2 barreras urbanas:</strong> Río Manzanares (-40%), vía de tren Chamartín (-25%)</li>
+            <li><strong>Metro L9:</strong> extiende la isócrona norte un 25%</li>
+            <li><strong>48 puntos</strong> de resolución por polígono</li>
+            <li><strong>3 modos × 3 tiempos:</strong> coche/bici/pie × 10/15/30 min</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ═══════ MAPS ═══════ -->
+<div class="panel" id="panel-maps">
+    <div class="panel-header">
+        <h2>🗺️ Mapas Leaflet interactivos</h2>
+        <p class="desc">3 mapas con datos reales de APIs en la app y en el informe</p>
+    </div>
+
+    <div class="card">
+        <h3>🗺️ Mapa principal (mapa.js — 18KB) <span class="tag tag-map">MAPA</span></h3>
+        <p>Mapa Leaflet interactivo en la pestaña "Mapa" de la app. Se carga bajo demanda (lazy init) al hacer click por primera vez.</p>
+        <div class="map-placeholder">
+            <div class="icon">🗺️</div>
+            <div class="label">Mapa interactivo con capas</div>
         </div>
-        <div class="ai-response-body">
-            <h4>13.1 Estaciones en Radio de Accesibilidad</h4>
-            <p>
-                Mediante la consulta a la API del <span class="highlight">Nodo de Acceso al Padrón (NAP) de la DGT</span>,
-                se han identificado <span class="kpi-inline">5 estaciones de metro</span> y
-                <span class="kpi-inline">2 puntos de Cercanías Renfe</span> en un radio de 600 metros
-                desde el centro de trabajo. Esta densidad de oferta sitúa al centro en una zona de
-                <span class="highlight">excelente cobertura ferroviaria</span>.
-            </p>
+        <p style="margin-top:12px;font-size:0.85rem"><strong>Capas disponibles:</strong></p>
+        <ul style="margin:4px 0 0 20px;font-size:0.85rem">
+            <li>🔴 <strong>Paradas TP</strong> — Bus EMT, Metro, Cercanías (Overpass API)</li>
+            <li>🟢 <strong>BiciMAD</strong> — Estaciones con colores por disponibilidad (GBFS)</li>
+            <li>🔵 <strong>Centro</strong> — Marcador del centro de trabajo</li>
+            <li>🟡 <strong>Isócronas</strong> — Polígonos irregulares con barreras urbanas</li>
+        </ul>
+    </div>
 
-            <h4>13.2 Análisis de Frecuencias</h4>
-            <table>
-                <tr><th>Línea</th><th>Destinos principales</th><th>Frecuencia punta</th><th>Frecuencia valle</th></tr>
-                <tr><td>L1 Metro</td><td>Valdebebas → Chamartín → Sol → Hospital Fuenlabrada</td><td>2-3 min</td><td>4-5 min</td></tr>
-                <tr><td>L5 Metro</td><td>Canillejas → Gran Vía → Moncloa</td><td>2-3 min</td><td>4-6 min</td></tr>
-                <tr><td>C-3 Cercanías</td><td>Chamartín → Sol → Atocha → Aranjuez</td><td>10-15 min</td><td>20-30 min</td></tr>
-                <tr><td>C-4 Cercanías</td><td>Chamartín → Sol → Atocha → Parla</td><td>10-15 min</td><td>20-30 min</td></tr>
-            </table>
-            <p>
-                La frecuencia media en horas punta es de <span class="highlight">3 minutos para metro</span>
-                y <span class="highlight">12 minutos para Cercanías</span>, lo que convierte al
-                transporte público en una alternativa altamente competitiva frente al coche particular,
-                especialmente considerando que el tiempo medio de espera es inferior al tiempo que
-                se invierte en buscar aparcamiento en la zona.
-            </p>
+    <div class="card">
+        <h3>📄 Mapas embebidos en el informe (report-maps.js — 14KB) <span class="tag tag-output">OUTPUT</span></h3>
+        <p>El informe HTML incluye 3 mapas Leaflet que se renderizan cuando el usuario abre el HTML en su navegador.</p>
+        <table class="data-table">
+            <tr><th>Mapa</th><th>Capítulo</th><th>Qué muestra</th></tr>
+            <tr><td>🏙️ <strong>Entorno</strong></td><td>Cap. 5</td><td>POIs de Nominatim: salud, educación, parking, restauración</td></tr>
+            <tr><td>🚌 <strong>TP + GBFS</strong></td><td>Cap. 13-14</td><td>Paradas EMT + 40 estaciones BiciMAD con colores</td></tr>
+            <tr><td>📍 <strong>Isócronas</strong></td><td>Cap. 5.4</td><td>Coche (azul) / Bici (verde) / Pie (amarillo) × 10/15/30 min</td></tr>
+        </table>
+        <p style="margin-top:12px;font-size:0.85rem;color:var(--gray-500)"><strong>Nota:</strong> Los mapas del informe son interactivos al abrir el HTML en navegador. Para el PDF, se capturan como imágenes estáticas.</p>
+    </div>
 
-            <h4>13.3 Cobertura por Zonas de Origen</h4>
-            <p>
-                Analizando los datos de procedencia de los trabajadores (distancia media 7.9 km),
-                se estima que el <span class="highlight">78% de la plantilla</span> podría acceder
-                al centro mediante transporte público con un tiempo total de viaje inferior a 45 minutos,
-                lo cual representa un <strong>techo de captura modal significativo</strong> para la
-                campaña de incentivos al TP.
-            </p>
+    <div class="card">
+        <h3>🤖 Comentarios IA de los mapas <span class="tag tag-ai">IA</span></h3>
+        <p>Después de cada mapa, la IA genera un análisis contextual con:</p>
+        <ul style="margin:8px 0 0 20px;font-size:0.85rem">
+            <li><strong>Isócronas:</strong> Cobertura por modo, barreras detectadas, tiempo hasta Sol</li>
+            <li><strong>TP:</strong> Líneas disponibles, frecuencia, conexiones, recomendaciones</li>
+            <li><strong>Entorno:</strong> Servicios cercanos, oportunidad de movilidad combinada</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ═══════ ISOCHRONES ═══════ -->
+<div class="panel" id="panel-isochrones">
+    <div class="panel-header">
+        <h2>📍 Isócronas realistas</h2>
+        <p class="desc">Polígonos irregulares con barreras urbanas — no círculos</p>
+    </div>
+
+    <div class="card">
+        <h3>🧠 Algoritmo (isochrones-realistas.js — 7KB) <span class="tag tag-ai">IA</span></h3>
+        <p>Genera polígonos tipo "mano de pulpo" que simulan la realidad del transporte urbano:</p>
+    </div>
+
+    <div class="card">
+        <h3>📐 Ejes viales principales de Madrid</h3>
+        <table class="data-table">
+            <tr><th>Ángulo</th><th>Dirección</th><th>Vía principal</th><th>Factor</th><th>Efecto</th></tr>
+            <tr><td>0°</td><td>Norte</td><td>Paseo de la Habana / Castellana</td><td><strong>1.4</strong></td><td>Se extiende 40% más</td></tr>
+            <tr><td>45°</td><td>NE</td><td>Bravo Murillo</td><td><strong>1.1</strong></td><td>Extensión moderada</td></tr>
+            <tr><td>90°</td><td>Este</td><td>Río Manzanares</td><td><strong>0.7</strong></td><td>Se contrae 30% (barrera)</td></tr>
+            <tr><td>135°</td><td>SE</td><td>Plaza de España</td><td><strong>1.2</strong></td><td>Buena conexión</td></tr>
+            <tr><td>180°</td><td>Sur</td><td>Paseo de la Habana sur</td><td><strong>1.3</strong></td><td>Extensión alta</td></tr>
+            <tr><td>225°</td><td>SW</td><td>Calle México</td><td><strong>1.0</strong></td><td>Normal</td></tr>
+            <tr><td>270°</td><td>Oeste</td><td>Zona menos desarrollada</td><td><strong>0.8</strong></td><td>Se contrae 20%</td></tr>
+            <tr><td>315°</td><td>NW</td><td>Concha Espina</td><td><strong>1.15</strong></td><td>Extensión moderada-alta</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>🚧 Barreras urbanas</h3>
+        <table class="data-table">
+            <tr><th>Barrera</th><th>Ángulo</th><th>Factor</th><th>Efecto</th></tr>
+            <tr><td>🌊 Río Manzanares</td><td>75°-105°</td><td><strong>0.6</strong></td><td>Reduce 40% — cruces limitados</td></tr>
+            <tr><td>🚂 Vía tren Chamartín</td><td>260°-285°</td><td><strong>0.75</strong></td><td>Reduce 25% — pasos subterráneos</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>🔢 Fórmula matemática</h3>
+        <div class="code-block"><span class="comment">// Para cada uno de los 48 puntos del polígono</span>
+<span class="keyword">angulo_base</span> = (i / 48) × 360°
+<span class="keyword">factor_eje</span> = ∏(1 + (eje.factor - 1) × peso)     <span class="dim">// 8 ejes</span>
+<span class="keyword">factor_barrera</span> = barrera.factor + (1 - barrera.factor) × diff  <span class="dim">// 2 barreras</span>
+<span class="keyword">variacion</span> = 1 + 0.15×sin(θ×0.1) + 0.1×cos(θ×0.23) + 0.08×sin(θ×0.37)
+<span class="keyword">radio</span> = radio_max × factor_eje × factor_barrera × variacion
+
+<span class="comment">// Conversión a coordenadas</span>
+<span class="highlight">lat_punto</span> = lat_centro + (radio / 111320) × cos(θ)
+<span class="highlight">lon_punto</span> = lon_centro + (radio / (111320 × cos(lat))) × sin(θ)
+
+<span class="comment">// Radio máximo por modo</span>
+coche: <span class="string">25 km/h × tiempo × 1000 / 60</span>
+bici:  <span class="string">14 km/h × tiempo × 1000 / 60</span>
+pie:   <span class="string">4.5 km/h × tiempo × 1000 / 60</span></div>
+    </div>
+</div>
+
+<!-- ═══════ REPORT ═══════ -->
+<div class="panel" id="panel-report">
+    <div class="panel-header">
+        <h2>📄 Paso 7 — Informe 22 capítulos</h2>
+        <p class="desc">Generador automático de PMST/PTST conforme a Ley 8/2021</p>
+    </div>
+
+    <div class="card">
+        <h3>📊 Generador (report.js — 209KB) <span class="tag tag-output">OUTPUT</span></h3>
+        <p>Genera un HTML completo de 170-180KB con todos los capítulos del PMST/PTST.</p>
+    </div>
+
+    <div class="card">
+        <h3>📑 Estructura del informe — 22 capítulos</h3>
+        <table class="data-table">
+            <tr><th>#</th><th>Capítulo</th><th>Contenido</th><th>Datos</th></tr>
+            <tr><td>1</td><td>Portada</td><td>Empresa, centro, fecha, Ley 8/2021</td><td>Automático</td></tr>
+            <tr><td>2</td><td>Resumen ejecutivo</td><td>KPIs principales, hallazgos clave</td><td>Diagnóstico</td></tr>
+            <tr><td>3</td><td>Marco legal</td><td>Ley 8/2021, RD 1010/2023, sanciones</td><td>Plantilla</td></tr>
+            <tr><td>4</td><td>Metodología</td><td>Encuesta, muestra, período</td><td>Encuesta</td></tr>
+            <tr><td>5</td><td>Análisis entorno</td><td>Geografía, demografía, transportes</td><td><strong>Nominatim + Mapa</strong></td></tr>
+            <tr><td>6</td><td>Empresa</td><td>Descripción, actividad, plantilla</td><td>Empresa</td></tr>
+            <tr><td>7</td><td>Centro de trabajo</td><td>Ubicación, instalaciones, aforo</td><td>Centro</td></tr>
+            <tr><td>8</td><td>Desplazamientos</td><td>Modo, distancia, tiempo, frecuencia</td><td>CSV/Encuesta</td></tr>
+            <tr><td>9</td><td>Análisis modal</td><td>Reparto, comparativa, tendencias</td><td>Diagnóstico</td></tr>
+            <tr><td>10</td><td>CO₂e y huella</td><td>Emisiones por modo, ahorro potencial</td><td>Diagnóstico</td></tr>
+            <tr><td>11</td><td>Teletrabajo</td><td>Frecuencia, impacto, percepción</td><td>CSV</td></tr>
+            <tr><td>12</td><td>Valoración empleados</td><td>Satisfacción, necesidades, propuestas</td><td>CSV</td></tr>
+            <tr><td>13</td><td>Oferta TP</td><td>Líneas, frecuencias, cobertura</td><td><strong>Overpass API + Mapa</strong></td></tr>
+            <tr><td>14</td><td>Infraestructura ciclista</td><td>Estaciones, carriles, viabilidad</td><td><strong>GBFS API + Mapa</strong></td></tr>
+            <tr><td>15</td><td>Isochronas</td><td>Accesibilidad por modo y tiempo</td><td><strong>Isócronas realistas</strong></td></tr>
+            <tr><td>16</td><td>Análisis DAFO</td><td>F, D, O, A + PEFODA</td><td>DAFO</td></tr>
+            <tr><td>17</td><td>Objetivos SMART</td><td>7 objetivos con plazos</td><td>Objetivos</td></tr>
+            <tr><td>18</td><td>Medidas</td><td>15 medidas detalladas</td><td>Medidas</td></tr>
+            <tr><td>19</td><td>Cronograma</td><td>Plan de acción 3 años</td><td>Plantilla</td></tr>
+            <tr><td>20</td><td>Seguimiento KPIs</td><td>Indicadores, baseline, targets</td><td>Diagnóstico</td></tr>
+            <tr><td>21</td><td>Presupuesto</td><td>Inversión, ROI, fuentes financiación</td><td>Plantilla</td></tr>
+            <tr><td>22</td><td>Anexos</td><td>Legislación, glosario, datos</td><td>Plantilla</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>📊 Contenido típico del informe</h3>
+        <div class="kpi-grid">
+            <div class="kpi"><div class="value">170KB</div><div class="label">HTML generado</div></div>
+            <div class="kpi green"><div class="value">31</div><div class="label">Tablas de datos</div></div>
+            <div class="kpi orange"><div class="value">3</div><div class="label">Mapas interactivos</div></div>
+            <div class="kpi purple"><div class="value">694</div><div class="label">Elementos HTML</div></div>
         </div>
     </div>
 </div>
 
-<!-- ═══════ PANEL: CH15 — DAFO ═══════ -->
-<div class="chapter-panel" id="panel-ch15">
-    <div class="chapter-header">
-        <div class="chapter-number">15</div>
-        <div>
-            <h2>Análisis DAFO</h2>
-            <p>Debilidades, Fortalezas, Oportunidades y Amenazas estratégicas</p>
-        </div>
+<!-- ═══════ KPIs ═══════ -->
+<div class="panel" id="panel-kpis">
+    <div class="panel-header">
+        <h2>📊 KPIs multi-año</h2>
+        <p class="desc">Seguimiento de indicadores con tendencias y gráficas de evolución</p>
     </div>
 
-    <div class="data-section">
-        <h3>📦 Datos del DAFO calculado <span class="tag tag-input">APP</span></h3>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:8px">
-            <div style="background:#dcfce7; padding:12px; border-radius:8px; border-left:4px solid var(--green)">
-                <strong style="color:var(--green)">💪 Fortalezas (2)</strong>
-                <ul style="margin:6px 0 0 16px; font-size:0.82rem; color:var(--gray-700)">
-                    <li>Ubicación céntrica con excelente transporte público</li>
-                    <li>Política de teletrabajo existente (20%)</li>
-                </ul>
-            </div>
-            <div style="background:#fef2f2; padding:12px; border-radius:8px; border-left:4px solid var(--red)">
-                <strong style="color:var(--red)">⚠️ Debilidades (1)</strong>
-                <ul style="margin:6px 0 0 16px; font-size:0.82rem; color:var(--gray-700)">
-                    <li>Alta dependencia del coche particular (80%)</li>
-                </ul>
-            </div>
-            <div style="background:#dbeafe; padding:12px; border-radius:8px; border-left:4px solid var(--blue)">
-                <strong style="color:var(--blue)">🚀 Oportunidades (5)</strong>
-                <ul style="margin:6px 0 0 16px; font-size:0.82rem; color:var(--gray-700)">
-                    <li>5 estaciones metro en radio 600m</li>
-                    <li>Terreno llano ideal para bici</li>
-                    <li>Ampliable teletrabajo a 35%</li>
-                    <li>BiciMAD disponible en zona</li>
-                    <li>Incentivos fiscales MITECO</li>
-                </ul>
-            </div>
-            <div style="background:#fff7ed; padding:12px; border-radius:8px; border-left:4px solid var(--orange)">
-                <strong style="color:var(--orange)">⛈️ Amenazas (4)</strong>
-                <ul style="margin:6px 0 0 16px; font-size:0.82rem; color:var(--gray-700)">
-                    <li>Posible reducción plazas aparcamiento zona AP-7</li>
-                    <li>Inflación encareciendo incentivos</li>
-                    <li>Resistencia cultural al cambio modal</li>
-                    <li>Regulación creciente ZBE Madrid</li>
-                </ul>
-            </div>
-        </div>
+    <div class="card">
+        <h3>📈 Matriz de KPIs (index.html) <span class="tag tag-output">OUTPUT</span></h3>
+        <p>La pestaña "KPIs" muestra una matriz de 10 indicadores × N años con:</p>
+        <ul style="margin:8px 0 0 20px;font-size:0.85rem">
+            <li><strong>Colores:</strong> verde (cumple), amarillo (parcial), rojo (no cumple)</li>
+            <li><strong>Flechas de tendencia:</strong> ↑ mejorando, ↓ empeorando, → estable</li>
+            <li><strong>Año libre:</strong> se pueden añadir columnas de años ilimitados</li>
+            <li><strong>Gráfica Chart.js:</strong> evolución temporal de los 4 indicadores principales</li>
+        </ul>
     </div>
 
-    <div class="ai-response">
-        <div class="ai-response-header">
-            🤖 Análisis estratégico derivado por IA
-        </div>
-        <div class="ai-response-body">
-            <h4>Estrategias Derivadas del DAFO</h4>
-            <table>
-                <tr><th>Tipo</th><th>Combinación</th><th>Estrategia</th></tr>
-                <tr><td><span style="color:var(--green);font-weight:700">FO</span> (Ofensiva)</td><td>Fortalezas × Oportunidades</td><td>Aprovechar la ubicación céntrica + 5 estaciones metro para lanzar una campaña agresiva de bonos transporte con acuerdos EMT/Cercanías. <strong>Prioridad: ALTA.</strong></td></tr>
-                <tr><td><span style="color:var(--blue);font-weight:700">DO</span> (Reorientación)</td><td>Debilidades × Oportunidades</td><td>Usar la infraestructura ciclista de la zona (BiciMAD, llano) para atacar directamente la dependencia del coche. <strong>Prioridad: ALTA.</strong></td></tr>
-                <tr><td><span style="color:var(--orange);font-weight:700">FA</span> (Defensiva)</td><td>Fortalezas × Amenazas</td><td>El teletrabajo existente protege contra la regulación ZBE: ampliar teletrabajo reduce exposición a restricciones. <strong>Prioridad: MEDIA.</strong></td></tr>
-                <tr><td><span style="color:var(--red);font-weight:700">DA</span> (Supervivencia)</td><td>Debilidades × Amenazas</td><td>La alta dependencia del coche + restricciones ZBE = riesgo de sanciones. Mitigar con plan de transición gradual. <strong>Prioridad: CRÍTICA.</strong></td></tr>
-            </table>
-        </div>
+    <div class="card">
+        <h3>📊 10 KPIs del PMST</h3>
+        <table class="data-table">
+            <tr><th>KPI</th><th>Unidad</th><th>Target típico</th><th>Fuente</th></tr>
+            <tr><td>% modo motorizado</td><td>%</td><td>< 50%</td><td>CSV</td></tr>
+            <tr><td>% modo sostenible</td><td>%</td><td>> 50%</td><td>CSV</td></tr>
+            <tr><td>CO₂e / empleado / año</td><td>ton</td><td>< 0.3t</td><td>Diagnóstico</td></tr>
+            <tr><td>Distancia media</td><td>km</td><td>< 10 km</td><td>CSV</td></tr>
+            <tr><td>% teletrabajo</td><td>%</td><td>> 30%</td><td>CSV</td></tr>
+            <tr><td>Satisfacción movilidad</td><td>1-5</td><td>> 3.5</td><td>CSV</td></tr>
+            <tr><td>Paradas en 800m</td><td>nº</td><td>> 5</td><td>Overpass</td></tr>
+            <tr><td>Estaciones bici en 1km</td><td>nº</td><td>> 3</td><td>GBFS</td></tr>
+            <tr><td>Accesibilidad bici</td><td>%</td><td>> 15%</td><td>Diagnóstico</td></tr>
+            <tr><td>Índice sostenibilidad</td><td>0-100</td><td>> 65</td><td>Diagnóstico</td></tr>
+        </table>
     </div>
 </div>
 
-<!-- ═══════ PANEL: CH17 — MEDIDAS ═══════ -->
-<div class="chapter-panel" id="panel-ch17">
-    <div class="chapter-header">
-        <div class="chapter-number">17</div>
-        <div>
-            <h2>Plan de Medidas</h2>
-            <p>Catálogo priorizado de medidas con impacto, coste y plazo</p>
+<!-- ═══════ PDF ═══════ -->
+<div class="panel" id="panel-pdf">
+    <div class="panel-header">
+        <h2>📄 Export PDF/DOCX/ZIP</h2>
+        <p class="desc">Generación de documentos profesionales con mapas embebidos</p>
+    </div>
+
+    <div class="card">
+        <h3>📄 Pipeline de exportación <span class="tag tag-output">OUTPUT</span></h3>
+        <div class="flow">
+            <div class="flow-box">report.js<br><small>Genera HTML</small></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box orange">report-enrich.js<br><small>Carga APIs</small></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box purple">report-maps.js<br><small>Añade mapas Leaflet</small></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">gen_static_maps.py<br><small>Mapas estáticos</small></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box green">WeasyPrint<br><small>Genera PDF</small></div>
         </div>
     </div>
 
-    <div class="ai-response">
-        <div class="ai-response-header">
-            🤖 Medidas priorizadas generadas por IA
-        </div>
-        <div class="ai-response-body">
-            <p>
-                A partir del análisis DAFO, los datos de encuesta y la huella de carbono,
-                la IA propone las siguientes <span class="highlight">15 medidas priorizadas</span>,
-                ordenadas por relación impacto/coste:
-            </p>
+    <div class="card">
+        <h3>📋 Opciones de exportación</h3>
+        <table class="data-table">
+            <tr><th>Formato</th><th>Herramienta</th><th>Contenido</th></tr>
+            <tr><td><strong>PDF</strong></td><td>WeasyPrint (Python)</td><td>71 páginas A4 con mapas estáticos embebidos</td></tr>
+            <tr><td><strong>HTML</strong></td><td>Export directo</td><td>170KB con mapas interactivos Leaflet</td></tr>
+            <tr><td><strong>DOCX</strong></td><td>docx.js (futuro)</td><td>Documento Word editable</td></tr>
+            <tr><td><strong>ZIP</strong></td><td>JSZip</td><td>HTML + CSV + imágenes de mapa</td></tr>
+        </table>
+    </div>
 
-            <table>
-                <tr><th>#</th><th>Medida</th><th>Categoría</th><th>Impacto</th><th>Coste</th><th>Plazo</th></tr>
-                <tr><td>1</td><td><strong>Ampliar teletrabajo a 35%</strong></td><td>Organización</td><td style="color:var(--green)">🔴 Muy alto</td><td style="color:var(--green)">Gratuito</td><td>3 meses</td></tr>
-                <tr><td>2</td><td><strong>Bonos transporte EMT/Renfe</strong></td><td>Incentivos</td><td style="color:var(--green)">🔴 Muy alto</td><td>~3,000 €/año</td><td>1 mes</td></tr>
-                <tr><td>3</td><td><strong>Aparcamiento bici cubierto</strong></td><td>Infraestructura</td><td style="color:var(--blue)">🟡 Alto</td><td>~2,500 €</td><td>2 meses</td></tr>
-                <tr><td>4</td><td><strong>Duchas y vestuarios</strong></td><td>Infraestructura</td><td style="color:var(--blue)">🟡 Alto</td><td>~5,000 €</td><td>3 meses</td></tr>
-                <tr><td>5</td><td><strong>Eco-driving training</strong></td><td>Formación</td><td>🟠 Medio</td><td>~1,500 €</td><td>1 mes</td></tr>
-                <tr><td>6</td><td><strong>Carpooling interno app</strong></td><td>Organización</td><td>🟠 Medio</td><td>~500 €/año</td><td>2 meses</td></tr>
-                <tr><td>7</td><td><strong>Zona aparcamiento preferente bici</strong></td><td>Infraestructura</td><td>🟡 Medio-bajo</td><td>~300 €</td><td>1 semana</td></tr>
-                <tr><td>8</td><td><strong>Campaña comunicación interna</strong></td><td>Comunicación</td><td>🟡 Medio-bajo</td><td>~200 €</td><td>1 mes</td></tr>
-                <tr><td>9</td><td><strong>Acuerdo BiciMAD empresa</strong></td><td>Incentivos</td><td>🟡 Medio-bajo</td><td>Gratuito</td><td>1 mes</td></tr>
-                <tr><td>10</td><td><strong>Desfase horario voluntario</strong></td><td>Organización</td><td>🟡 Medio-bajo</td><td>Gratuito</td><td>1 mes</td></tr>
-                <tr><td>11</td><td><strong>Recarga eléctrica puntos</strong></td><td>Infraestructura</td><td>🟠 Bajo</td><td>~8,000 €</td><td>6 meses</td></tr>
-                <tr><td>12</td><td><strong>Comité de movilidad</strong></td><td>Gobernanza</td><td>🟡 Medio</td><td>Gratuito</td><td>1 mes</td></tr>
-                <tr><td>13</td><td><strong>Plan anual seguimiento KPIs</strong></td><td>Seguimiento</td><td>🟡 Medio</td><td>Gratuito</td><td>1 mes</td></tr>
-                <tr><td>14</td><td><strong>Parking compartido vecinos</strong></td><td>Organización</td><td>🟠 Bajo</td><td>Gratuito</td><td>3 meses</td></tr>
-                <tr><td>15</td><td><strong>Auditoría anual movilidad</strong></td><td>Seguimiento</td><td>🟡 Medio</td><td>~2,000 €/año</td><td>12 meses</td></tr>
-            </table>
-
-            <p>
-                <strong>Inversión total estimada:</strong> <span class="kpi-inline">~23,000 €</span> (primero año)
-                con ROI positivo en <span class="highlight">18 meses</span> (ahorro en plazas parking + bonos
-                + reducción sanciones ZBE).
-            </p>
-        </div>
+    <div class="card">
+        <h3>🖼️ Cómo se capturan los mapas para el PDF</h3>
+        <p>WeasyPrint no ejecuta JavaScript, así que los mapas Leaflet se capturan como imágenes:</p>
+        <ol style="margin:8px 0 0 20px;font-size:0.85rem">
+            <li>Se genera el HTML con mapas Leaflet</li>
+            <li>Se abren en el navegador para que Leaflet renderice</li>
+            <li>Se capturan con <code>staticmap</code> (OpenStreetMap tiles)</li>
+            <li>Se convierten a JPEG comprimido (124-158KB)</li>
+            <li>Se reemplazan los divs de mapa por <code>&lt;img&gt;</code></li>
+            <li>WeasyPrint genera el PDF con las imágenes incluidas</li>
+        </ol>
     </div>
 </div>
 
-<!-- ═══════ PANEL: CH21 — CONCLUSIONES ═══════ -->
-<div class="chapter-panel" id="panel-ch21">
-    <div class="chapter-header">
-        <div class="chapter-number">21</div>
-        <div>
-            <h2>Conclusiones y Compromisos</h2>
-            <p>Síntesis final, compromisos de la dirección y hoja de ruta</p>
-        </div>
+<!-- ═══════ EXAMPLE ═══════ -->
+<div class="panel" id="panel-example">
+    <div class="panel-header">
+        <h2>🏢 Ejemplo: Ineco Paseo de la Habana</h2>
+        <p class="desc">PMST completo para Ineco, S.A. — oficina en Paseo de la Habana, 16 (Madrid)</p>
     </div>
 
-    <div class="ai-response">
-        <div class="ai-response-header">
-            🤖 Conclusiones generadas por IA
-        </div>
-        <div class="ai-response-body">
-            <h4>Síntesis del Diagnóstico</h4>
-            <p>
-                El presente Plan de Movilidad Sostenible al Trabajo del <span class="highlight">Centro Ineco Madrid</span>
-                ha revelado que, pese a contar con una ubicación estratégica en el centro de Madrid
-                y un entorno de transporte público excepcional, el <span class="highlight">80% de la plantilla
-                de 120 trabajadores</span> se desplaza en coche particular, generando una huella de
-                <span class="highlight">7.9 toneladas de CO₂e anuales</span>.
-            </p>
+    <div class="kpi-grid">
+        <div class="kpi"><div class="value">85</div><div class="label">Empleados totales</div></div>
+        <div class="kpi green"><div class="value">25</div><div class="label">Encuestados</div></div>
+        <div class="kpi orange"><div class="value">71</div><div class="label">Páginas PDF</div></div>
+        <div class="kpi purple"><div class="value">1.2MB</div><div class="label">Tamaño PDF</div></div>
+    </div>
 
-            <h4>Compromisos de la Dirección</h4>
-            <ul>
-                <li>✅ Ampliar el teletrabajo del 20% al 35% antes de diciembre 2025</li>
-                <li>✅ Instalar aparcamiento para 15 bicicletas con duchas antes de marzo 2025</li>
-                <li>✅ Firmar acuerdos de bonos transporte con EMT y Renfe antes de febrero 2025</li>
-                <li>✅ Constituir el Comité de Movilidad antes de enero 2025</li>
-                <li>✅ Revisar avance de KPIs trimestralmente y publicar resultados internamente</li>
-            </ul>
+    <div class="card">
+        <h3>🏢 Datos de la empresa</h3>
+        <table class="data-table">
+            <tr><th>Campo</th><th>Valor</th></tr>
+            <tr><td>Nombre</td><td>Ineco, S.A.</td></tr>
+            <tr><td>CIF</td><td>A-79014433</td></tr>
+            <tr><td>Sector</td><td>Ingeniería y consultoría</td></tr>
+            <tr><td>Centro</td><td>Paseo de la Habana, 16 — 28036 Madrid</td></tr>
+            <tr><td>Coordenadas</td><td>40.4458°N, 3.6888°W</td></tr>
+        </table>
+    </div>
 
-            <h4>Hoja de Ruta 2024-2028</h4>
-            <table>
-                <tr><th>Fase</th><th>Periodo</th><th>Objetivo</th><th>Meta</th></tr>
-                <tr><td>🟡 Preparación</td><td>Q4 2024</td><td>Infraestructura base</td><td>Bici + bonos + comité</td></tr>
-                <tr><td>🟠 Implementación</td><td>2025</td><td>Cambio de hábitos</td><td>+10% modos sostenibles</td></tr>
-                <tr><td>🔴 Consolidación</td><td>2026</td><td>Inercia positiva</td><td>20% sostenible → 35%</td></tr>
-                <tr><td>🟢 Optimización</td><td>2027-28</td><td>Sostenibilidad</td><td>-30% CO₂e, 45% sostenible</td></tr>
-            </table>
+    <div class="card">
+        <h3>📊 Reparto modal inventado (25 empleados)</h3>
+        <table class="data-table">
+            <tr><th>Modo</th><th>Personas</th><th>%</th><th>Indicador</th></tr>
+            <tr><td>🚗 Coche particular (conductor)</td><td>8</td><td>32%</td><td style="color:var(--red)">Motorizado ↑</td></tr>
+            <tr><td>🚌 Autobús</td><td>5</td><td>20%</td><td style="color:var(--green)">Sostenible</td></tr>
+            <tr><td>🚇 Metro / Tren</td><td>5</td><td>20%</td><td style="color:var(--green)">Sostenible</td></tr>
+            <tr><td>🚲 Bicicleta</td><td>3</td><td>12%</td><td style="color:var(--green)">Sostenible ↑</td></tr>
+            <tr><td>🚶 A pie</td><td>2</td><td>8%</td><td style="color:var(--green)">Activo</td></tr>
+            <tr><td>🚗 Coche particular (pasajero)</td><td>2</td><td>8%</td><td style="color:var(--orange)">Compartido</td></tr>
+        </table>
+    </div>
 
-            <p style="margin-top:20px; padding:16px; background:var(--blue-light); border-radius:8px; text-align:center">
-                <strong style="color:var(--blue); font-size:1.1rem">
-                    "La movilidad sostenible no es un gasto, es una inversión en el futuro de nuestra empresa y de nuestra ciudad."
-                </strong>
-            </p>
-        </div>
+    <div class="card">
+        <h3>🌐 Datos reales de APIs (Madrid)</h3>
+        <table class="data-table">
+            <tr><th>API</th><th>Datos obtenidos</th><th>Cantidad</th></tr>
+            <tr><td><strong>GBFS</strong></td><td>Estaciones BiciMAD en 1.2km</td><td>8 estaciones, 49 bicicletas</td></tr>
+            <tr><td><strong>Overpass</strong></td><td>Paradas de bus/metro</td><td>7 paradas (EMT + Metro L9 + Cercanías)</td></tr>
+            <tr><td><strong>Nominatim</strong></td><td>POIs del entorno</td><td>Salud, educación, parking, hostelería</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>🗺️ Mapas del informe</h3>
+        <table class="data-table">
+            <tr><th>Mapa</th><th>Contenido</th><th>Datos</th></tr>
+            <tr><td>🏙️ Entorno</td><td>POIs en radio 1km</td><td>Nominatim: salud, educación, parking</td></tr>
+            <tr><td>🚌 TP + GBFS</td><td>Paradas + bicis</td><td>7 paradas EMT + 8 BiciMAD</td></tr>
+            <tr><td>📍 Isócronas</td><td>9 polígonos irregulares</td><td>3 modos × 3 tiempos con barreras</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>🤖 Comentarios IA generados</h3>
+        <ul style="margin:0;padding-left:20px;font-size:0.85rem">
+            <li><strong>Isócronas:</strong> "El análisis revela que en 15 min se cubren 150-200 km² en coche. La barrera del río reduce accesibilidad al SE un 40%."</li>
+            <li><strong>TP:</strong> "Cobertura excelente: 4 líneas EMT a 120m, Metro L9 a 280m. El 60% podría prescindir de coche."</li>
+            <li><strong>Entorno:</strong> "Servicios bien distribuidos. Oportunidad: programa de movilidad combinada sin coche."</li>
+        </ul>
+    </div>
+
+    <div class="card" style="background:var(--blue-light);border-color:var(--blue)">
+        <h3>📥 Descargar ejemplo</h3>
+        <p><strong>PDF:</strong> <code>PMST_Ineco_Paseo_Habana.pdf</code> (71 páginas, 1.2MB)</p>
+        <p><strong>HTML:</strong> <code>informe_preview.html</code> (abrir en navegador para mapas interactivos)</p>
+        <p style="margin-top:8px;font-size:0.85rem;color:var(--gray-600)">El PDF contiene mapas estáticos embebidos. El HTML contiene mapas Leaflet interactivos con zoom, popups y capas.</p>
     </div>
 </div>
 
-</main>
-</div>
+</div><!-- /content -->
+</div><!-- /app -->
 
 <!-- ═══════ FOOTER ═══════ -->
 <div class="footer">
-    <strong>PLANDEMOVILIDAD IA Demo</strong> — Prototipo de generación inteligente de informes PMST<br>
-    Hecho con ❤️ por David Antizar
+    <p><strong>PLANDEMOVILIDAD v2.0</strong> — Generador de Planes de Movilidad Sostenible al Trabajo</p>
+    <p>Conforme a <strong>Ley 8/2021</strong> de Medidas de Movilidad Sostenible y <strong>RD 1010/2023</strong></p>
+    <p style="margin-top:8px">Hecho con ❤️ por David Antizar</p>
+    <p style="margin-top:4px"><a href="https://github.com/Ntizar/PLANDEMOVILIDAD" target="_blank">github.com/Ntizar/PLANDEMOVILIDAD</a></p>
 </div>
 
-<!-- ═══════ JAVASCRIPT ═══════ -->
 <script>
-function showPanel(id) {
-    document.querySelectorAll('.chapter-panel').forEach(p => p.classList.remove('active'));
+function show(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    
     const panel = document.getElementById('panel-' + id);
     if (panel) panel.classList.add('active');
-    
-    // Highlight nav item
-    const navItems = document.querySelectorAll('.nav-item');
-    const panelIndex = ['overview','ch2','ch5','ch8','ch11','ch13','ch15','ch17','ch21'].indexOf(id);
-    if (panelIndex >= 0 && navItems[panelIndex]) {
-        navItems[panelIndex].classList.add('active');
-    }
+    event.currentTarget.classList.add('active');
 }
 </script>
 
