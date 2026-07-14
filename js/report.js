@@ -2435,7 +2435,8 @@ function generarAnalisisAparcamiento(app) {
 // ──────────────────────────────────────────
 
 function generarOfertaTransporte(app) {
-    const tp = safeArr(app, 'transportePublico');
+    const tp = app.paradasReales || safeArr(app, 'transportePublico');
+    const calidadDatos = app.htmlCalidadDatos || '';
 
     return `
 <div class="chapter" id="chapter-13">
@@ -2493,7 +2494,7 @@ function generarOfertaTransporte(app) {
     <h2 class="section-title">13.2 Paradas y Estaciones en el Entorno</h2>
 
     ${tp.length > 0 ? `
-    <p>Se han identificado <strong>${tp.length} paradas/estaciones</strong> de transporte público en el entorno del centro de trabajo:</p>
+    <p>Se han identificado <strong>${tp.length} paradas/estaciones</strong> de transporte público en el entorno del centro de trabajo (datos verificados de Overpass API/OSM):</p>
 
     <table>
         <caption>Paradas de transporte público en el entorno</caption>
@@ -2583,6 +2584,13 @@ function generarOfertaTransporte(app) {
     <div class="highlight-box">
         <strong>📌 Dato clave:</strong> Según el MITMA, el transporte público en España tiene una huella de carbono promedio de 0,033-0,089 kg CO2e/pasajero-km, dependiendo del modo, lo que supone entre un 53% y un 82% menos de emisiones que el coche particular con conductor (0,192 kg CO2e/pasajero-km).
     </div>
+
+    ${calidadDatos ? `
+    <div class="section" style="margin-top:20px;background:#fffbeb;border:1px solid #fbbf24;border-radius:8px;padding:16px">
+        <h3 style="color:#92400e;margin:0 0 8px 0">📋 Calidad de Datos de este Capítulo</h3>
+        <p style="font-size:13px;color:#78350f;margin:0">Los datos de este capítulo han sido obtenidos de fuentes verificadas. Los datos marcados como "N/D" no han podido verificarse.</p>
+        ${app.dataValidator ? app.dataValidator.toHTML() : ''}
+    </div>` : ''}
 </div>`;
 }
 
@@ -2593,7 +2601,7 @@ function generarOfertaTransporte(app) {
 function generarInfraestructuraCiclista(app) {
     const centro = safe(app, 'centro', {});
     const empresa = safe(app, 'empresa', {});
-    const gbfs = safeArr(app, 'gbfs.estaciones');
+    const gbfs = app.estacionesBiciReales || safeArr(app, 'gbfs.estaciones');
     const plazasBici = empresa.plazasBici || 0;
 
     return `
@@ -2653,7 +2661,7 @@ function generarInfraestructuraCiclista(app) {
     <p>Los sistemas de bicicleta compartida (General Bikeshare Feed Specification - GBFS) son una alternativa complementaria a la bicicleta privada. Permiten a los/as trabajadores/as realizar trayectos "last-mile" desde las estaciones de transporte público hasta el centro de trabajo.</p>
 
     ${gbfs.length > 0 ? `
-    <p>Se han identificado <strong>${gbfs.length} estaciones de bicicleta compartida</strong> en el entorno del centro de trabajo:</p>
+    <p>Se han identificado <strong>${gbfs.length} estaciones de bicicleta compartida</strong> en el entorno del centro de trabajo (datos verificados de GBFS):</p>
     <table>
         <caption>Estaciones de bicicleta compartida (GBFS)</caption>
         <thead>
