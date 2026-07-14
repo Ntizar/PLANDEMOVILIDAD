@@ -1240,6 +1240,12 @@ function generarAnalisisEntorno(app) {
 
     <h2 class="section-title">5.4 Isocronas de Accesibilidad</h2>
 
+    <div class="map-container" style="height:450px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
+        <div id="report-map-isocronas" data-report-map="isocronas" style="height:100%;width:100%"></div>
+        <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Isochronas: coche (azul), bici (verde), pie (amarillo) - 10/15/30 min</div>
+    </div>
+    <p><em>Mapa interactivo con isocronas de accesibilidad. Las zonas coloreadas muestran las areas alcanzables desde el centro de trabajo en diferentes tiempos de desplazamiento. Lineas continuas = datos ORS reales; lineas discontinua = simulacion basica.</em></p>
+
     <p>Las isocronas son mapas que muestran las áreas alcanzables desde un punto de origen en un tiempo determinado, para un modo de transporte concreto. Este análisis permite evaluar la accesibilidad del centro de trabajo desde diferentes puntos de residencia de los trabajadores/as.</p>
 
     <div class="highlight-box">
@@ -2425,14 +2431,26 @@ function generarOfertaTransporte(app) {
 
     <h2 class="section-title">13.1 Metodología de Análisis</h2>
 
-    <p>La información sobre la oferta de transporte público se ha obtenido a partir de las siguientes fuentes:</p>
+    <div class="map-container" style="height:450px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
+        <div id="report-map-tp" data-report-map="tp-gbfs" style="height:100%;width:100%"></div>
+        <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Mapa: paradas TP + estaciones bicicleta publica</div>
+    </div>
+    <p><em>Mapa interactivo con paradas de transporte publico (EMT Madrid, Metro, Cercanias) y estaciones de bicicleta compartida (BiciMAD) en un radio de 800 metros. Datos obtenidos de OpenStreetMap (Overpass API) y feeds GBFS en tiempo real.</em></p>
+
+    <p>La informacion sobre la oferta de transporte publico se ha obtenido a partir de las siguientes fuentes:</p>
     <ul>
         <li><strong>NAP DGT (Nodo de Acceso Público):</strong> Base de datos oficial del Ministerio de Transportes con información sobre paradas, líneas y horarios del transporte público en toda España.</li>
         <li><strong>OpenStreetMap / Overpass API:</strong> Datos de infraestructuras de transporte público actualizados por la comunidad de mapeo.</li>
         <li><strong>Plan de Movilidad Municipal:</strong> Documentación del ayuntamiento correspondiente sobre las líneas y frecuencias del transporte público municipal.</li>
     </ul>
 
-    <p>El radio de búsqueda se ha establecido en ${safe(app, 'configuracion.gtfsStopRadius', 500)} metros desde el centro de trabajo, que corresponde aproximadamente a un paseo de 10 minutos a pie.</p>
+    <p>El radio de busqueda se ha establecido en ${safe(app, 'configuracion.gtfsStopRadius', 500)} metros desde el centro de trabajo, que corresponde aproximadamente a un paseo de 10 minutos a pie.</p>
+
+    <div class="map-container" style="height:400px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
+        <div id="report-map-entorno" data-report-map="entorno" style="height:100%;width:100%"></div>
+        <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Mapa interactivo: puntos de interes del entorno</div>
+    </div>
+    <p><em>Mapa generado con datos reales de OpenStreetMap (Nominatim). Los puntos muestran establecimientos de salud, educacion, parking y restauracion en un radio de 1km.</em></p>
 
     <h2 class="section-title">13.2 Paradas y Estaciones en el Entorno</h2>
 
@@ -3839,6 +3857,28 @@ ${generarConclusiones(app)}
     </p>
 </div>
 
+<!-- Leaflet CSS/JS for interactive maps -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+// Pass data to maps
+window.__reportGBFS = JSON.parse('${JSON.stringify(app.gbfs || {})}');
+window.__reportPOIs = JSON.parse('${JSON.stringify(app.pois || [])}');
+window.__reportIsochronas = JSON.parse('${JSON.stringify(app.isocronas || [])}');
+</script>
+<script type="module">
+import { initReportMaps } from './js/report-maps.js';
+document.addEventListener('DOMContentLoaded', () => {
+    const app = {
+        centro: { latitud: '40.4168', longitud: '-3.7038', nombre: 'Centro de trabajo' },
+        gbfs: window.__reportGBFS,
+        pois: window.__reportPOIs,
+        isocronas: window.__reportIsochronas
+    };
+    setTimeout(() => initReportMaps(app), 800);
+});
+</script>
 </body>
 </html>`;
 

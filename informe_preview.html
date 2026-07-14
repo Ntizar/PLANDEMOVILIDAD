@@ -1015,10 +1015,10 @@ li {
             </tr>
         </thead>
         <tbody>
-            <tr><td><strong>Dirección</strong></td><td>Puerta del Sol, Madrid</td></tr>
+            <tr><td><strong>Dirección</strong></td><td>No especificada</td></tr>
             <tr><td><strong>Coordenadas</strong></td><td>N/D, N/D</td></tr>
             <tr><td><strong>Municipio</strong></td><td>el municipio correspondiente</td></tr>
-            <tr><td><strong>Provincia</strong></td><td>Madrid</td></tr>
+            <tr><td><strong>Provincia</strong></td><td>la provincia correspondiente</td></tr>
         </tbody>
     </table>
 
@@ -1054,6 +1054,12 @@ li {
     </ul>
 
     <h2 class="section-title">5.4 Isocronas de Accesibilidad</h2>
+
+    <div class="map-container" style="height:450px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
+        <div id="report-map-isocronas" data-report-map="isocronas" style="height:100%;width:100%"></div>
+        <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Isochronas: coche (azul), bici (verde), pie (amarillo) - 10/15/30 min</div>
+    </div>
+    <p><em>Mapa interactivo con isocronas de accesibilidad. Las zonas coloreadas muestran las areas alcanzables desde el centro de trabajo en diferentes tiempos de desplazamiento. Lineas continuas = datos ORS reales; lineas discontinua = simulacion basica.</em></p>
 
     <p>Las isocronas son mapas que muestran las áreas alcanzables desde un punto de origen en un tiempo determinado, para un modo de transporte concreto. Este análisis permite evaluar la accesibilidad del centro de trabajo desde diferentes puntos de residencia de los trabajadores/as.</p>
 
@@ -1105,7 +1111,7 @@ li {
         </thead>
         <tbody>
             <tr><td><strong>Nombre del centro</strong></td><td>Centro Ineco Madrid</td></tr>
-            <tr><td><strong>Dirección completa</strong></td><td>Puerta del Sol, Madrid</td></tr>
+            <tr><td><strong>Dirección completa</strong></td><td>No especificada</td></tr>
             <tr><td><strong>Superficie construida</strong></td><td>No especificada</td></tr>
             <tr><td><strong>Plantilla total</strong></td><td>0 trabajadores/as</td></tr>
             <tr><td><strong>Horarios de trabajo</strong></td><td>No especificados</td></tr>
@@ -1119,10 +1125,10 @@ li {
 
     <h3 class="subsection-title">Acceso por modos de transporte</h3>
     <ul>
-        <li><strong>Vehículo privado:</strong> El centro es accesible desde las principales vías de comunicación del municipio. Se dispone de aparcamiento en la zona.</li>
+        <li><strong>Vehículo privado:</strong> El acceso en vehículo privado debe evaluarse en función de la ubicación específica del centro.</li>
         <li><strong>Transporte público:</strong> Se recomienda consultar la disponibilidad de transporte público en el entorno del centro.</li>
         <li><strong>Bicicleta:</strong> No se ha registrado infraestructura ciclista propia. Se recomienda su habilitación.</li>
-        <li><strong>A pie:</strong> El centro cuenta con aceras y accesos peatonales en su entorno inmediato.</li>
+        <li><strong>A pie:</strong> Las condiciones peatonales deben evaluarse in situ.</li>
     </ul>
 
     <h2 class="section-title">6.3 Infraestructuras del Centro</h2>
@@ -2187,14 +2193,26 @@ li {
 
     <h2 class="section-title">13.1 Metodología de Análisis</h2>
 
-    <p>La información sobre la oferta de transporte público se ha obtenido a partir de las siguientes fuentes:</p>
+    <div class="map-container" style="height:450px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
+        <div id="report-map-tp" data-report-map="tp-gbfs" style="height:100%;width:100%"></div>
+        <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Mapa: paradas TP + estaciones bicicleta publica</div>
+    </div>
+    <p><em>Mapa interactivo con paradas de transporte publico (EMT Madrid, Metro, Cercanias) y estaciones de bicicleta compartida (BiciMAD) en un radio de 800 metros. Datos obtenidos de OpenStreetMap (Overpass API) y feeds GBFS en tiempo real.</em></p>
+
+    <p>La informacion sobre la oferta de transporte publico se ha obtenido a partir de las siguientes fuentes:</p>
     <ul>
         <li><strong>NAP DGT (Nodo de Acceso Público):</strong> Base de datos oficial del Ministerio de Transportes con información sobre paradas, líneas y horarios del transporte público en toda España.</li>
         <li><strong>OpenStreetMap / Overpass API:</strong> Datos de infraestructuras de transporte público actualizados por la comunidad de mapeo.</li>
         <li><strong>Plan de Movilidad Municipal:</strong> Documentación del ayuntamiento correspondiente sobre las líneas y frecuencias del transporte público municipal.</li>
     </ul>
 
-    <p>El radio de búsqueda se ha establecido en 500 metros desde el centro de trabajo, que corresponde aproximadamente a un paseo de 10 minutos a pie.</p>
+    <p>El radio de busqueda se ha establecido en 500 metros desde el centro de trabajo, que corresponde aproximadamente a un paseo de 10 minutos a pie.</p>
+
+    <div class="map-container" style="height:400px;border-radius:12px;border:2px solid #e5e7eb;margin:16px 0;position:relative">
+        <div id="report-map-entorno" data-report-map="entorno" style="height:100%;width:100%"></div>
+        <div class="map-legend" style="position:absolute;bottom:8px;left:8px;background:white;padding:6px 10px;border-radius:6px;font-size:11px;box-shadow:0 1px 4px rgba(0,0,0,0.2);z-index:1000">Mapa interactivo: puntos de interes del entorno</div>
+    </div>
+    <p><em>Mapa generado con datos reales de OpenStreetMap (Nominatim). Los puntos muestran establecimientos de salud, educacion, parking y restauracion en un radio de 1km.</em></p>
 
     <h2 class="section-title">13.2 Paradas y Estaciones en el Entorno</h2>
 
@@ -3519,5 +3537,27 @@ li {
     </p>
 </div>
 
+<!-- Leaflet CSS/JS for interactive maps -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+// Pass data to maps
+window.__reportGBFS = JSON.parse('{"sistema":"BiciMAD","operador":"EMT Madrid","estaciones":[{"id":"1437","nombre":"33 - Puerta del Sol","lat":40.4165363,"lng":-3.7032264,"capacidad":43,"bicis":6,"docks":13,"estado":"active","tipo":"bicycle","distancia":56.726143028926614},{"id":"2307","nombre":"1 - Metro Sol","lat":40.416465,"lng":-3.7054098,"capacidad":43,"bicis":3,"docks":20,"estado":"active","tipo":"bicycle","distancia":141.2820228486931},{"id":"1428","nombre":"25A - Plaza de Celenque A","lat":40.4173703,"lng":-3.7057791,"capacidad":44,"bicis":2,"docks":19,"estado":"active","tipo":"bicycle","distancia":179.14540590399767},{"id":"1429","nombre":"25B - Plaza de Celenque B","lat":40.4173687,"lng":-3.7058976,"capacidad":44,"bicis":7,"docks":9,"estado":"active","tipo":"bicycle","distancia":188.5014788392955},{"id":"1435","nombre":"31 - Mayor","lat":40.416346,"lng":-3.7065869999999994,"capacidad":47,"bicis":7,"docks":20,"estado":"active","tipo":"bicycle","distancia":241.2830150869041},{"id":"1460","nombre":"56 - Plaza del Carmen ","lat":40.4190322,"lng":-3.7039032999999995,"capacidad":44,"bicis":5,"docks":18,"estado":"active","tipo":"bicycle","distancia":248.36332212250812},{"id":"1616","nombre":"210 - Calle de las Tres Cruces - Gran Vía","lat":40.4196518,"lng":-3.7027164000000004,"capacidad":47,"bicis":2,"docks":22,"estado":"active","tipo":"bicycle","distancia":330.10764984216394},{"id":"1436","nombre":"32 - Plaza de la Provincia","lat":40.41466783910054,"lng":-3.7066362890417137,"capacidad":43,"bicis":0,"docks":21,"estado":"active","tipo":"bicycle","distancia":337.44100769731165},{"id":"1456","nombre":"52 - Plaza de Santa Ana","lat":40.4144689,"lng":-3.7008558000000003,"capacidad":35,"bicis":6,"docks":7,"estado":"active","tipo":"bicycle","distancia":359.60513451287824},{"id":"1444","nombre":"40 - Conde de Romanones","lat":40.413148899341536,"lng":-3.704953887500373,"capacidad":43,"bicis":0,"docks":20,"estado":"active","tipo":"bicycle","distancia":417.5714924709874},{"id":"1406","nombre":"2 - Metro Callao","lat":40.4204,"lng":-3.7056899999999997,"capacidad":47,"bicis":3,"docks":23,"estado":"active","tipo":"bicycle","distancia":431.0931516502527},{"id":"1617","nombre":"211 - Desengaño - Valverde","lat":40.42059,"lng":-3.70239,"capacidad":43,"bicis":7,"docks":10,"estado":"active","tipo":"bicycle","distancia":438.0069574028776},{"id":"2403","nombre":"22 - Jacometrezo 3","lat":40.420172,"lng":-3.706494,"capacidad":32,"bicis":4,"docks":7,"estado":"active","tipo":"bicycle","distancia":438.86188082229575},{"id":"1413","nombre":"9 - Plaza de San Miguel","lat":40.4156057,"lng":-3.7095084,"capacidad":44,"bicis":0,"docks":21,"estado":"active","tipo":"bicycle","distancia":501.1808527798414},{"id":"1426","nombre":"23 - Santo Domingo","lat":40.4202595,"lng":-3.708249,"capacidad":44,"bicis":2,"docks":18,"estado":"active","tipo":"bicycle","distancia":538.359554619424},{"id":"1422","nombre":"18 - Plaza de Pedro Zerolo","lat":40.4209251,"lng":-3.6996776,"capacidad":44,"bicis":5,"docks":17,"estado":"active","tipo":"bicycle","distancia":576.3560618068393},{"id":"1427","nombre":"24 - Palacio de Oriente","lat":40.417343,"lng":-3.710864,"capacidad":35,"bicis":2,"docks":12,"estado":"active","tipo":"bicycle","distancia":601.0624548592697},{"id":"1439","nombre":"35 - Doctor Letamendi, 3","lat":40.41369072326586,"lng":-3.710062961307532,"capacidad":43,"bicis":0,"docks":21,"estado":"active","tipo":"bicycle","distancia":632.9842408876957},{"id":"1445","nombre":"41 - Metro Antón Martín","lat":40.4122047,"lng":-3.6991147000000004,"capacidad":39,"bicis":3,"docks":13,"estado":"active","tipo":"bicycle","distancia":646.865662916207},{"id":"1421","nombre":"17 - Plaza de Carlos Cambronero","lat":40.4228028680601,"lng":-3.7050511289749055,"capacidad":39,"bicis":2,"docks":15,"estado":"active","tipo":"bicycle","distancia":675.8391203911441},{"id":"1434","nombre":"30 - San Quintín","lat":40.419622,"lng":-3.710967,"capacidad":39,"bicis":3,"docks":16,"estado":"active","tipo":"bicycle","distancia":683.0729874403751},{"id":"1433","nombre":"29 - Marqués de Cubas","lat":40.4163838,"lng":-3.6957434000000005,"capacidad":43,"bicis":13,"docks":7,"estado":"active","tipo":"bicycle","distancia":683.62652580661},{"id":"1440","nombre":"36 - Plaza Ramales","lat":40.416876,"lng":-3.7121509999999995,"capacidad":39,"bicis":1,"docks":17,"estado":"active","tipo":"bicycle","distancia":707.0295763259992},{"id":"1443","nombre":"39 - Plaza de la Cebada","lat":40.4112744,"lng":-3.7088337,"capacidad":51,"bicis":2,"docks":25,"estado":"active","tipo":"bicycle","distancia":747.7455004244158},{"id":"1420","nombre":"16 - San Bernardo","lat":40.4229374,"lng":-3.7074808485065,"capacidad":39,"bicis":16,"docks":1,"estado":"active","tipo":"bicycle","distancia":750.2193252808145},{"id":"1424","nombre":"20 - Banco de España","lat":40.4188076,"lng":-3.6952465,"capacidad":47,"bicis":21,"docks":1,"estado":"active","tipo":"bicycle","distancia":757.7413235289747},{"id":"1447","nombre":"43 - Jesús y María","lat":40.4100387,"lng":-3.7024709999999996,"capacidad":38,"bicis":0,"docks":18,"estado":"active","tipo":"bicycle","distancia":760.1951103579698},{"id":"1448","nombre":"44 - Plaza de Nelson Mandela","lat":40.40979071254635,"lng":-3.7038640533106597,"capacidad":39,"bicis":0,"docks":19,"estado":"active","tipo":"bicycle","distancia":779.4160698538489},{"id":"1431","nombre":"27 - Huertas","lat":40.4133,"lng":-3.6957000000000004,"capacidad":47,"bicis":0,"docks":26,"estado":"active","tipo":"bicycle","distancia":788.4879946644212},{"id":"1462","nombre":"58 - Metro Chueca","lat":40.4222783,"lng":-3.6978583000000005,"capacidad":47,"bicis":2,"docks":22,"estado":"active","tipo":"bicycle","distancia":789.9849158994009},{"id":"1446","nombre":"42 - Santa Isabel","lat":40.4108488,"lng":-3.6982922,"capacidad":47,"bicis":5,"docks":19,"estado":"active","tipo":"bicycle","distancia":809.5307813549206},{"id":"1459","nombre":"55 - Plaza de San Ildefonso","lat":40.4239757,"lng":-3.7020842,"capacidad":44,"bicis":3,"docks":20,"estado":"active","tipo":"bicycle","distancia":811.0140830648835},{"id":"1410","nombre":"6 - Colegio de Arquitectos","lat":40.423178,"lng":-3.699023,"capacidad":39,"bicis":4,"docks":13,"estado":"active","tipo":"bicycle","distancia":816.3942714105998},{"id":"1572","nombre":"166 - Viaducto de Segovia","lat":40.41390473235381,"lng":-3.713377023313513,"capacidad":46,"bicis":1,"docks":23,"estado":"active","tipo":"bicycle","distancia":872.3672712304123},{"id":"1442","nombre":"38 - Plaza de los Carros","lat":40.4113586,"lng":-3.7115898000000005,"capacidad":47,"bicis":0,"docks":26,"estado":"active","tipo":"bicycle","distancia":895.0016018358723},{"id":"1423","nombre":"19 - Prim","lat":40.4218616,"lng":-3.6954982999999997,"capacidad":48,"bicis":5,"docks":23,"estado":"active","tipo":"bicycle","distancia":900.3721433963497},{"id":"1489","nombre":"86 - Cibeles","lat":40.4186516,"lng":-3.6933498,"capacidad":44,"bicis":18,"docks":3,"estado":"active","tipo":"bicycle","distancia":908.323421317737},{"id":"1522","nombre":"116B - Metro Plaza de España","lat":40.423684,"lng":-3.71046,"capacidad":38,"bicis":7,"docks":7,"estado":"active","tipo":"bicycle","distancia":950.6847543297242},{"id":"1463","nombre":"59 - Plaza de Juan Pujol","lat":40.4255495,"lng":-3.7043418,"capacidad":39,"bicis":2,"docks":15,"estado":"active","tipo":"bicycle","distancia":973.9804959660822},{"id":"1457","nombre":"53 - Plaza de Lavapiés","lat":40.40830870823806,"lng":-3.700754126389314,"capacidad":44,"bicis":1,"docks":23,"estado":"active","tipo":"bicycle","distancia":978.7701763228829}],"total":40}');
+window.__reportPOIs = JSON.parse('[{"id":27717687,"nombre":"McDonald's","tipo":"fast_food","lat":40.4164064,"lng":-3.7049818,"distancia":109.203165469881},{"id":26341193,"nombre":"Parking Benavente","tipo":"parking","lat":40.4144691,"lng":-3.7035492,"distancia":260.05249757864584},{"id":27728064,"nombre":"Brasa y Leña","tipo":"restaurant","lat":40.4162327,"lng":-3.7088498,"distancia":432.13696454651205},{"id":26340398,"nombre":"Filmoteca Nacional","tipo":"cinema","lat":40.4122075,"lng":-3.7021068,"distancia":530.4008109998473},{"id":32639058,"nombre":"Peor Para El Sol","tipo":"bar","lat":40.4167458,"lng":-3.7101814,"distancia":540.2707852212716},{"id":27792111,"nombre":"Picado Fino","tipo":"restaurant","lat":40.4136118,"lng":-3.7087304,"distancia":547.6385252232936},{"id":26472667,"nombre":"Farmacia la Latina","tipo":"pharmacy","lat":40.4117047,"lng":-3.7079389,"distancia":666.1731013086667},{"id":26066584,"nombre":"","tipo":"police","lat":40.4227875,"lng":-3.7068661,"distancia":714.5859905736673},{"id":26066575,"nombre":"Teatro Alfil","tipo":"theatre","lat":40.4232134,"lng":-3.7045532,"distancia":715.9823128454622},{"id":47215969,"nombre":"Evo Banco","tipo":"bank","lat":40.4114612,"lng":-3.7094244,"distancia":761.0222711933437},{"id":47216126,"nombre":"Tío Timón","tipo":"restaurant","lat":40.4131593,"lng":-3.7117469,"distancia":785.1929794169806},{"id":47215976,"nombre":"El Viajero","tipo":"restaurant","lat":40.4116487,"lng":-3.7101786,"distancia":787.2231344732421},{"id":47215997,"nombre":"La Tomasa","tipo":"pub","lat":40.41178,"lng":-3.7103837,"distancia":788.8362325081325},{"id":47216120,"nombre":"La Malaje","tipo":"restaurant","lat":40.4130702,"lng":-3.7117497,"distancia":790.5488121063644},{"id":47215988,"nombre":"Pez Tortilla","tipo":"pub","lat":40.4118381,"lng":-3.7105359,"distancia":793.4872198229765},{"id":47216016,"nombre":"El Bonanno","tipo":"pub","lat":40.4118652,"lng":-3.7106292,"distancia":797.105448999765},{"id":47216032,"nombre":"Cervecería San Andrés","tipo":"pub","lat":40.4118925,"lng":-3.7109337,"distancia":813.9587578458512},{"id":26472719,"nombre":"Café Melo's","tipo":"pub","lat":40.4097328,"lng":-3.7010866,"distancia":818.725975930637},{"id":47216198,"nombre":"Taquería del Alamillo","tipo":"restaurant","lat":40.4137154,"lng":-3.7127335,"distancia":830.4507389141844},{"id":26472349,"nombre":"","tipo":"parking_entrance","lat":40.4078419,"lng":-3.704522,"distancia":997.969100156442}]');
+window.__reportIsochronas = JSON.parse('[{"modo":"coche","minutos":10,"areaKm2":69.12770750277897,"real":false},{"modo":"coche","minutos":15,"areaKm2":155.5373418802136,"real":false},{"modo":"coche","minutos":30,"areaKm2":622.1493675209886,"real":false},{"modo":"bici","minutos":10,"areaKm2":17.281926875728264,"real":false},{"modo":"bici","minutos":15,"areaKm2":38.884335469952845,"real":false},{"modo":"bici","minutos":30,"areaKm2":155.5373418802136,"real":false},{"modo":"pie","minutos":10,"areaKm2":1.9202140971243729,"real":false},{"modo":"pie","minutos":15,"areaKm2":4.320481718630395,"real":false},{"modo":"pie","minutos":30,"areaKm2":17.281926875728264,"real":false}]');
+</script>
+<script type="module">
+import { initReportMaps } from './js/report-maps.js';
+document.addEventListener('DOMContentLoaded', () => {
+    const app = {
+        centro: { latitud: '40.4168', longitud: '-3.7038', nombre: 'Centro de trabajo' },
+        gbfs: window.__reportGBFS,
+        pois: window.__reportPOIs,
+        isocronas: window.__reportIsochronas
+    };
+    setTimeout(() => initReportMaps(app), 800);
+});
+</script>
 </body>
 </html>
