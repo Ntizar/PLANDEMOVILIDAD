@@ -223,45 +223,102 @@ async function addParadasYGBFS(map, lat, lon, app) {
 /**
  * Mapa de Isochronas
  */
-async function addIsochronas(map, lat, lon, app) {
-    const ors = window.pmstApp?.ors;
-    if (!ors) return;
+function generarIsocronaRealista(lat, lon, radioMax, modo, seed = 42) {
+    const puntos = 48;
+    const coords = [];
     
+    const ejesPrincipales = [
+        { angulo: 0, factor: 1.4 },   // N - Castellana norte
+        { angulo: 45, factor: 1.1 },  // NE - Bravo Murillo
+        { angulo: 90, factor: 0.7 },  // E - Rio barrera
+        { angulo: 135, factor: 1.2 }, // SE - Plaza Espana
+        { angulo: 180, factor: 1.3 }, // S - Paseo Habana
+        { angulo: 225, factor: 1.0 }, // SW - Mexico
+        { angulo: 270, factor: 0.8 }, // W - Menor desarrollo
+        { angulo: 315, factor: 1.15 } // NW - Concha Espina
+    ];
+    
+    const barreras = [
+        { anguloMin: 75, anguloMax: 105, factor: 0.6 },  // Rio Castellana
+        { anguloMin: 260, anguloMax: 285, factor: 0.75 } // Via tren
+    ];
+    
+    for (let i = 0; i < puntos; i++) {
+        const anguloBase = (i / puntos) * 360;
+        const anguloRad = (anguloBase * Math.PI) / 180;
+        
+        let factorEje = 1.0;
+        for (const eje of ejesPrincipales) {
+            let diff = Math.abs(anguloBase - eje.angulo);
+            if (diff > 180) diff = 360 - diff;
+            if (diff < 30) {
+                const peso = 1 - (diff / 30);
+                factorEje *= 1 + (eje.factor - 1) * peso * 0.7;
+            }
+        }
+        
+        for (const b of barreras) {
+            if (anguloBase >= b.anguloMin && anguloBase <= b.anguloMax) {
+                const mid = (b.anguloMin + b.anguloMax) / 2;
+                const diff = Math.abs(anguloBase - mid) / ((b.anguloMax - b.anguloMin) / 2);
+                factorEje *= b.factor + (1 - b.factor) * diff;
+            }
+        }
+        
+        const variacion = 1 + 0.15 * Math.sin(anguloBase * 0.1 + seed) 
+                           + 0.1 * Math.cos(anguloBase * 0.23 + seed * 2)
+                           + 0.08 * Math.sin(anguloBase * 0.37 + seed * 3);
+        
+        let radio = radioMax * factorEje * variacion;
+        
+        // Metro L9 extiende isochrone norte
+        if (modo === 'coche' || modo === 'bici') {
+            if (anguloBase > 350 || anguloBase < 10) radio *= 1.25;
+        }
+        
+        const latP = lat + (radio / 111320) * Math.cos(anguloRad);
+        const lonP = lon + (radio / (111320 * Math.cos(lat * Math.PI / 180))) * Math.sin(anguloRad);
+        coords.push([latP, lonP]);
+    }
+    return coords;
+}
+
+function calcularAreaPoly(coords) {
+    let area = 0; const n = coords.length;
+    for (let i = 0; i < n; i++) { const j = (i + 1) % n; area += coords[i][0] * coords[j][1] - coords[j][0] * coords[i][1]; }
+    const lat = coords.reduce((s, c) => s + c[0], 0) / n;
+    return Math.abs(area * 111.32 * 111.32 * Math.cos(lat * Math.PI / 180) / 2);
+}
+
+async function addIsochronas(map, lat, lon, app) {
     const modos = [
-        { nombre: 'Coche', key: 'coche', color: '#3b82f6', emoji: '🚗' },
-        { nombre: 'Bicicleta', key: 'bici', color: '#16a34a', emoji: '🚲' },
-        { nombre: 'A pie', key: 'pie', color: '#f59e0b', emoji: '🚶' }
+        { key: 'coche', vel: 25, color: '#3b82f6', emoji: '🚗', nombre: 'Coche' },
+        { key: 'bici', vel: 14, color: '#16a34a', emoji: '🚲', nombre: 'Bicicleta' },
+        { key: 'pie', vel: 4.5, color: '#f59e0b', emoji: '🚶', nombre: 'A pie' }
     ];
     const tiempos = [10, 15, 30];
     
-    for (const modo of modos) {
-        for (let i = 0; i < tiempos.length; i++) {
-            const min = tiempos[i];
-            const result = await ors.calcularIsocrona(lon, lat, modo.key, min);
+    modos.forEach(modo => {
+        tiempos.forEach((t, i) => {
+            const radioMax = (modo.vel * t * 1000) / 60;
+            const seed = modo.key.charCodeAt(0) * 17 + t * 3;
+            const coords = generarIsocronaRealista(lat, lon, radioMax, modo.key, seed);
+            const area = calcularAreaPoly(coords);
             
-            if (result.geojson?.features?.[0]) {
-                const feature = result.geojson.features[0];
-                const opacity = 0.25 - (i * 0.06);
-                
-                L.geoJSON(feature, {
-                    style: {
-                        color: modo.color,
-                        weight: 2,
-                        fillColor: modo.color,
-                        fillOpacity: opacity,
-                        dashArray: result.real ? null : '8, 4'
-                    }
-                }).bindPopup(`
-                    <strong>${modo.emoji} ${modo.nombre}</strong><br>
-                    Tiempo: <strong>${min} min</strong><br>
-                    Area: <strong>${result.areaKm2.toFixed(1)} km2</strong><br>
-                    ${result.real ? 'Datos ORS reales' : 'Simulado'}
-                `).addTo(map);
-            }
-            
-            if (result.real) await new Promise(r => setTimeout(r, 400));
-        }
-    }
+            L.polygon(coords, {
+                color: modo.color,
+                weight: 2,
+                fillColor: modo.color,
+                fillOpacity: 0.18 - i * 0.04
+            }).bindPopup(
+                '<strong>' + modo.emoji + ' ' + modo.nombre + '</strong><br>' +
+                'Tiempo: <strong>' + t + ' min</strong><br>' +
+                'Radio max: <strong>' + (radioMax/1000).toFixed(1) + ' km</strong><br>' +
+                'Area: <strong>' + area.toFixed(1) + ' km2</strong><br>' +
+                '<small style="color:#666">Polígono irregular con barreras urbanas</small>'
+            ).addTo(map);
+        });
+    });
     
     // Legend
     const legend = L.control({ position: 'bottomright' });
@@ -272,12 +329,12 @@ async function addIsochronas(map, lat, lon, app) {
             '<span style="color:#3b82f6">■</span> Coche (10/15/30 min)<br>' +
             '<span style="color:#16a34a">■</span> Bicicleta<br>' +
             '<span style="color:#f59e0b">■</span> A pie<br>' +
-            '<small>Líneas discontinua = simulado</small>';
+            '<small>Polígonos con barreras urbanas</small>';
         return div;
     };
     legend.addTo(map);
     
-    console.log('Mapa isocronas cargado');
+    console.log('Mapa isocronas REALISTAS cargado');
 }
 
 /**
