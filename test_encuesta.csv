@@ -1,0 +1,16 @@
+fecha,nombre,email,departamento,puesto,centro,teletrabajo,dias_presenciales,modo_principal,modo_secundario,distancia_km,tiempo_viaje_min,ocupacion_coche,parada_cercana,tipo_parada,tiempo_a_parada,parking_trabajo,dispuesto_cambiar,alternativas,barreras,comentarios
+2026-07-14,María García,,IT,Desarrolladora,Centro Principal,ocasional,3,transporte_publico,,5.2,22,1,si,metro,5,pagando,si,transporte_publico; bicicleta,coste; comodidad,Bonos transporte
+2026-07-14,Carlos Ruiz,,Consultoria,Consultor Senior,Centro Principal,nunca,5,coche_particular,,12.5,30,1,no,,0,gratuito,no,,distancia,Preferiria coche
+2026-07-14,Ana Martínez,,Administracion,Admin,Centro Principal,habitual,2,bicicleta,,3.2,15,1,si,,0,si,si,bicicleta; desfase_horario,,Muy bien
+2026-07-14,Pedro López,,IT,DevOps,Centro Principal,nunca,5,coche_compartido,,8.0,25,3,no,,0,pagando,si,coche_compartido; transporte_publico,infraestructura,Me apunto
+2026-07-14,Laura Sánchez,,RRHH,Responsable,Centro Principal,ocasional,3,transporte_publico,,6.5,28,1,si,metro,8,gratuito,si,teletrabajo; transporte_publico,,Bien
+2026-07-14,Juan Torres,,Comercial,Comercial,Centro Principal,nunca,5,coche_particular,,18.0,35,1,no,,0,gratuito,no,,distancia,Lejos
+2026-07-14,Sofía Hernández,,IT,Tester,Centro Principal,habitual,2,a_pie,,1.5,20,1,si,bus,3,si,si,a_pie; bicicleta,,Perfecto
+2026-07-14,Miguel Ángel Díaz,,Marketing,Content Manager,Centro Principal,ocasional,3,coche_particular,,9.5,28,1,si,metro,10,pagando,si,teletrabajo; transporte_publico,coste,Ayuda
+2026-07-14,Elena Vargas,,Financiero,Contable,Centro Principal,nunca,5,transporte_publico,,4.8,20,1,si,metro,6,si,si,transporte_publico,,Ok
+2026-07-14,Roberto Blanco,,Legal,Abogado,Centro Principal,nunca,5,coche_particular,,15.0,32,1,no,,0,gratuito,no,,distancia; comodidad,Fijo
+2026-07-14,Carmen Navarro,,IT,Senior Dev,Centro Principal,habitual,2,bicicleta,,2.8,12,1,si,,0,si,si,bicicleta; desfase_horario,,Genial
+2026-07-14,Francisco Morales,,Operaciones,Manager,Centro Principal,ocasional,3,coche_compartido,,11.0,27,2,no,,0,gratuito,si,coche_compartido; transporte_publico,,Vale
+2026-07-14,Isabel Delgado,,I+D,Researcher,Centro Principal,habitual,2,transporte_publico,,7.0,24,1,si,metro,7,si,si,transporte_publico; bicicleta,,Bien
+2026-07-14,Diego Romero,,IT,Architect,Centro Principal,ocasional,3,coche_particular,,10.0,26,1,si,metro,4,pagando,si,teletrabajo; transporte_publico,coste; tiempo,Quiero menos tiempo
+2026-07-14,Ana Belén Castro,,Comercial,Account Manager,Centro Principal,nunca,5,coche_particular,,20.0,40,1,no,,0,gratuito,no,,distancia; tiempo,Mucho trafico

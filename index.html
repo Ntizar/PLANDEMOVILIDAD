@@ -21,7 +21,8 @@
                 <p class="subtitle">Generador Profesional de Planes de Movilidad Sostenible al Trabajo</p>
             </div>
             <div class="header-actions">
-                <button class="btn btn-outline" onclick="window.pmstApp.nuevaEmpresa()">🏢 Nueva empresa</button>
+                <div id="empresaSelector" style="display:inline-flex;align-items:center;gap:8px;margin-right:8px"></div>
+                <button class="btn btn-outline" onclick="pmstUI?.abrirModalEmpresas?.()">⚙️ Empresas</button>
                 <div class="dropdown">
                     <button class="btn btn-primary">📥 Export ▾</button>
                     <div class="dropdown-menu">
@@ -769,6 +770,7 @@
         import { exportPDF, exportDOCX, exportZIP } from './js/export.js';
         import { CONFIG } from './js/config.js';
         import { calcularDiagnostico, calcularDAFO, generarMedidas, generarObjetivos } from './js/main.js?v=2';
+        import { initEmpresas } from './js/empresa.js?v=1';
 
         // ── Estado global ───────────────────────────────────
         window.pmstApp = {
@@ -791,6 +793,7 @@
         // ── Inicialización ──────────────────────────────────
         document.addEventListener('DOMContentLoaded', () => {
             initApp();
+            initEmpresas().catch(e => console.warn('Empresas init:', e));
             initDashboard();
             initDepartamentosSelect();
             initKpiYearSelect();
